@@ -21,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 
 public class SkyMap_gui {
@@ -105,6 +106,7 @@ public class SkyMap_gui {
 		frmSkymap.getContentPane().add(txtYear);
 		
 		JButton btnGenerate = new JButton("Generate Map");
+		btnGenerate.setForeground(Color.WHITE);
 		btnGenerate.setBackground(Color.BLACK);
 		btnGenerate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -113,12 +115,8 @@ public class SkyMap_gui {
 		btnGenerate.setBounds(17, 312, 101, 23);
 		frmSkymap.getContentPane().add(btnGenerate);
 		
-		Canvas canvas = new Canvas();
-		canvas.setBackground(Color.DARK_GRAY);
-		canvas.setBounds(280, 0, 604, 577);
-		frmSkymap.getContentPane().add(canvas);
-		
 		JButton btnPrint = new JButton("Print Map");
+		btnPrint.setForeground(Color.WHITE);
 		btnPrint.setBackground(Color.BLACK);
 		btnPrint.setBounds(17, 521, 89, 23);
 		frmSkymap.getContentPane().add(btnPrint);
@@ -195,5 +193,15 @@ public class SkyMap_gui {
 		lblSkymap.setForeground(Color.WHITE);
 		lblSkymap.setBounds(17, 8, 176, 55);
 		frmSkymap.getContentPane().add(lblSkymap);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon("C:\\Users\\Christy\\workspace2\\SkyMap\\src\\map.png"));
+		label.setBounds(299, 0, 585, 577);
+		frmSkymap.getContentPane().add(label);
+		
+		JLabel label_2 = new JLabel("");
+		label_2.setIcon(new ImageIcon("C:\\Users\\Christy\\workspace2\\SkyMap\\src\\ex.png"));
+		label_2.setBounds(0, 0, 292, 587);
+		frmSkymap.getContentPane().add(label_2);
 	}
 }
