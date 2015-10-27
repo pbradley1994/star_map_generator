@@ -88,27 +88,27 @@ public void setEccentricity(double value) {
 	this.eccentricity=value;
 }
 
-public void getSMAxis(double value) {
+public void setSMAxis(double value) {
 	this.smaxis=value;
 }
 
-public void getInclination(double value) {
+public void setInclination(double value) {
 	this.inclination=value;
 }
 
-public void getPerihelion(double value) {
+public void setPerihelion(double value) {
 	this.perihelion=value;
 }
 
-public void getANL(double value) {
+public void setANL(double value) {
 	this.ascNodeLongi=value;
 }
 
-public void getMeanLong(double value) {
+public void setMeanLong(double value) {
 	this.meanLongi=value;
 }
 
-public void getHourAngle(double value) {
+public void setHourAngle(double value) {
 	this.hourAngle=value;
 }
 
