@@ -1,5 +1,6 @@
 
 // Data structure for Messier Deep Space Objects
+// Each object is initially read from flatfile by Parser class.
 
 public class Messier {
 	String name;
@@ -12,6 +13,7 @@ public class Messier {
 	double perihelion;
 	double ascNodeLongi;	// ascending node longitude
 	double meanLongi;		// mean longitude
+	double hourAngle;
 	
 // constructor 
 public Messier(String vname, boolean vlabel, double vrasc, double vdecl) {
@@ -61,6 +63,11 @@ public double getMeanLong() {
 	return meanLongi;
 }
 
+public double getHourAngle() {
+	return hourAngle;
+}
+
+
 // setters
 public void setName(String value) {
 	this.name=value;
@@ -102,7 +109,9 @@ public void getMeanLong(double value) {
 	this.meanLongi=value;
 }
 
-
+public void getHourAngle(double value) {
+	this.hourAngle=value;
+}
 
 
 
