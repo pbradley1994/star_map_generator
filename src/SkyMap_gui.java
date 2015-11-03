@@ -1,31 +1,54 @@
+//TO DO: clean up what you actually use 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+
 import java.awt.SystemColor;
+
 import javax.swing.JButton;
+
 import java.awt.Canvas;
+
 import javax.swing.JSeparator;
+
 import java.awt.Button;
 import java.awt.Panel;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.ImageIcon;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.text.NumberFormat;
 import java.util.*;
+import java.util.logging.Logger;
+
 import javax.swing.*;
 import javax.swing.plaf.basic.*;
+import javax.swing.text.MaskFormatter;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 /**
@@ -95,14 +118,14 @@ public class SkyMap_gui {
 		// Latitude Field -- takes text input
 		txtLatitude = new JTextField();
 		txtLatitude.setForeground(Color.DARK_GRAY);
-		txtLatitude.setText("34.7114");
+		txtLatitude.setText("+/- 90");
 		txtLatitude.setBounds(17, 94, 146, 20);
 		frmSkymap.getContentPane().add(txtLatitude);
 		txtLatitude.setColumns(10);
 		
 		// Longitude Field -- takes text input
 		txtLongitude = new JTextField();
-		txtLongitude.setText("86.6542");
+		txtLongitude.setText("+/- 180");
 		txtLongitude.setForeground(Color.DARK_GRAY);
 		txtLongitude.setColumns(10);
 		txtLongitude.setBounds(17, 143, 146, 20);
@@ -297,19 +320,95 @@ public class SkyMap_gui {
 			    	 * On Button click, set user input input to variables. Drop-down menus
 			    	 * are handled elsewhere since it sets them immediately.
 			    	 */
-			    	final String inputLat = txtLatitude.getText();
-			    	final String inputLong = txtLongitude.getText();
+			    	//final String inputLat = txtLatitude.getText();
+			    	//final double inputLat = Double.parseDouble((String)txtLatitude.getText());
+			    	//final String inputLong = txtLongitude.getText();
 			    	final String inputTime = txtTime.getText();
-			    	// Day and year are converted to ints for use
+			    	
+			    	// Try-Catch for Latitude validation
+			    	// If the input can't be cast to an double, throws exception
+			    	/** TO-DO: Number validation isn't working */
+			    	
+				    try {
+				    	double MIN_LAT = -90.000;
+					    double MAX_LAT = 90.000;
+					    
+				    	final double testLat = Double.parseDouble((String)txtLatitude.getText());
+				    	
+					    if ((testLat > MIN_LAT) || (testLat < MAX_LAT)) {
+				            double inputLat = testLat;
+				          //DEBUG: remove. just outputs the variables so that I know it's
+				            System.out.println("INPUT LATITUDE: " + inputLat);
+					    }
+					    else if (testLat < MIN_LAT){
+					    	JOptionPane.showMessageDialog(null,"This is not a valid latitude. Please input a value between -90.0 and 90.0.");
+					    }
+					    else if (testLat < MAX_LAT){
+					    	JOptionPane.showMessageDialog(null,"This is not a valid latitude. Please input a value between -90.0 and 90.0.");
+					    }
+				    }
+				    catch(NumberFormatException ex) {
+				    	 JOptionPane.showMessageDialog(null,"This is not a valid latitude. Please input a value between -90.0 and 90.0.");
+				    	}
+				    
+			    	// Try-Catch for Longitude validation
+			    	// If the input can't be cast to an double, throws exception
+			    	/** TO-DO: Number validation isn't working */
+			    	
+				    try {
+				    	double MIN_LONG = -180.000;
+					    double MAX_LONG = 180.000;
+					    
+				    	final double testLong = Double.parseDouble((String)txtLongitude.getText());
+				    	
+					    if ((testLong > MIN_LONG) || (testLong < MAX_LONG)) {
+				            double inputLong = testLong;
+				          //DEBUG: remove. just outputs the variables so that I know it's
+				            System.out.println("INPUT Longitude: " + inputLong);
+					    }
+					    else if (testLong < MIN_LONG){
+					    	JOptionPane.showMessageDialog(null,"This is not a valid longitude. Please input a value between -180.0 and 180.0.");
+					    }
+					    else if (testLong < MAX_LONG){
+					    	JOptionPane.showMessageDialog(null,"This is not a valid longitude. Please input a value between -180.0 and 180.0.");
+					    }
+				    }
+				    catch(NumberFormatException ex) {
+				    	 JOptionPane.showMessageDialog(null,"This is not a valid longitude. Please input a value between -180.0 and 180.0.");
+				    	}
+			    	
+				    // Day is converted to int for use
 			    	final int inputDay = Integer.parseInt((String)comboBoxDay.getSelectedItem());
-			    	final int inputYear = Integer.parseInt((String)txtYear.getText());
+
+				    // Try-Catch for Year validation
+			    	// If the input can't be cast to an int, throws exception
+			    	/** TO-DO: Year validation isn't working */
+			    	
+				    try {
+				    	int MIN_YEAR = 1900;
+					    int MAX_YEAR = 2100;
+					    
+				    	final int testYear = Integer.parseInt((String)txtYear.getText());
+				    	
+					    if ((testYear > MIN_YEAR) || (testYear < MAX_YEAR)) {
+				            int inputYear = testYear;
+				          //DEBUG: remove. just outputs the variables so that I know it's
+				            System.out.println("INPUT YEAR: " + inputYear);
+					    }
+					    else if (testYear < MIN_YEAR){
+					    	JOptionPane.showMessageDialog(null,"This is not a valid year. Please input a year between 1900 and 2100.");
+					    }
+					    else if (testYear < MAX_YEAR){
+					    	JOptionPane.showMessageDialog(null,"This is not a valid year. Please input a year between 1900 and 2100.");
+					    }
+				    }
+				    catch(NumberFormatException ex) {
+				    	 JOptionPane.showMessageDialog(null,"This is not a valid year. Please input a year between 1900 and 2100.");
+				    	}
 			    	
 			    	//DEBUG: remove. just outputs the variables so that I know they're set.
-			    	System.out.println(inputLat);
-			    	System.out.println(inputLong);
 			    	System.out.println(inputTime);
-			    	System.out.println(inputDay);
-			    	System.out.println(inputYear);
+			    	System.out.println("DAY: " + inputDay);
 
 			    }
 		});
