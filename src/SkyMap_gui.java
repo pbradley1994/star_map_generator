@@ -216,7 +216,7 @@ public class SkyMap_gui {
 		/** Begin Time */
 		// Time Field -- takes text input
 		txtTime = new JTextField();
-		txtTime.setText("23:59");
+		txtTime.setText("00:00");
 		txtTime.setForeground(Color.DARK_GRAY);
 		txtTime.setColumns(10);
 		txtTime.setBounds(17, 239, 64, 20);
@@ -306,24 +306,10 @@ public class SkyMap_gui {
 		btnGenerate.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e)
 			    {
-			    	// DELETE: just for reference so I don't have to keep switching back to the Controller
-			    	double userLocalTime;  //in decimal form (LST)
-			    	double userGMTime;
-			    	double userLat;
-			    	double userLong;
-			    	int userMonth;
-			    	int userDay;
-			    	int userYear;
-			    	int userTimezone;
-			    	
 			    	/**
 			    	 * On Button click, set user input input to variables. Drop-down menus
 			    	 * are handled elsewhere since it sets them immediately.
 			    	 */
-			    	//final String inputLat = txtLatitude.getText();
-			    	//final double inputLat = Double.parseDouble((String)txtLatitude.getText());
-			    	//final String inputLong = txtLongitude.getText();
-			    	final String inputTime = txtTime.getText();
 			    	
 			    	// Try-Catch for Latitude validation
 			    	// If the input can't be cast to an double, throws exception
@@ -405,9 +391,24 @@ public class SkyMap_gui {
 				    catch(NumberFormatException ex) {
 				    	 JOptionPane.showMessageDialog(null,"This is not a valid year. Please input a year between 1900 and 2100.");
 				    	}
+
+
+				    // Try-Catch for Time validation
+			    	// If the input can't be cast, throws exception
+			    	/** TO-DO: time validation */
+				    
+			    	final String inputTime = txtTime.getText();
+				    SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+				    //format.parse(inputTime);
+				    try {
+				    	format.parse(inputTime);
+				    }
+				    catch(ParseException ex) {
+				    	 JOptionPane.showMessageDialog(null,"This is not a valid time. Please enter a time between 00:00 and 24:00.");
+				    	}
 			    	
 			    	//DEBUG: remove. just outputs the variables so that I know they're set.
-			    	System.out.println(inputTime);
+			    	System.out.println("TIME: " + inputTime);
 			    	System.out.println("DAY: " + inputDay);
 
 			    }
