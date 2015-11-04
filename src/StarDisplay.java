@@ -1,8 +1,7 @@
-package starmapgenerator;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Circle;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 
 /**
  *
@@ -15,7 +14,7 @@ public class StarDisplay {
     private int sphere_z;
     // Sprite (not needed yet)
     //private Image my_sprite;
-    private Circle my_sprite;
+    //private Circle my_sprite;
     // Grid coords (2D) Pixels
     private int grid_x;
     private int grid_y;
@@ -50,7 +49,7 @@ public class StarDisplay {
         grid_x = (int)(offset_x * center_x + center_x);
         grid_y = (int)(-offset_y * center_y + center_y);
         
-        my_sprite = new Circle(grid_x, grid_y, 5);
+        //my_sprite = new Circle(grid_x, grid_y, 5);
 
     }
     
@@ -70,6 +69,12 @@ public class StarDisplay {
         // We're not using a sprite
         if(sphere_x == 0 && sphere_y == 0) {g.setColor(Color.red);}
         else {g.setColor(Color.white);}
-        g.draw(my_sprite);
+        
+        Graphics2D g2d = (Graphics2D)g;
+        // Assume x, y, and diameter are instance variables.
+        Ellipse2D.Double circle = new Ellipse2D.Double(grid_x, grid_y, 10, 10);
+        g2d.fill(circle);
+        //g.draw(my_sprite);
     }
+
 }
