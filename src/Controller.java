@@ -24,14 +24,9 @@ public class Controller {
 	ArrayList<Constellation> constellationList;
 	Parser theParser;
 	Calculator theCalculator;
-	double userLocalTime;  //in decimal form (LST)
-	double userGMTime;
-	double userLat;
-	double userLong;
-	int userMonth;
-	int userDay;
-	int userYear;
-	int userTimezone;
+	double userLocalTime;  //in decimal form 
+	double userLat;		   //in degrees
+	double userLong;	   //in degrees
 	double userJulianDate;
 	double epoch2000JD; 
 	
@@ -59,40 +54,48 @@ public class Controller {
 	 * This function is called by the GUI once the user inputs
 	 * their data. It saves the users data to local variables,
 	 * and then adjusts star map data based on this information.
-	 * @param localTime as local user time in decimal form
 	 * @param latitude as user latitude in decimal form
 	 * @param longitude as user longitude in decimal form
 	 * @param month as user month where 1 = Jan, 12 = Dec
 	 * @param day as user day of the month, 1-31
 	 * @param year as user year
 	 * @param timezone as user time zone offset from GMT
+	 * @param hour as the hour given by the user in military time
+	 * @param minutes as the minutes of the hour given by the user
 	 ************************************************************/
-	public void setUserData(double localTime, double latitude, double longitude, int month, int day, int year, int timezone)
+	public void setUserData(double latitude, double longitude, int month, int day, int year, int timezone, int hour, int minutes)
 	{
-		userLocalTime = localTime;
 		userLat = latitude;
 		userLong = longitude;
-		userMonth = month;
-		userDay = day;
-		userYear = year;
-		userTimezone = timezone;
-		//**************************
-		//find GMT time of the user
-		//**************************
-			//TODO
+		//********************************************
+		//find local time of the user in decimal form
+		//********************************************
+		//Note hour must be in military time
+		double temp = (double)minutes / 60.0;
+		userLocalTime = hour + temp;
+		
+		//******************************************
+		//find GMT time of the user in decimal form
+		//******************************************
+		double userGMT = userLocalTime - timezone;
+		if(userGMT > 24.0)
+			userGMT -= 24.0;
+		if(userGMT < 0.0)
+			userGMT += 24.0;
+		
 		
 		//*****************************************
 		//find the Julian Date based on user input
 		//*****************************************
-		if(userMonth < 3) //adjust date if in Jan or Feb
+		if(month < 3) //adjust date if in Jan or Feb
 		{
-			userYear -= 1;
-			userMonth += 12;
+			year -= 1;
+			month += 12;
 		}
-		double userDecimalDay = userDay + (userGMTime / 24);
-		int tempA = (int)(userYear/100);
+		double userDecimalDay = (double)day + (userGMT / 24.0);
+		int tempA = (int)(year/100);
 		int tempB =  2 - tempA + (int)(tempA/4);
-		userJulianDate = (int)(365.25 * userYear) + (int)(30.6001 * (userMonth + 1)) + userDecimalDay + 1720994.5 + tempB;
+		userJulianDate = (int)(365.25 * year) + (int)(30.6001 * (month + 1)) + userDecimalDay + 1720994.5 + tempB;
 		
 		//*****************************
 		//adjust star map data to user
