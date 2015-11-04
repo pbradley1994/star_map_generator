@@ -35,7 +35,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.*;
 
 import javax.swing.*;
