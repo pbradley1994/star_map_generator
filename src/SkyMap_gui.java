@@ -56,7 +56,7 @@ import javax.swing.plaf.basic.*;
 public class SkyMap_gui {
 
 	/**
-	 * Class Variables
+	 * Class Variables 
 	 */
 	// Fields
 	private JFrame frmSkymap;
