@@ -20,6 +20,7 @@ public class Parser {
 // constructor 
 public Parser() {
 	ArrayList<File> listOfFiles=findDataFiles("./data");
+	readStars();
 	
 //	BufferedReader b=BufferedReader(FileReader(File))
 //	String[] thingy = myString.split(",");
@@ -47,17 +48,15 @@ public ArrayList<Star> readStars() {
         //Create the file reader
         fileReader = new BufferedReader(new FileReader(fileToParse));
          
+        // Throw away the first line, which contains column names.
+        fileReader.readLine();
+        
         //Read the file line by line
         while ((line = fileReader.readLine()) != null)
         {
         	Star s = new Star(line);
             //Get all tokens available in line
             String[] tokens = line.split(DELIMITER);
-            for(String token : tokens)
-            {
-                //Print all tokens
-	               
-            }
         }
     }
     catch (Exception e) {
@@ -89,6 +88,19 @@ public ArrayList<Planet> getPlanets() {
 
 public List<Constellation> getConstellations() {
 	return this.listOfConstellations;
+}
+
+public void print() {
+	if (listOfStars != null) {
+		for (Star s: listOfStars) {
+			s.print();
+		}
+	}
+//	if (listOfMessier != null) {
+//		for (Messier m: listOfMessier) {
+//			m.print();
+//		}
+//	}
 }
 
 } // end of Parser.java

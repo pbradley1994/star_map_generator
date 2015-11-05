@@ -141,5 +141,11 @@ public void setMeanLongitude(double value) {
 public void setHourAngle(double value) {
 	this.hourAngle=value;
 }
-	
+
+public void print() {
+	System.out.print("ID:  "+this.id+"  ");
+	System.out.print("RA:  "+this.rightAscension+"  ");
+	System.out.println("De:  "+this.declination);
 }
+
+} // class Star
