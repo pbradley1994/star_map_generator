@@ -6,7 +6,7 @@ public class TextOutputDriver {
 	public static void main(String[] args) {
 		if (DEBUG) { System.out.println("TextOutputDriver.main() start"); }
 		Parser p=new Parser();
-		p.print();	
+		p.print(6.0);	
 		if (DEBUG) { System.out.println("TextOutputDriver.main() end"); }
 	}
 

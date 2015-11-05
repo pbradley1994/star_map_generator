@@ -49,6 +49,8 @@ public Star(String csvString) {
     this.name=tokens[6];                			     // ProperName
     this.rightAscension=Double.parseDouble(tokens[7]);   // RA
     this.declination=Double.parseDouble(tokens[8]);      // Dec
+    this.magnitude=Double.parseDouble(tokens[10]);       // Mag
+
     
     if (this.name != null) {
     	this.label=true;
@@ -58,6 +60,10 @@ public Star(String csvString) {
 // getters	
 public String getName() {
 	return name;
+}
+
+public double getMagnitude() {
+	return magnitude;
 }
 
 public double getRA() {
@@ -147,7 +153,9 @@ public void setHourAngle(double value) {
 public void print() {
 	System.out.print("ID:  "+this.id+"  ");
 	System.out.print("RA:  "+this.rightAscension+"  ");
-	System.out.println("De:  "+this.declination);
+	System.out.print("De:  "+this.declination+"   ");
+	System.out.println("Mag:  "+this.magnitude);
+
 }
 
 } // class Star

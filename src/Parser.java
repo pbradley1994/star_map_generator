@@ -53,7 +53,7 @@ public ArrayList<Star> readStars() {
 	
 	System.out.println("readStars() start");
 	
-	ArrayList<Star> l=null;
+	ArrayList<Star> l=new ArrayList<Star>();
 	String fileToParse = "./data/Star.csv";
     BufferedReader fileReader = null;
 
@@ -72,8 +72,7 @@ public ArrayList<Star> readStars() {
         {
             //String[] tokens = line.split(DELIMITER);
         	Star s = new Star(line);
-        	if (DEBUG) { s.print(); }
-        	listOfStars.add(s);
+        	l.add(s);
         }
     }
     catch (Exception e) {
@@ -109,13 +108,13 @@ public List<Constellation> getConstellations() {
 	return this.listOfConstellations;
 }
 
-public void print() {
-	if (DEBUG) { System.out.println("Parser.print()"); }
+public void print(double mag) {
 	if (this.listOfStars != null) {
 
 		for (Star s: this.listOfStars) {
-			System.out.println("Parser.print() for");
-			s.print();
+			if (s.getMagnitude() > mag) {
+				s.print();
+			}
 		}
 	}
 //	if (listOfMessier != null) {
