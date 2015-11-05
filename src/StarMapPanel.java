@@ -61,7 +61,7 @@ public class StarMapPanel extends JPanel {
         }
 
         g.setColor(Color.white);
-        g.drawString("This is my custom panel!", 15, 15);
+        //g.drawString("This is my custom panel!", 15, 15);
         //System.out.println("This is a panel!");
     }
 }

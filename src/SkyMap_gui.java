@@ -560,7 +560,7 @@ public class SkyMap_gui {
                         else {
                             lblGeneratedTime.setText(String.valueOf(inputHour) + ":" + String.valueOf(inputMin) + ", GMT +" + String.valueOf(inputTimezone));
                         }
-                                                // DO THE THING!
+                        // DO THE THING!
                         star_canvas.clearStars();
                         star_canvas.setCameraPosition((int) inputLat, (int) inputLong);
                         star_canvas.createStars();
