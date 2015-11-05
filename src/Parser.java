@@ -3,42 +3,92 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.File;
 import java.io.FileReader;
-
+import java.io.BufferedReader;
+import java.io.IOException;
 // Read data from flat files into object arrays.
 
 
 public class Parser {
 	
+	// 
+	ArrayList<Star> listOfStars=null;
+	ArrayList<Messier> listOfMessierObjects=null;
+	ArrayList<Planet> listOfPlanets=null;
+	ArrayList<Constellation> listOfConstellations=null;
+
 	
 // constructor 
 public Parser() {
-
+	ArrayList<File> listOfFiles=findDataFiles("./data");
+	
+//	BufferedReader b=BufferedReader(FileReader(File))
+//	String[] thingy = myString.split(",");
+//	Class.forName("the.class.full.Name");
+	
 }
 
-public List<File> findDataFiles() {
-	File f = new File("./data");
+private ArrayList<File> findDataFiles(String pathname) {
+	File f = new File(pathname);
 	ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
 	return files;
 }
 
-public List<Star> getStars() {
+// Create an ArrayList of stars from provided file handle.
+public ArrayList<Star> readStars() {
+	
+	ArrayList<Star> l=null;
+	String fileToParse = "./data/Star.csv";
+    BufferedReader fileReader = null;
 
+    final String DELIMITER = ",";
+    try
+    {
+        String line = "";
+        //Create the file reader
+        fileReader = new BufferedReader(new FileReader(fileToParse));
+         
+        //Read the file line by line
+        while ((line = fileReader.readLine()) != null)
+        {
+        	Star s = new Star(line);
+            //Get all tokens available in line
+            String[] tokens = line.split(DELIMITER);
+            for(String token : tokens)
+            {
+                //Print all tokens
+	               
+            }
+        }
+    }
+    catch (Exception e) {
+        e.printStackTrace();
+    }
+    finally
+    {
+        try {
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
+    return l;
 }
 
-public List<Messier> getMessierObjects() {
-	
+public ArrayList<Star> getStars() {
+	return this.listOfStars;
 }
 
-public List<Planet> getPlanets() {
-	
+public ArrayList<Messier> getMessierObjects() {
+	return this.listOfMessierObjects;
+}
+
+public ArrayList<Planet> getPlanets() {
+	return this.listOfPlanets;
 }
 
 public List<Constellation> getConstellations() {
-	
-}
-
-private List<Star> loadStars(String filename) { 
-
+	return this.listOfConstellations;
 }
 
 } // end of Parser.java
