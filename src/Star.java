@@ -1,26 +1,56 @@
+import java.awt.datatransfer.StringSelection;
 
 // Data structure for stars
 // Each object is initially read from flatfile by Parser class.
 
+
+// Schema:  
+// 0        1   2   3   4       5               6
+// StarID	Hip	HD	HR	Gliese	BayerFlamsteed	ProperName	
+// 7    8   9           10  11      12          13
+// RA	Dec	Distance	Mag	AbsMag	Spectrum	ColorIndex
+
 public class Star {
 	String name;
-	boolean label;			// is a label required for this object?
-	double rasc; 			// right ascension
-	double decl; 			// declination
+	boolean label;		 	 // is a label required for this object?
+	int id;            		 // StarID 
+	double magnitude;		 // brightness/magnitude
+	double rightAscension; 	 // right ascension
+	double declination; 	 // declination
 	double eccentricity; 
-	double smaxis;          // semimajor axis
+	double semimajorAxis;    // semimajor axis
 	double inclination;
 	double perihelion;
-	double ascNodeLongi;	// ascending node longitude
-	double meanLongi;		// mean longitude
+	double ascNodeLongi;	 // ascending node longitude
+	double meanLongi;		 // mean longitude
 	double hourAngle;	
 	
 // constructor 
 public Star(String vname, boolean vlabel, double vrasc, double vdecl) {
 	this.name=vname; 
 	this.label=vlabel;
-	this.rasc=vrasc;
-	this.decl=vdecl;
+	this.rightAscension=vrasc;
+	this.declination=vdecl;
+}
+
+//constructor using a single comma separated string.
+public Star(String csvString) {
+	// Initialize label to false
+    this.label=false;
+
+    //Get all tokens available in line
+	String delimiter = ",";
+    String[] tokens = csvString.split(delimiter);
+    
+    // Take desired info from token string
+    this.id=Integer.parseInt(tokens[0]); 				 // StarID
+    this.name=tokens[6];                			     // ProperName
+    this.rightAscension=Double.parseDouble(tokens[7]);   // RA
+    this.declination=Double.parseDouble(tokens[8]);      // Dec
+    
+    if (this.name != null) {
+    	this.label=true;
+    }
 }
 
 // getters	
@@ -29,7 +59,7 @@ public String getName() {
 }
 
 public double getRA() {
-	return rasc;
+	return rightAscension;
 }
 
 public boolean labelRequired() {
@@ -37,7 +67,7 @@ public boolean labelRequired() {
 }
 
 public double getDeclination() {
-	return decl;
+	return declination;
 }
 
 public double getEccentricity() {
@@ -45,7 +75,7 @@ public double getEccentricity() {
 }
 
 public double getSMAxis() {
-	return smaxis;
+	return semimajorAxis;
 }
 public double getInclination() {
 	return inclination;
@@ -73,7 +103,7 @@ public void setName(String value) {
 }
 
 public void setRA(double value) {
-	this.rasc=value;
+	this.rightAscension=value;
 }
 
 public void setLabelRequired(boolean value) {
@@ -81,15 +111,15 @@ public void setLabelRequired(boolean value) {
 }
 
 public void setDeclination(double value) {
-	this.decl=value;
+	this.declination=value;
 }
 
 public void setEccentricity(double value) {
 	this.eccentricity=value;
 }
 
-public void setSMAxis(double value) {
-	this.smaxis=value;
+public void setSemimajorAxis(double value) {
+	this.semimajorAxis=value;
 }
 
 public void setInclination(double value) {
@@ -100,19 +130,16 @@ public void setPerihelion(double value) {
 	this.perihelion=value;
 }
 
-public void setANL(double value) {
+public void setAscendingNodeLongitude(double value) {
 	this.ascNodeLongi=value;
 }
 
-public void setMeanLong(double value) {
+public void setMeanLongitude(double value) {
 	this.meanLongi=value;
 }
 
 public void setHourAngle(double value) {
 	this.hourAngle=value;
 }
-
-
-
 	
 }
