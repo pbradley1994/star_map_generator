@@ -15,16 +15,12 @@ import javax.swing.JTextField;
 
 import javax.swing.JButton;
 
-<<<<<<< HEAD
-=======
 import java.awt.Canvas;
 
 import javax.swing.JSeparator;
 
 import java.awt.Button;
 import java.awt.Panel;
-
->>>>>>> origin/master
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -39,11 +35,8 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.*;
-<<<<<<< HEAD
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-=======
->>>>>>> origin/master
 
 
 /**
@@ -63,18 +56,16 @@ public class SkyMap_gui {
 	/**
 	 * Class Variables 
 	 */
+    /** Globals */
+        private Globals globals = new Globals();
+        
 	// Fields
 	private JFrame frmSkymap;
         private StarMapPanel star_canvas = new StarMapPanel();
 	private JTextField txtLatitude;
 	private JTextField txtLongitude;
 	private JTextField txtYear;
-<<<<<<< HEAD
 	private JTextField txtTime;
-        
-        /** Globals */
-        private Globals globals = new Globals();
-=======
 	private JTextField txtHour;
 	private JTextField textMinutes;
 	
@@ -99,7 +90,6 @@ public class SkyMap_gui {
 	private int MAX_HOUR = 24;
 	private int MIN_MIN = 0;
 	private int MAX_MIN = 59;
->>>>>>> origin/master
 
 	/**
 	 * Launch the application.
@@ -220,12 +210,12 @@ public class SkyMap_gui {
 		comboBoxMonth.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JComboBox comboBoxMonth = (JComboBox)arg0.getSource();
-		        final Item InputItem = (Item)comboBoxMonth.getSelectedItem();
-		        inputMonth = InputItem.getId();
-		        // DEBUG: just making sure it's setting to the variables like it should
-		        System.out.println("ID: " + InputItem.getId() + 
-		        		" OFFSET: " + InputItem.getOffset() + 
-		        		" MONTH: " + InputItem.getDescription());
+                                final Item InputItem = (Item)comboBoxMonth.getSelectedItem();
+                                inputMonth = InputItem.getId();
+                                // DEBUG: just making sure it's setting to the variables like it should
+                                System.out.println("ID: " + InputItem.getId() + 
+                                                " OFFSET: " + InputItem.getOffset() + 
+                                                " MONTH: " + InputItem.getDescription());
 			}
 		});
 		
@@ -335,151 +325,11 @@ public class SkyMap_gui {
 		// Action Listener: When an item is selected, the InputItem variable is sent to the corresponding
 		// menu item's Item attributes
 		comboBoxTimezone.addActionListener(new ActionListener() {
-<<<<<<< HEAD
                     public void actionPerformed(ActionEvent arg0) {
-                        JComboBox comboBoxTimezone = (JComboBox)arg0.getSource();
-                        final Item InputItem = (Item)comboBoxTimezone.getSelectedItem();
-                        // DEBUG: just making sure it's setting to the variables like it should
-                        System.out.println("ID: " + InputItem.getId() + 
-                                           " OFFSET: " + InputItem.getOffset() + 
-                                           " TIMEZONE: " + InputItem.getDescription());
+                            JComboBox comboBoxTimezone = (JComboBox)arg0.getSource();
+                    final Item InputItem = (Item)comboBoxTimezone.getSelectedItem();
+                    inputTimezone = InputItem.getOffset();
                     }
-                });
-
-
-                // Button: Generate Map -- takes input and converts it to useable formats
-                JButton btnGenerate = new JButton("Generate Map");
-                btnGenerate.setForeground(Color.WHITE);
-                btnGenerate.setBackground(Color.BLACK);
-                btnGenerate.setBounds(17, 312, 101, 23);
-                frmSkymap.getContentPane().add(btnGenerate);
-
-                // Action Listener: When an item is selected, the InputItem variable is sent to the corresponding
-                // menu item's Item attributes
-                btnGenerate.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        /**
-                         * On Button click, set user input input to variables. Drop-down menus
-                         * are handled elsewhere since it sets them immediately.
-                         */
-
-                        // Try-Catch for Latitude validation
-                        // If the input can't be cast to an double, throws exception
-                        /** TO-DO: Number validation isn't working */
-
-                        try {
-                            double MIN_LAT = -90.000;
-                            double MAX_LAT = 90.000;
-
-                            final double testLat = Double.parseDouble((String)txtLatitude.getText());
-
-                            if ((testLat > MIN_LAT) || (testLat < MAX_LAT)) {
-                                double inputLat = testLat;
-                                //DEBUG: remove. just outputs the variables so that I know it's
-                                System.out.println("INPUT LATITUDE: " + inputLat);
-                            }
-                            else if (testLat < MIN_LAT){
-                                JOptionPane.showMessageDialog(null,"This is not a valid latitude. Please input a value between -90.0 and 90.0.");
-                            }
-                            else if (testLat > MAX_LAT){
-                                JOptionPane.showMessageDialog(null,"This is not a valid latitude. Please input a value between -90.0 and 90.0.");
-                            }
-                        }
-                        catch(NumberFormatException ex) {
-                             JOptionPane.showMessageDialog(null,"This is not a valid latitude. Please input a value between -90.0 and 90.0.");
-                        }
-
-                        // Try-Catch for Longitude validation
-                        // If the input can't be cast to an double, throws exception
-                        /** TO-DO: Number validation isn't working */
-
-                        try {
-                            double MIN_LONG = -180.000;
-                            double MAX_LONG = 180.000;
-
-                            final double testLong = Double.parseDouble((String)txtLongitude.getText());
-
-                            if ((testLong > MIN_LONG) || (testLong < MAX_LONG)) {
-                                double inputLong = testLong;
-                              //DEBUG: remove. just outputs the variables so that I know it's
-                                System.out.println("INPUT Longitude: " + inputLong);
-                            }
-                            else if (testLong < MIN_LONG){
-                                JOptionPane.showMessageDialog(null,"This is not a valid longitude. Please input a value between -180.0 and 180.0.");
-                            }
-                            else if (testLong > MAX_LONG){
-                                JOptionPane.showMessageDialog(null,"This is not a valid longitude. Please input a value between -180.0 and 180.0.");
-                            }
-                        }
-                        catch(NumberFormatException ex) {
-                             JOptionPane.showMessageDialog(null,"This is not a valid longitude. Please input a value between -180.0 and 180.0.");
-                        }
-
-                        // Day is converted to int for use
-                        final int inputDay = Integer.parseInt((String)comboBoxDay.getSelectedItem());
-
-                        // Try-Catch for Year validation
-                        // If the input can't be cast to an int, throws exception
-                        /** TO-DO: Year validation isn't working */
-
-                        try {
-                            int MIN_YEAR = 1900;
-                                int MAX_YEAR = 2100;
-
-                            final int testYear = Integer.parseInt((String)txtYear.getText());
-
-                            if ((testYear > MIN_YEAR) || (testYear < MAX_YEAR)) {
-                                int inputYear = testYear;
-                                //DEBUG: remove. just outputs the variables so that I know it's
-                                System.out.println("INPUT YEAR: " + inputYear);
-                            }
-                            else if (testYear < MIN_YEAR){
-                                JOptionPane.showMessageDialog(null,"This is not a valid year. Please input a year between 1900 and 2100.");
-                            }
-                            else if (testYear > MAX_YEAR){
-                                JOptionPane.showMessageDialog(null,"This is not a valid year. Please input a year between 1900 and 2100.");
-                            }
-                        }
-                        catch(NumberFormatException ex) {
-                             JOptionPane.showMessageDialog(null,"This is not a valid year. Please input a year between 1900 and 2100.");
-                        }
-
-                        // Try-Catch for Time validation
-                        // If the input can't be cast, throws exception
-                        /** TO-DO: time validation */
-
-                        final String inputTime = txtTime.getText();
-                        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                        //format.parse(inputTime);
-                        try {
-                            format.parse(inputTime);
-                        }
-                        catch(ParseException ex) {
-                             JOptionPane.showMessageDialog(null,"This is not a valid time. Please enter a time between 00:00 and 24:00.");
-                            }
-
-                        //DEBUG: remove. just outputs the variables so that I know they're set.
-                        System.out.println("TIME: " + inputTime);
-                        System.out.println("DAY: " + inputDay);
-
-                        // DO THE THING!
-                        star_canvas.clearStars();
-                        star_canvas.createStars();
-                        star_canvas.revalidate();
-                        star_canvas.repaint();
-                    }
-=======
-			public void actionPerformed(ActionEvent arg0) {
-				JComboBox comboBoxTimezone = (JComboBox)arg0.getSource();
-		        final Item InputItem = (Item)comboBoxTimezone.getSelectedItem();
-		        inputTimezone = InputItem.getOffset();
-		        
-		        /** DEBUG: just making sure it's setting to the variables like it should */
-//		        System.out.println("ID: " + InputItem.getId() + 
-//		        		" OFFSET: " + InputItem.getOffset() + 
-//		        		" TIMEZONE: " + InputItem.getDescription());
-			}
 		});
 
 		
@@ -533,11 +383,10 @@ public class SkyMap_gui {
 		lblGeneratedTime.setBounds(27, 495, 165, 37);
 		frmSkymap.getContentPane().add(lblGeneratedTime);
 		
-		
 		/**
-    	 * On Button click, set user-input input to variables. Drop-down menus
-    	 * are handled elsewhere since it sets them immediately.
-    	 */
+                * On Button click, set user-input input to variables. Drop-down menus
+                * are handled elsewhere since it sets them immediately.
+                */
 		// Button: Generate Map 
 		JButton btnGenerate = new JButton("Generate Map");
 		btnGenerate.setForeground(Color.WHITE);
@@ -550,171 +399,173 @@ public class SkyMap_gui {
 		// in other classes. Uses try-catch blocks to check for invalid types of input. 
 		// Also tests to validate input. 
 		btnGenerate.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e)
-			    {
-			    	// Try-Catch for Latitude validation
-			    	// If the input can't be cast to an double, throws exception
-				    try {
-				    	final double testLat = Double.parseDouble((String)txtLatitude.getText());
-				    	
-					    if ((testLat >= MIN_LAT) && (testLat <= MAX_LAT)) {
-				            inputLat = testLat;
-				          /** DEBUG: remove. just outputs the variables so that I know it's set */
-				          //  System.out.println("INPUT LATITUDE: " + inputLat);
-					    }
-					    else if (testLat < MIN_LAT){
-					    	JOptionPane.showMessageDialog(null,"This latitude is less than -90.0. "
-					    			+ "Please input a value between -90.0 and 90.0.");
-					    }
-					    else if (testLat > MAX_LAT){
-					    	JOptionPane.showMessageDialog(null,"This latitude is greater than 90.0. "
-					    			+ "Please input a value between -90.0 and 90.0.");
-					    }
-					    else {
-					    	JOptionPane.showMessageDialog(null,"This is not a valid latitude. "
-					    			+ "Please input a value between -90.0 and 90.0.");
-					    }
-				    }
-				    
-				    catch(NumberFormatException ex) {
-				    	 JOptionPane.showMessageDialog(null,"This is not a valid latitude. "
-				    	 		+ "Please input a value between -90.0 and 90.0.");
-				    	}
-				    
-			    	// Try-Catch for Longitude validation
-			    	// If the input can't be cast to an double, throws exception
-				    try {
-				    	final double testLong = Double.parseDouble((String)txtLongitude.getText());
-				    	
-					    if ((testLong >= MIN_LONG) && (testLong <= MAX_LONG)) {
-				            inputLong = testLong;
-				          /** DEBUG: remove. just outputs the variables so that I know it's working */
-				          //  System.out.println("INPUT Longitude: " + inputLong);
-					    }
-					    else if (testLong < MIN_LONG){
-					    	JOptionPane.showMessageDialog(null,"This longitude you have entered is less than -180.0. "
-					    			+ "Please input a value between -180.0 and 180.0.");
-					    }
-					    else if (testLong > MAX_LONG){
-					    	JOptionPane.showMessageDialog(null,"This longitude you have entered is greater than 180.0. "
-					    			+ "Please input a value between -180.0 and 180.0.");
-					    }
-					    else {
-					    	JOptionPane.showMessageDialog(null,"This is not a valid longitude. "
-					    			+ "Please input a value between -180.0 and 180.0.");
-					    }
-				    }
-				    
-				    catch(NumberFormatException ex) {
-				    	 JOptionPane.showMessageDialog(null,"This is not a valid longitude. "
-				    	 		+ "Please input a value between -180.0 and 180.0.");
-				    	}
-			    	
-				    
-				    // Day is converted to int for use
-			    	inputDay = Integer.parseInt((String)comboBoxDay.getSelectedItem());
+                    public void actionPerformed(ActionEvent e) {
+                        // Try-Catch for Latitude validation
+                        // If the input can't be cast to an double, throws exception
+                        try {
+                            final double testLat = Double.parseDouble((String)txtLatitude.getText());
 
-			    	
-				    // Try-Catch for Year validation
-			    	// If the input can't be cast to an int, throws exception
-				    try {
-				    	final int testYear = Integer.parseInt((String)txtYear.getText());
-				    	
-					    if ((testYear >= MIN_YEAR) && (testYear <= MAX_YEAR)) {
-				          inputYear = testYear;
-				          /** DEBUG: remove. just outputs the variables so that I know it's working */
-				          //  System.out.println("INPUT YEAR: " + inputYear);
-					    }
-					    else if (testYear < MIN_YEAR){
-					    	JOptionPane.showMessageDialog(null,"The year you have entered is before 1900. "
-					    			+ "Please input a year between 1900 and 2100.");
-					    }
-					    else if (testYear > MAX_YEAR){
-					    	JOptionPane.showMessageDialog(null,"The year you have entered is after 2100. "
-					    			+ "Please input a year between 1900 and 2100.");
-					    }
-					    else {
-					    	JOptionPane.showMessageDialog(null,"This is not a valid year. "
-					    			+ "Please input a year between 1900 and 2100.");
-					    }
-				    }
-				    catch(NumberFormatException ex) {
-				    	 JOptionPane.showMessageDialog(null,"This is not a valid year. "
-				    	 		+ "Please input a year between 1900 and 2100.");
-				    	}
+                            if ((testLat >= MIN_LAT) && (testLat <= MAX_LAT)) {
+                                inputLat = testLat;
+                                /** DEBUG: remove. just outputs the variables so that I know it's set */
+                                //  System.out.println("INPUT LATITUDE: " + inputLat);
+                            }
+                            else if (testLat < MIN_LAT){
+                                JOptionPane.showMessageDialog(null,"This latitude is less than -90.0. "
+                                                + "Please input a value between -90.0 and 90.0.");
+                            }
+                            else if (testLat > MAX_LAT){
+                                JOptionPane.showMessageDialog(null,"This latitude is greater than 90.0. "
+                                                + "Please input a value between -90.0 and 90.0.");
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null,"This is not a valid latitude. "
+                                                + "Please input a value between -90.0 and 90.0.");
+                            }
+                        }
+
+                        catch(NumberFormatException ex) {
+                             JOptionPane.showMessageDialog(null,"This is not a valid latitude. "
+                                            + "Please input a value between -90.0 and 90.0.");
+                            }
+
+                        // Try-Catch for Longitude validation
+                        // If the input can't be cast to an double, throws exception
+                        try {
+                            final double testLong = Double.parseDouble((String)txtLongitude.getText());
+
+                            if ((testLong >= MIN_LONG) && (testLong <= MAX_LONG)) {
+                                inputLong = testLong;
+                                /** DEBUG: remove. just outputs the variables so that I know it's working */
+                                //  System.out.println("INPUT Longitude: " + inputLong);
+                            }
+                            else if (testLong < MIN_LONG){
+                                JOptionPane.showMessageDialog(null,"This longitude you have entered is less than -180.0. "
+                                                + "Please input a value between -180.0 and 180.0.");
+                            }
+                            else if (testLong > MAX_LONG){
+                                JOptionPane.showMessageDialog(null,"This longitude you have entered is greater than 180.0. "
+                                                + "Please input a value between -180.0 and 180.0.");
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null,"This is not a valid longitude. "
+                                                + "Please input a value between -180.0 and 180.0.");
+                            }
+                        }
+
+                        catch(NumberFormatException ex) {
+                             JOptionPane.showMessageDialog(null,"This is not a valid longitude. "
+                                            + "Please input a value between -180.0 and 180.0.");
+                            }
 
 
-				    // Try-Catch for Time validation (Hour)
-			    	// If the input can't be cast to an int, throws exception
-				    try {
-				    	final int testHour = Integer.parseInt((String)txtHour.getText());
-				    	
-					    if ((testHour >= MIN_HOUR) && (testHour <= MAX_HOUR)) {
-				          inputHour = testHour;
-				          /** DEBUG: remove. just outputs the variables so that I know it's working */
-				          //  System.out.println("INPUT HOUR: " + inputHour);
-					    }
-					    else if (testHour < MIN_HOUR){
-					    	JOptionPane.showMessageDialog(null,"This is not a valid hour. "
-					    			+ "Please input an hour between 00 and 24.");
-					    }
-					    else if (testHour > MAX_HOUR){
-					    	JOptionPane.showMessageDialog(null,"This is not a valid hour. "
-					    			+ "Please input an hour between 00 and 24.");
-					    }
-					    else {
-					    	JOptionPane.showMessageDialog(null,"This is not a valid hour. "
-					    			+ "Please input an hour between 00 and 24.");
-					    }
-				    }
-				    catch(NumberFormatException ex) {
-				    	 JOptionPane.showMessageDialog(null,"This is not a valid hour. "
-				    	 		+ "Please input an hour between 00 and 24.");
-				    	}
-				    
-				    // Try-Catch for Time validation (Minutes)
-			    	// If the input can't be cast to an int, throws exception
-				    try {
-				    	final int testMin = Integer.parseInt((String)textMinutes.getText());
-				    	
-					    if ((testMin >= MIN_MIN) && (testMin <= MAX_MIN)) {
-				          inputMin = testMin;
-				          /** DEBUG: remove. just outputs the variables so that I know it's working */
-				          //  System.out.println("INPUT MINUTES: " + inputMin);
-					    }
-					    else if (testMin < MIN_MIN){
-					    	JOptionPane.showMessageDialog(null,"These are not valid minutes. "
-					    			+ "Please input minutes between 00 and 59.");
-					    }
-					    else if (testMin > MAX_MIN){
-					    	JOptionPane.showMessageDialog(null,"These are not valid minutes. "
-					    			+ "Please input minutes between 00 and 59.");
-					    }
-					    else {
-					    	JOptionPane.showMessageDialog(null,"These are not valid minutes. "
-					    			+ "Please input minutes between 00 and 59.");
-					    }
-				    }
-				    catch(NumberFormatException ex) {
-				    	 JOptionPane.showMessageDialog(null,"These are not valid minutes. "
-				    	 		+ "Please input minutes between 00 and 59.");
-				    	}
+                        // Day is converted to int for use
+                        inputDay = Integer.parseInt((String)comboBoxDay.getSelectedItem());
 
-				    // Outputs values to "Current Map" Section
-				    lblLat.setText(String.valueOf(inputLat));
-				    lblLong.setText(String.valueOf(inputLong));
-				    lblGeneratedDate.setText(String.valueOf(inputMonth) + "/" + String.valueOf(inputDay) + "/" + String.valueOf(inputYear));
-				    
-				    // Just a loop to determine formatting so the timezone more readable
-				    // If the timezone is >= 0, adds a plus to the formatting
-				    if (inputTimezone < 0) {
-				    	lblGeneratedTime.setText(String.valueOf(inputHour) + ":" + String.valueOf(inputMin) + ", GMT " + String.valueOf(inputTimezone));
-				    }
-				    else {
-				    	lblGeneratedTime.setText(String.valueOf(inputHour) + ":" + String.valueOf(inputMin) + ", GMT +" + String.valueOf(inputTimezone));
-				    }
-			    }
->>>>>>> origin/master
+                        // Try-Catch for Year validation
+                        // If the input can't be cast to an int, throws exception
+                        try {
+                            final int testYear = Integer.parseInt((String)txtYear.getText());
+
+                            if ((testYear >= MIN_YEAR) && (testYear <= MAX_YEAR)) {
+                                inputYear = testYear;
+                                /** DEBUG: remove. just outputs the variables so that I know it's working */
+                                //  System.out.println("INPUT YEAR: " + inputYear);
+                            }
+                            else if (testYear < MIN_YEAR){
+                                JOptionPane.showMessageDialog(null,"The year you have entered is before 1900. "
+                                                + "Please input a year between 1900 and 2100.");
+                            }
+                            else if (testYear > MAX_YEAR){
+                                JOptionPane.showMessageDialog(null,"The year you have entered is after 2100. "
+                                                + "Please input a year between 1900 and 2100.");
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null,"This is not a valid year. "
+                                                + "Please input a year between 1900 and 2100.");
+                            }
+                        }
+                        catch(NumberFormatException ex) {
+                             JOptionPane.showMessageDialog(null,"This is not a valid year. "
+                                            + "Please input a year between 1900 and 2100.");
+                            }
+
+
+                        // Try-Catch for Time validation (Hour)
+                        // If the input can't be cast to an int, throws exception
+                        try {
+                            final int testHour = Integer.parseInt((String)txtHour.getText());
+
+                            if ((testHour >= MIN_HOUR) && (testHour <= MAX_HOUR)) {
+                                inputHour = testHour;
+                                /** DEBUG: remove. just outputs the variables so that I know it's working */
+                                //  System.out.println("INPUT HOUR: " + inputHour);
+                            }
+                            else if (testHour < MIN_HOUR){
+                                JOptionPane.showMessageDialog(null,"This is not a valid hour. "
+                                                + "Please input an hour between 00 and 24.");
+                            }
+                            else if (testHour > MAX_HOUR){
+                                JOptionPane.showMessageDialog(null,"This is not a valid hour. "
+                                                + "Please input an hour between 00 and 24.");
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null,"This is not a valid hour. "
+                                                + "Please input an hour between 00 and 24.");
+                            }
+                        }
+                        catch(NumberFormatException ex) {
+                             JOptionPane.showMessageDialog(null,"This is not a valid hour. "
+                                            + "Please input an hour between 00 and 24.");
+                            }
+
+                        // Try-Catch for Time validation (Minutes)
+                        // If the input can't be cast to an int, throws exception
+                        try {
+                            final int testMin = Integer.parseInt((String)textMinutes.getText());
+
+                            if ((testMin >= MIN_MIN) && (testMin <= MAX_MIN)) {
+                                inputMin = testMin;
+                                /** DEBUG: remove. just outputs the variables so that I know it's working */
+                                //  System.out.println("INPUT MINUTES: " + inputMin);
+                            }
+                            else if (testMin < MIN_MIN){
+                                JOptionPane.showMessageDialog(null,"These are not valid minutes. "
+                                                + "Please input minutes between 00 and 59.");
+                            }
+                            else if (testMin > MAX_MIN){
+                                JOptionPane.showMessageDialog(null,"These are not valid minutes. "
+                                                + "Please input minutes between 00 and 59.");
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null,"These are not valid minutes. "
+                                                + "Please input minutes between 00 and 59.");
+                            }
+                        }
+                        catch(NumberFormatException ex) {
+                             JOptionPane.showMessageDialog(null,"These are not valid minutes. "
+                                            + "Please input minutes between 00 and 59.");
+                            }
+
+                        // Outputs values to "Current Map" Section
+                        lblLat.setText(String.valueOf(inputLat));
+                        lblLong.setText(String.valueOf(inputLong));
+                        lblGeneratedDate.setText(String.valueOf(inputMonth) + "/" + String.valueOf(inputDay) + "/" + String.valueOf(inputYear));
+
+                        // Just a loop to determine formatting so the timezone more readable
+                        // If the timezone is >= 0, adds a plus to the formatting
+                        if (inputTimezone < 0) {
+                            lblGeneratedTime.setText(String.valueOf(inputHour) + ":" + String.valueOf(inputMin) + ", GMT " + String.valueOf(inputTimezone));
+                        }
+                        else {
+                            lblGeneratedTime.setText(String.valueOf(inputHour) + ":" + String.valueOf(inputMin) + ", GMT +" + String.valueOf(inputTimezone));
+                        }
+                                                // DO THE THING!
+                        star_canvas.clearStars();
+                        star_canvas.createStars();
+                        star_canvas.revalidate();
+                        star_canvas.repaint();
+                    }
 		});
 		
 		
@@ -725,37 +576,16 @@ public class SkyMap_gui {
 		btnPrint.setBackground(Color.BLACK);
 		btnPrint.setBounds(17, 543, 89, 23);
 		frmSkymap.getContentPane().add(btnPrint);
-		
-<<<<<<< HEAD
-                // Starmap will go here
-		/*JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(this.getClass().getResource("/images/map.png")));
-                //new ImageIcon("images/map.png"));
-		label.setBounds(300, 0, 585, 577);
-		frmSkymap.getContentPane().add(label);*/
                 
                 // Add canvas
                 //star_canvas = new StarMapPanel(); Done above
                 star_canvas.setBounds(Globals.GUIWIDTH, 0, Globals.WINWIDTH, Globals.WINHEIGHT); //-15, -35
                 frmSkymap.getContentPane().add(star_canvas);
-                //frmSkymap.pack();
-                //frmSkymap.pack();
 		
                 // Gui Background image
 		JLabel label_2 = new JLabel("");
 		label_2.setIcon(new ImageIcon(this.getClass().getResource("/images/ex.png")));
-=======
-		
-		
-		// Background image
-		JLabel label = new JLabel("");
-		JLabel label_2 = new JLabel("");
-		label.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/resources/map.png"))); /** DEBUG: Placeholder map */
-		label_2.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/resources/ex.png"))); 
->>>>>>> origin/master
 		label_2.setBounds(0, 0, 292, 587);
-		label.setBounds(299, 0, 585, 577);
-		frmSkymap.getContentPane().add(label);
 		frmSkymap.getContentPane().add(label_2);
 	}
 }
