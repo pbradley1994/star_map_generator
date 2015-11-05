@@ -3,7 +3,6 @@ import java.awt.datatransfer.StringSelection;
 // Data structure for stars
 // Each object is initially read from flatfile by Parser class.
 
-
 // Schema:  
 // 0        1   2   3   4       5               6
 // StarID	Hip	HD	HR	Gliese	BayerFlamsteed	ProperName	
@@ -11,6 +10,9 @@ import java.awt.datatransfer.StringSelection;
 // RA	Dec	Distance	Mag	AbsMag	Spectrum	ColorIndex
 
 public class Star {
+	
+	final static boolean DEBUG=true;	
+	
 	String name;
 	boolean label;		 	 // is a label required for this object?
 	int id;            		 // StarID 

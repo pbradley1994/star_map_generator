@@ -8,26 +8,40 @@ import java.io.IOException;
 // Read data from flat files into object arrays.
 
 
+/**
+ * @author kexline
+ *
+ */
 public class Parser {
+
+	final static boolean DEBUG=true;	
 	
-	// 
-	ArrayList<Star> listOfStars=null;
+	// Maintain a list of each type of object.
+	ArrayList<Star> listOfStars=new ArrayList<Star>();
 	ArrayList<Messier> listOfMessierObjects=null;
 	ArrayList<Planet> listOfPlanets=null;
 	ArrayList<Constellation> listOfConstellations=null;
-
 	
-// constructor 
+/**
+ * Constructor
+ *  
+ */
 public Parser() {
 	ArrayList<File> listOfFiles=findDataFiles("./data");
-	readStars();
+	if (DEBUG) { System.out.println("Parser()"); }
+	listOfStars=readStars();
+    if (DEBUG && listOfStars != null) { System.out.println("Parser(): length of listOfStars is "+listOfStars.size());}
 	
 //	BufferedReader b=BufferedReader(FileReader(File))
 //	String[] thingy = myString.split(",");
 //	Class.forName("the.class.full.Name");
-	
 }
 
+/**
+ * Generate a list of files in the specified directory.
+ * @param pathname
+ * @return Arraylist of files
+ */
 private ArrayList<File> findDataFiles(String pathname) {
 	File f = new File(pathname);
 	ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
@@ -36,6 +50,8 @@ private ArrayList<File> findDataFiles(String pathname) {
 
 // Create an ArrayList of stars from provided file handle.
 public ArrayList<Star> readStars() {
+	
+	System.out.println("readStars() start");
 	
 	ArrayList<Star> l=null;
 	String fileToParse = "./data/Star.csv";
@@ -54,9 +70,10 @@ public ArrayList<Star> readStars() {
         //Read the file line by line
         while ((line = fileReader.readLine()) != null)
         {
+            //String[] tokens = line.split(DELIMITER);
         	Star s = new Star(line);
-            //Get all tokens available in line
-            String[] tokens = line.split(DELIMITER);
+        	if (DEBUG) { s.print(); }
+        	listOfStars.add(s);
         }
     }
     catch (Exception e) {
@@ -70,6 +87,8 @@ public ArrayList<Star> readStars() {
             e.printStackTrace();
         }
     }
+
+    if (DEBUG && l != null) { System.out.println("readStars: length of l is "+l.size());}
 	
     return l;
 }
@@ -91,8 +110,11 @@ public List<Constellation> getConstellations() {
 }
 
 public void print() {
-	if (listOfStars != null) {
-		for (Star s: listOfStars) {
+	if (DEBUG) { System.out.println("Parser.print()"); }
+	if (this.listOfStars != null) {
+
+		for (Star s: this.listOfStars) {
+			System.out.println("Parser.print() for");
 			s.print();
 		}
 	}
