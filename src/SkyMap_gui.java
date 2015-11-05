@@ -562,6 +562,7 @@ public class SkyMap_gui {
                         }
                                                 // DO THE THING!
                         star_canvas.clearStars();
+                        star_canvas.setCameraPosition((int) inputLat, (int) inputLong);
                         star_canvas.createStars();
                         star_canvas.revalidate();
                         star_canvas.repaint();
