@@ -178,7 +178,7 @@ public class Controller {
 		//create Venus
 		//*****************
 		Planet venus = new Planet("Venus");
-                unicode_icon = "\u263f";
+                unicode_icon = "\u2640";
 		semimajorAxis = 0.72333199 + 0.00000092 * cy;
 		eccentricityOfOrbit = 0.00677323 - 0.00004938 * cy;
 		inclinationOnPlane = 3.39471 - 2.86 * cy / 3600;
@@ -204,7 +204,7 @@ public class Controller {
 		//create Earth
 		//*****************
 		earth = new Planet("Earth");
-                unicode_icon = "\u263f";
+                unicode_icon = "\u2695";
 		semimajorAxis = 1.00000011 - 0.00000005 * cy;
 		eccentricityOfOrbit = 0.01671022 - 0.00003804 * cy;
 		inclinationOnPlane = 0.00005 - 46.94 * cy / 3600;
@@ -230,7 +230,7 @@ public class Controller {
 		//create Mars
 		//*****************
 		Planet mars = new Planet("Mars");
-                unicode_icon = "\u263f";
+                unicode_icon = "\u2642";
 		semimajorAxis = 1.52366231 - 0.00007221 * cy;
 		eccentricityOfOrbit = 0.09341233 + 0.00011902 * cy;
 		inclinationOnPlane = 1.85061 - 25.47 * cy / 3600;
@@ -256,7 +256,7 @@ public class Controller {
 		//create Jupiter
 		//*****************
 		Planet jupiter = new Planet("Jupiter");
-                unicode_icon = "\u263f";
+                unicode_icon = "\u2643";
 		semimajorAxis = 5.20336301 + 0.00060737 * cy;
 		eccentricityOfOrbit = 0.04839266 - 0.00012880 * cy;
 		inclinationOnPlane = 1.30530 -  4.15 * cy / 3600;
@@ -282,7 +282,7 @@ public class Controller {
 		//create Saturn
 		//*****************
 		Planet saturn = new Planet("Saturn");
-                unicode_icon = "\u263f";
+                unicode_icon = "\u2644";
 		semimajorAxis = 9.53707032 - 0.00301530 * cy;
 		eccentricityOfOrbit = 0.05415060 - 0.00036762 * cy;
 		inclinationOnPlane = 2.48446 +  6.11 * cy / 3600;
@@ -308,7 +308,7 @@ public class Controller {
 		//create Uranus
 		//*****************
 		Planet uranus = new Planet("Uranus");
-                unicode_icon = "\u263f";
+                unicode_icon = "\u2645";
 		semimajorAxis = 19.19126393 + 0.00152025 * cy;
 		eccentricityOfOrbit = 0.04716771 - 0.00019150 * cy;
 		inclinationOnPlane = 0.76986  -  2.09 * cy / 3600;
@@ -334,7 +334,7 @@ public class Controller {
 		//create Neptune
 		//*****************
 		Planet neptune = new Planet("Neptune");
-                unicode_icon = "\u263f";
+                unicode_icon = "\u2646";
 		semimajorAxis = 30.06896348 - 0.00125196 * cy;
 		eccentricityOfOrbit = 0.00858587 + 0.00002510 * cy;
 		inclinationOnPlane = 1.76917  -  3.64 * cy / 3600;
