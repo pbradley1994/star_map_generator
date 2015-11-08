@@ -8,11 +8,3 @@ Saturn,49.94432,4401052.95,9.53707032,0.0030153,0.0541506,0.00036762,2.48446,6.1
 Uranus,313.23218,1542547.79,19.19126393,0.00152025,0.04716771,0.0001915,0.76986,2.09,170.96424,1312.56,74.22988,1681.4
 Neptune,304.88003,786449.21,30.06896348,0.00125196,0.00858587,0.00125196,1.76917,3.64,44.97135,844.43,131.72169,151.25
 Pluto,238.92881,522747.9,39.48168677,0.00076912,0.24880766,0.00006465,17.14175,11.07,224.06676,132.25,110.30347,37.33
-,,,,,,,,,,,,
-cy = JD/36525,,,,,,,,,,,,
-a = semimajor axis of the orbit (this element is a constant for each planet. See tables following),,,,,,,,a = Ascal + Aprop*cy,,,,
-e = eccentricity of the orbit,,,,,,,,e = Escal + Eprop * cy,,,,
-i = inclination on the plane of the ecliptic,,,,,,,,i = ( Iscal - Iprop * cy / 3600) * RADS,,,,
-ω = argument of perihelion,,,,,,,,ω = (Wscal + Wprop * cy / 3600) * RADS,,,,
-Ω = longitude of ascending node,,,,,,,,Ω = (Oscal - Oprop * cy / 3600) * RADS,,,,
-L = mean longitude of the planet,,,,,,,,L=Mod2Pi ((Lscal + Lprop * cy / 3600) * RADS),,,,
