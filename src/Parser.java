@@ -20,7 +20,7 @@ public class Parser {
 	// Maintain a list of each type of object.
 	ArrayList<Star> listOfStars=new ArrayList<Star>();
 	ArrayList<Messier> listOfMessierObjects=new ArrayList<Messier>();
-	ArrayList<Planet> listOfPlanets=new ArrayList<Planet>();
+	//ArrayList<Planet> listOfPlanets=new ArrayList<Planet>();
 	ArrayList<Constellation> listOfConstellations=new ArrayList<Constellation>();
 	
 /**
@@ -142,50 +142,50 @@ public ArrayList<Messier> readMessier() {
 	 return l;
 }
 
-public ArrayList<Planet> readPlanets() {
-	
-	if (DEBUG ) { System.out.println("readPlanets() start"); }
-	
-	ArrayList<Planet> l=new ArrayList<Planet>();
-	String fileToParse = "./data/Planet.csv";
-    BufferedReader fileReader = null;
-
-    final String DELIMITER = ",";
-    try
-    {
-        String line = "";
-        //Create the file reader
-        fileReader = new BufferedReader(new FileReader(fileToParse));
-         
-        // Throw away the first line, which contains column names.
-        fileReader.readLine();
-        
-        //Read the file line by line
-        while ((line = fileReader.readLine()) != null)
-        {
-            //String[] tokens = line.split(DELIMITER);
-        	Planet p = new Planet(line);
-        	l.add(p);
-        	if (DEBUG ) { System.out.println("readPlanets:  "+line); }
-
-        }
-    }
-    catch (Exception e) {
-        e.printStackTrace();
-    }
-    finally
-    {
-        try {
-            fileReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    if (DEBUG && l != null) { System.out.println("readPlanets: length of l is "+l.size());}
-	
-    return l;
-}
+//public ArrayList<Planet> readPlanets() {
+//	
+//	if (DEBUG ) { System.out.println("readPlanets() start"); }
+//	
+//	ArrayList<Planet> l=new ArrayList<Planet>();
+//	String fileToParse = "./data/Planet.csv";
+//    BufferedReader fileReader = null;
+//
+//    final String DELIMITER = ",";
+//    try
+//    {
+//        String line = "";
+//        //Create the file reader
+//        fileReader = new BufferedReader(new FileReader(fileToParse));
+//         
+//        // Throw away the first line, which contains column names.
+//        fileReader.readLine();
+//        
+//        //Read the file line by line
+//        while ((line = fileReader.readLine()) != null)
+//        {
+//            //String[] tokens = line.split(DELIMITER);
+//        	Planet p = new Planet(line);
+//        	l.add(p);
+//        	if (DEBUG ) { System.out.println("readPlanets:  "+line); }
+//
+//        }
+//    }
+//    catch (Exception e) {
+//        e.printStackTrace();
+//    }
+//    finally
+//    {
+//        try {
+//            fileReader.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    if (DEBUG && l != null) { System.out.println("readPlanets: length of l is "+l.size());}
+//	
+//    return l;
+//}
 
 
 public ArrayList<Star> getStars() {
@@ -196,9 +196,9 @@ public ArrayList<Messier> getMessierObjects() {
 	return this.listOfMessierObjects;
 }
 
-public ArrayList<Planet> getPlanets() {
-	return this.listOfPlanets;
-}
+//public ArrayList<Planet> getPlanets() {
+//	return this.listOfPlanets;
+//}
 
 public ArrayList<Constellation> getConstellations() {
 	return this.listOfConstellations;
@@ -219,11 +219,11 @@ public void print(double mag) {
 		}
 	}
 	
-	if (listOfPlanets != null) {
-		for (Planet p: listOfPlanets) {
-			p.print();
-		}
-	}	
+//	if (listOfPlanets != null) {
+//		for (Planet p: listOfPlanets) {
+//			p.print();
+//		}
+//	}	
 	
 }
 
