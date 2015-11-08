@@ -1,17 +1,19 @@
-import java.awt.datatransfer.StringSelection;
-
-// Data structure for stars
-// Each object is initially read from flatfile by Parser class.
-
-// Schema:  
-// 0        1   2   3   4       5               6
-// StarID	Hip	HD	HR	Gliese	BayerFlamsteed	ProperName	
-// 7    8   9           10  11      12          13
-// RA	Dec	Distance	Mag	AbsMag	Spectrum	ColorIndex
+/*
+ *  Data structure for stars
+ *  
+ *  Each object is initially read from flatfile by Parser class.
+ *
+ * Schema:  
+ * 0        1   2   3   4       5               6
+ * StarID	Hip	HD	HR	Gliese	BayerFlamsteed	ProperName	
+ * 7    8   9           10  11      12          13
+ * RA	Dec	Distance	Mag	AbsMag	Spectrum	ColorIndex
+ * 
+ */
 
 public class Star {
 	
-	final static boolean DEBUG=true;	
+	final static boolean DEBUG=false;	
 	
 	String name;
 	boolean label;		 	 // is a label required for this object?
@@ -27,13 +29,6 @@ public class Star {
 	double meanLongi;		 // mean longitude
 	double hourAngle;	
 	
-// constructor 
-public Star(String vname, boolean vlabel, double vrasc, double vdecl) {
-	this.name=vname; 
-	this.label=vlabel;
-	this.rightAscension=vrasc;
-	this.declination=vdecl;
-}
 
 //constructor using a single comma separated string.
 public Star(String csvString) {

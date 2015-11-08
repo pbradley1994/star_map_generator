@@ -5,32 +5,34 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
-// Read data from flat files into object arrays.
 
+// Read data from flat files into object arrays.
 
 /**
  * @author kexline
  *
  */
+
 public class Parser {
 
 	final static boolean DEBUG=true;	
 	
 	// Maintain a list of each type of object.
 	ArrayList<Star> listOfStars=new ArrayList<Star>();
-	ArrayList<Messier> listOfMessierObjects=null;
-	ArrayList<Planet> listOfPlanets=null;
-	ArrayList<Constellation> listOfConstellations=null;
+	ArrayList<Messier> listOfMessierObjects=new ArrayList<Messier>();
+	ArrayList<Planet> listOfPlanets=new ArrayList<Planet>();
+	ArrayList<Constellation> listOfConstellations=new ArrayList<Constellation>();
 	
 /**
  * Constructor
  *  
  */
 public Parser() {
-	ArrayList<File> listOfFiles=findDataFiles("./data");
+//	ArrayList<File> listOfFiles=findDataFiles("./data");
 	if (DEBUG) { System.out.println("Parser()"); }
 	listOfStars=readStars();
-    if (DEBUG && listOfStars != null) { System.out.println("Parser(): length of listOfStars is "+listOfStars.size());}
+ 	listOfMessierObjects=readMessier();
+	listOfPlanets=readPlanets();
 	
 //	BufferedReader b=BufferedReader(FileReader(File))
 //	String[] thingy = myString.split(",");
@@ -48,7 +50,10 @@ private ArrayList<File> findDataFiles(String pathname) {
 	return files;
 }
 
-// Create an ArrayList of stars from provided file handle.
+/**
+ * readStars(): Create an ArrayList of stars from provided file handle.
+ * @return ArrayList of Star objects populated from CSV
+ */
 public ArrayList<Star> readStars() {
 	
 	System.out.println("readStars() start");
@@ -92,6 +97,97 @@ public ArrayList<Star> readStars() {
     return l;
 }
 
+/** 
+ * readMessier():  Create an ArrayList of Messier Deep Space Objects from provided file handle.
+ * @return
+ */
+public ArrayList<Messier> readMessier() {
+	
+	if (DEBUG) { System.out.println("readMessier() start"); }
+	
+	ArrayList<Messier> l=new ArrayList<Messier>();
+	String fileToParse = "./data/Messier.csv";
+	BufferedReader fileReader = null;
+
+	 try
+	 {
+	     String line = "";
+	     //Create the file reader
+	     fileReader = new BufferedReader(new FileReader(fileToParse));
+	      
+	     // Throw away the first line, which contains column names.
+	     fileReader.readLine();
+	     
+	     //Read the file line by line
+	     while ((line = fileReader.readLine()) != null)
+	     {
+	     	Messier s = new Messier(l.size(), line);    // use the list index as object id 
+	     	l.add(s);
+	     }
+	 }
+	 catch (Exception e) {
+	     e.printStackTrace();
+	 }
+	 finally
+	 {
+	     try {
+	         fileReader.close();
+	     } catch (IOException e) {
+	         e.printStackTrace();
+	     }
+	 }
+	
+	 if (DEBUG && l != null) { System.out.println("readMessier: length of l is "+l.size());}
+		
+	 return l;
+}
+
+public ArrayList<Planet> readPlanets() {
+	
+	if (DEBUG ) { System.out.println("readPlanets() start"); }
+	
+	ArrayList<Planet> l=new ArrayList<Planet>();
+	String fileToParse = "./data/Planet.csv";
+    BufferedReader fileReader = null;
+
+    final String DELIMITER = ",";
+    try
+    {
+        String line = "";
+        //Create the file reader
+        fileReader = new BufferedReader(new FileReader(fileToParse));
+         
+        // Throw away the first line, which contains column names.
+        fileReader.readLine();
+        
+        //Read the file line by line
+        while ((line = fileReader.readLine()) != null)
+        {
+            //String[] tokens = line.split(DELIMITER);
+        	Planet p = new Planet(line);
+        	l.add(p);
+        	if (DEBUG ) { System.out.println("readPlanets:  "+line); }
+
+        }
+    }
+    catch (Exception e) {
+        e.printStackTrace();
+    }
+    finally
+    {
+        try {
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    if (DEBUG && l != null) { System.out.println("readPlanets: length of l is "+l.size());}
+	
+    return l;
+}
+
+
 public ArrayList<Star> getStars() {
 	return this.listOfStars;
 }
@@ -112,16 +208,23 @@ public void print(double mag) {
 	if (this.listOfStars != null) {
 
 		for (Star s: this.listOfStars) {
-			if (s.getMagnitude() > mag) {
+			if (s.getMagnitude() < mag) {
 				s.print();
 			}
 		}
+  	}
+	if (listOfMessierObjects != null) {
+		for (Messier m: listOfMessierObjects) {
+			m.print();
+		}
 	}
-//	if (listOfMessier != null) {
-//		for (Messier m: listOfMessier) {
-//			m.print();
-//		}
-//	}
+	
+	if (listOfPlanets != null) {
+		for (Planet p: listOfPlanets) {
+			p.print();
+		}
+	}	
+	
 }
 
 } // end of Parser.java
