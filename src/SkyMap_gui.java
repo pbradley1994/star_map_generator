@@ -135,7 +135,6 @@ public class SkyMap_gui {
 		lblSkymap.setBounds(17, 8, 176, 55);
 		frmSkymap.getContentPane().add(lblSkymap);
 		
-		
 		/** Begin Lat/Long */	
 		// Latitude Field -- takes text input
 		txtLatitude = new JTextField();

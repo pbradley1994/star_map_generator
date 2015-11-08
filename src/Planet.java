@@ -33,7 +33,7 @@ public class Planet {
 	/*******************************
 	 * Planet Getters
 	 *******************************/
-	public String getPlanetName()
+	public String getName()
 	{
 		return m_name;
 	}
