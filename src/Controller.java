@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 /**
  * This class is the controller of model/view/controller pattern
  * It receives user input information from the GUI,
@@ -433,7 +432,7 @@ public class Controller {
 			projectedRadiusVectorPlanet = theCalculator.findProjectedRadiusVector(radiusVectorPlanet, helioLatPlanet);
 			
 			//calculate geocentric longitude
-			String name = planet.getPlanetName();
+			String name = planet.getName();
 			geoLongPlanet = theCalculator.findGeocentricLongitude(name, projectedRadiusVectorPlanet, projectedHelioLongPlanet, radiusVectorEarth, helioLongEarth);
 			
 			//calculate geocentric latitude
@@ -516,8 +515,8 @@ public class Controller {
 	 * once its calculations have been completed
 	 * @return Moon - modified Moon
 	 *******************************************************/
-	//public Moon getModifiedMoon()
-	//{
-	//	return moon;
-	//}
+	/*public Moon getModifiedMoon()
+	{
+		return moon;
+	}*/
 }
