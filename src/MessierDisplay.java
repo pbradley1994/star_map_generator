@@ -24,7 +24,8 @@ public class MessierDisplay extends ObjDisplay {
         
         Graphics2D g2d = (Graphics2D)g;
         // Assume x, y, and diameter are instance variables.
-        Ellipse2D.Double circle = new Ellipse2D.Double(grid_x + scroll_x, grid_y + scroll_y, 12, 12);
+        int size = 12;
+        Ellipse2D.Double circle = new Ellipse2D.Double(grid_x + scroll_x - size/2, grid_y + scroll_y - size/2, size, size);
         g2d.fill(circle);
         
         g.setColor(Color.yellow);
