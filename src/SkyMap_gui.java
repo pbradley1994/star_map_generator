@@ -62,6 +62,7 @@ public class SkyMap_gui {
 	// Fields
 	private JFrame frmSkymap;
         private StarMapPanel star_canvas = new StarMapPanel();
+        private Controller my_controller = new Controller();
 	private JTextField txtLatitude;
 	private JTextField txtLongitude;
 	private JTextField txtYear;
@@ -561,9 +562,11 @@ public class SkyMap_gui {
                             lblGeneratedTime.setText(String.valueOf(inputHour) + ":" + String.valueOf(inputMin) + ", GMT +" + String.valueOf(inputTimezone));
                         }
                         // DO THE THING!
-                        star_canvas.clearStars();
+                        my_controller.setUserData(inputLat, inputLong, inputMonth, inputDay, inputYear, inputTimezone, inputHour, inputMin);
+                        star_canvas.clearObjects();
                         star_canvas.setCameraPosition((int) inputLat, (int) inputLong);
-                        star_canvas.createStars();
+                        star_canvas.setScroll(0, 0); // star_canvas.setScroll(scroll_x, scroll_y);
+                        star_canvas.createObjects(my_controller);
                         star_canvas.revalidate();
                         star_canvas.repaint();
                     }

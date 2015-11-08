@@ -13,36 +13,64 @@ public class StarMapPanel extends JPanel {
     /** Globals */
     private Globals globals = new Globals();
     /** List of Star */
-    private ArrayList<StarDisplay> stars = new ArrayList();
+    private ArrayList<ObjDisplay> objects = new ArrayList();
     /** Camera Position */
     double camera_x = 0;
     double camera_y = 0;
+    
+    /** scroll position */
+    double scroll_x = 0;
+    double scroll_y = 0;
     
     public StarMapPanel() {
         setBorder(BorderFactory.createLineBorder(Color.black));
         //createStars();
     }
     
-    public void createStars() {
-        // Create a host of star objects
+    /*public void createStars() {
+        //Create a host of star objects
         for(int x=-80; x<80; x += 10) {
             for(int y=-80; y<80; y += 10) {
-                StarDisplay current_star = new StarDisplay(x, y);
+                ObjDisplay current_star = new ObjDisplay(x, y);
                 current_star.sphere_to_grid(camera_x, camera_y);
                 current_star.print_sphere_coords();
                 current_star.print_grid_coords();
-                stars.add(current_star);
+                objects.add(current_star);
             }
+        }
+    }*/
+    
+    public void createObjects(Controller the_controller) {
+        for (Messier messier : the_controller.messierList) {
+            MessierDisplay current_object = new MessierDisplay(messier.getRADecimalDegree(), messier.getDeclination(), messier.getName());
+            current_object.sphere_to_grid(camera_x, camera_y);
+            objects.add(current_object);
+        }
+        for (Star star : the_controller.starList) {
+            StarDisplay current_object = new StarDisplay(star.getRA()*15, star.getDeclination(), star.getMagnitude(), star.getName());
+            current_object.sphere_to_grid(camera_x, camera_y);
+            objects.add(current_object);
+        }
+        for (Planet planet : the_controller.planetList) {
+            PlanetDisplay current_object = new PlanetDisplay(planet.getHourAngle()*15, planet.getDeclination(), planet.getName());
+            current_object.sphere_to_grid(camera_x, camera_y);
+            objects.add(current_object);
         }
     }
     
-    public void clearStars() {
-        stars.clear();
+    public void clearObjects() {
+        objects.clear();
     }
     
     public void setCameraPosition(int x, int y) {
         camera_x = x;
         camera_y = y;
+    }
+    
+    public void setScroll(int x, int y)
+    {
+        scroll_x = x;
+        scroll_y = y;
     }
     
     public Dimension getPreferredSize() {
@@ -56,11 +84,11 @@ public class StarMapPanel extends JPanel {
         g.setColor(Color.black);
         g.fillRect(0, 0, Globals.WINWIDTH + Globals.GUIWIDTH, Globals.WINHEIGHT);
         // Draw each star
-        for (StarDisplay star : stars) {
-            star.draw(g);
+        for (ObjDisplay object : objects) {
+            object.draw(g, scroll_y, scroll_y);
         }
 
-        g.setColor(Color.white);
+        //g.setColor(Color.white);
         //g.drawString("This is my custom panel!", 15, 15);
         //System.out.println("This is a panel!");
     }

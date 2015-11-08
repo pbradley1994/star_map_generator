@@ -3,33 +3,28 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
+
 /**
  *
  * @author Patrick
  */
-public class StarDisplay extends ObjDisplay {
-    private double star_mag;
+public class MessierDisplay extends ObjDisplay {
     private String label;
     
-    public StarDisplay(double x, double y, double magnitude, String name) {
+    public MessierDisplay(double x, double y, String name) {
         super(x, y);
         label = name;
-        star_mag = magnitude;
     }
     
     public void draw(Graphics g, double scroll_x, double scroll_y)
     {
-        // We're not using a sprite yet
-        // Don't print if greater than 6 magnitude
-        if (star_mag > 6) {return;}
-        
         //if(sphere_x == 0 && sphere_y == 0) {g.setColor(Color.red);}
         //else {g.setColor(Color.white);}
-        g.setColor(Color.white);
+        g.setColor(Color.magenta);
         
         Graphics2D g2d = (Graphics2D)g;
         // Assume x, y, and diameter are instance variables.
-        Ellipse2D.Double circle = new Ellipse2D.Double(grid_x + scroll_x, grid_y + scroll_y, Math.abs(star_mag - 6) + 2, Math.abs(star_mag - 6) + 2);
+        Ellipse2D.Double circle = new Ellipse2D.Double(grid_x + scroll_x, grid_y + scroll_y, 12, 12);
         g2d.fill(circle);
         
         g.setColor(Color.yellow);

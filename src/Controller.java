@@ -20,7 +20,7 @@ public class Controller {
 	ArrayList<Messier> messierList;
 	ArrayList<Planet> planetList;
 	Planet earth;
-	Moon moon;
+	//Moon moon;
 	ArrayList<Constellation> constellationList;
 	Parser theParser;
 	Calculator theCalculator;
@@ -43,7 +43,7 @@ public class Controller {
 		theParser = new Parser();
 		starList = theParser.getStars();
 		messierList = theParser.getMessierObjects();
-		moon = theParser.getMoon();
+		//moon = theParser.getMoon();
 		constellationList = theParser.getConstellations();
 		planetList = new ArrayList<Planet>();
 		theCalculator = new Calculator();
@@ -63,7 +63,7 @@ public class Controller {
 	 * @param hour as the hour given by the user in military time
 	 * @param minutes as the minutes of the hour given by the user
 	 ************************************************************/
-	public void setUserData(double latitude, double longitude, int month, int day, int year, int timezone, int hour, int minutes)
+	public void setUserData(double latitude, double longitude, int month, int day, int year, double timezone, int hour, int minutes)
 	{
 		userLat = latitude;
 		userLong = longitude;
@@ -116,7 +116,7 @@ public class Controller {
 		for(int i = 0; i < starList.size(); i++)
 		{
 			Star aStar = starList.get(i);
-			double rightAsc = aStar.getRightAscension();
+			double rightAsc = aStar.getRA();
 			double hourAngle = theCalculator.findHourAngle(rightAsc, userLocalTime);
 			aStar.setHourAngle(hourAngle);
 			starList.set(i, aStar);
@@ -435,7 +435,7 @@ public class Controller {
 			projectedRadiusVectorPlanet = theCalculator.findProjectedRadiusVector(radiusVectorPlanet, helioLatPlanet);
 			
 			//calculate geocentric longitude
-			String name = planet.getPlanetName();
+			String name = planet.getName();
 			geoLongPlanet = theCalculator.findGeocentricLongitude(name, projectedRadiusVectorPlanet, projectedHelioLongPlanet, radiusVectorEarth, helioLongEarth);
 			
 			//calculate geocentric latitude
@@ -467,7 +467,7 @@ public class Controller {
 		for(int i = 0; i < messierList.size(); i++)
 		{
 			Messier aMessier = messierList.get(i);
-			double rightAsc = aMessier.getRightAscension();
+			double rightAsc = aMessier.getRADecimalHour();
 			double hourAngle = theCalculator.findHourAngle(rightAsc, userLocalTime);
 			aMessier.setHourAngle(hourAngle);
 			messierList.set(i, aMessier);
@@ -518,8 +518,8 @@ public class Controller {
 	 * once its calculations have been completed
 	 * @return Moon - modified Moon
 	 *******************************************************/
-	public Moon getModifiedMoon()
+	/*public Moon getModifiedMoon()
 	{
 		return moon;
-	}
+	}*/
 }

@@ -87,8 +87,9 @@ public class Planet {
 	/*******************************
 	 * Planet Getters
 	 *******************************/
-	public String getPlanetName()
+	public String getName()
 	{
+                System.out.println(m_name);
 		return m_name;
 	}
 	public double getRightAscension()
