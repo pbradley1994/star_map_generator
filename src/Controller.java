@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
 /**
  * This class is the controller of model/view/controller pattern
  * It receives user input information from the GUI,

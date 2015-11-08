@@ -1,0 +1,89 @@
+Number,Abbrev.,Constellation,English Name, Hemisphere, Alpha Star  
+1,And,Andromeda,Andromeda,Northern,Alpheratz  
+2,Ant,Antlia,Air Pump,Southern, 
+3,Aps,Apus,Bird of Paradise,Southern, 
+4,Aqr,Aquarius,Water Carrier,Southern,Sadalmelik  
+5,Aql,Aquila,Eagle,Northern-Southern,Altair  
+6,Ara,Ara,Altar,Southern, 
+7,Ari,Aries,Ram,Northern,Hamal  
+8,Aur,Auriga,Charioteer,Northern,Capella  
+9,Boo,Bootes,Herdsman,Northern,Arcturus  
+10,Cae,Caelum,Chisel,Southern, 
+11,Cam,Camelopardalis,Giraffe,Northern, 
+12,Cnc,Cancer,Crab,Northern,Acubens  
+13,CVn,Canes Venatici, Hunting Dogs,Northern,Cor Caroli  
+14,CMa,Canis Major,Big Dog,Southern,Sirius  
+15,CMi,Canis Minor,Little Dog,Northern,Procyon  
+16,Cap,Capricornus,Goat ( Capricorn ),Southern,Algedi  
+17,Car,Carina,Keel,Southern,Canopus  
+18,Cas,Cassiopeia,Cassiopeia,Northern,Schedar  
+19,Cen,Centaurus,Centaur,Southern,Rigil Kentaurus  
+20,Cep,Cepheus,Cepheus,Southern,Alderamin  
+21,Cet,Cetus,Whale,Southern,Menkar  
+22,Cha,Chamaleon,Chameleon,Southern, 
+23,Cir,Circinus,Compasses,Southern, 
+24,Col,Columba,Dove,Southern,Phact  
+25,Com,Coma,Berenices Berenice's Hair,Northern,Diadem  
+26,CrA,Corona,Australis,Southern,Crown Southern  
+27,CrB,Corona,Borealis,Northern,Crown Northern Alphecca  
+28,Crv,Corvus,Crow,Southern,Alchiba  
+29,Crt,Crater,Cup,Southern,Alkes  
+30,Cru,Crux,Southern,Cross,Southern Acrux  
+31,Cyg,Cygnus,Swan,Northern,Deneb  
+32,Del,Delphinus,Dolphin,Northern,Sualocin  
+33,Dor,Dorado,Goldfish,Southern, 
+34,Dra,Draco,Dragon,Northern,Thuban 
+35,Equ,Equuleus,Little Horse,Northern,Kitalpha  
+36,Eri,Eridanus,River,Southern,Achernar  
+37,For,Fornax,Furnace,Southern, 
+38,Gem,Gemini,Twins,Northern,Castor  
+39,Gru,Grus,Crane,Southern,Al Na'ir  
+40,Her,Hercules,Hercules,Northern,Rasalgethi  
+41,Hor,Horologium,Clock,Southern, 
+42,Hya,Hydra,Hydra ( Sea Serpent ),Southern,Alphard  
+43,Hyi,Hydrus,Water Serpen ( male ),Southern, 
+44,Ind,Indus,Indian,Southern, 
+45,Lac,Lacerta,Lizard,Northern, 
+46,Leo,Leo,Lion,Northern,Regulus  
+47,LMi,Leo Minor,Smaller Lion,Northern, 
+48,Lep,Lepus,Hare,Southern,Arneb  
+49,Lib,Libra,Balance,Southern,Zubenelgenubi  
+50,Lup,Lupus,Wolf,Southern,Men  
+51,Lyn,Lynx,Lynx,Northern, 
+52,Lyr,Lyra,Lyre,Northern,Vega  
+53,Men,Mensa,Table,Southern, 
+54,Mic,Microscopium,Microscope,Southern, 
+55,Mon,Monoceros,Unicorn,Southern, 
+56,Mus,Musca,Fly,Southern, 
+57,Nor,Norma,Square,Southern, 
+58,Oct,Octans,Octant,Southern, 
+59,Oph,Ophiucus,Serpent Holder,Northern-Southern,Rasalhague  
+60,Ori,Orion,Orion,Northern-Southern,Betelgeuse  
+61,Pav,Pavo,Peacock,Southern,Peacock  
+62,Peg,Pegasus,Winged Horse,Northern,Markab  
+63,Per,Perseus,Perseus,Northern,Mirfak  
+64,Phe,Phoenix,Phoenix,Southern,Ankaa  
+65,Pic,Pictor,Easel,Southern, 
+66,Psc,Pisces,Fishes,Northern,Alrischa  
+67,PsA,Pisces Austrinus,Southern Fish, Southern Fomalhaut  
+68,Pup,Puppis,Stern,Southern, 
+69,Pyx,Pyxis,Compass,Southern, 
+70,Ret,Reticulum,Reticle,Southern, 
+71,Sge,Sagitta,Arrow,Northern, 
+72,Sgr,Sagittarius,Archer,Southern,Rukbat  
+73,Sco,Scorpius,Scorpion,Southern,Antares  
+74,Scl,Sculptor,Sculptor,Southern, 
+75,Sct,Scutum,Shield,Southern, 
+76,Ser,Serpens,Serpent,Northern-Southern,Unuck al Hai  
+77,Sex,Sextans,Sextant,Southern, 
+78,Tau,Taurus,Bull,Northern,Aldebaran  
+79,Tel,Telescopium,Telescope,Southern, 
+80,Tri,Triangulum,Triangle,Northern,Ras al Mothallah  
+81,TrA,Triangulum,Australe,Southern,Triangle Southern Atria  
+82,Tuc,Tucana,Toucan,Southern, 
+83,UMa,Ursa Major,Great Bear,Northern,Dubhe  
+84,UMi,Ursa Minor,Little Bear,Northern,Polaris  
+85,Vel,Vela,Sails,Southern, 
+86,Vir,Virgo,Virgin,Northern-Southern,Spica  
+87,Vol,Volans,Flying Fish,Southern, 
+88,Vul,Vulpecula,Fox,Northern,  

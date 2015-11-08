@@ -32,7 +32,7 @@ public Parser() {
 	if (DEBUG) { System.out.println("Parser()"); }
 	listOfStars=readStars();
  	listOfMessierObjects=readMessier();
-	listOfPlanets=readPlanets();
+	//listOfPlanets=readPlanets();
 	
 //	BufferedReader b=BufferedReader(FileReader(File))
 //	String[] thingy = myString.split(",");
