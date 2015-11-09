@@ -41,22 +41,49 @@ public class StarMapPanel extends JPanel {
     }*/
     
     public void createObjects(Controller the_controller) {
+    	// Note from Christy:
+    	// When adding the planets/constellations, the string needs to be null here
+    	// Then just add that code into the Label methods below
         for (Messier messier : the_controller.messierList) {
-            MessierDisplay current_object = new MessierDisplay(messier.getRADecimalDegree(), messier.getDeclination(), messier.getName());
+        	MessierDisplay current_object = new MessierDisplay(messier.getRADecimalDegree(), messier.getDeclination(), null);
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
+        for (Star star : the_controller.starList) {
+        	StarDisplay current_object = new StarDisplay(star.getRA()*15, star.getDeclination(), star.getMagnitude(), null);
+            current_object.sphere_to_grid(camera_x, camera_y);
+            objects.add(current_object);
+        }
+        /*for (Planet planet : the_controller.planetList) {
+            PlanetDisplay current_object = new PlanetDisplay(planet.getHourAngle()*15, planet.getDeclination(), planet.getName());
+            current_object.sphere_to_grid(camera_x, camera_y);
+            objects.add(current_object);
+        }*/
+    }
+    
+    public void StarLabels(Controller the_controller) {
         for (Star star : the_controller.starList) {
             StarDisplay current_object = new StarDisplay(star.getRA()*15, star.getDeclination(), star.getMagnitude(), star.getName());
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
-        for (Planet planet : the_controller.planetList) {
-            PlanetDisplay current_object = new PlanetDisplay(planet.getHourAngle()*15, planet.getDeclination(), planet.getName(), planet.getIcon());
+    }
+    
+    public void MessierLabels(Controller the_controller) {
+    	 for (Messier messier : the_controller.messierList) {
+        	MessierDisplay current_object = new MessierDisplay(messier.getRADecimalDegree(), messier.getDeclination(), messier.getName());
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
     }
+    
+    public void PlanetLabels(Controller the_controller) {
+      	 // Planet label method
+      }
+    
+    public void ConstLabels(Controller the_controller) {
+    	// Constellation label method
+   }
     
     public void clearObjects() {
         objects.clear();
@@ -85,11 +112,12 @@ public class StarMapPanel extends JPanel {
         g.fillRect(0, 0, Globals.WINWIDTH + Globals.GUIWIDTH, Globals.WINHEIGHT);
         // Draw each star
         for (ObjDisplay object : objects) {
-            object.draw(g, scroll_y, scroll_y);
+            object.draw(g, scroll_x, scroll_y);
         }
 
         //g.setColor(Color.white);
         //g.drawString("This is my custom panel!", 15, 15);
         //System.out.println("This is a panel!");
     }
+   
 }
