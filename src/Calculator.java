@@ -9,6 +9,8 @@ public class Calculator {
 	/************************
 	* Class Variables
 	************************/
+	double ToDeg; //to convert from radians to degrees
+	double ToRad; //to convert from degrees to radians
 	
 	/*****************************
 	 * Class Constructor
@@ -16,7 +18,8 @@ public class Calculator {
 	*****************************/
 	public Calculator()
 	{
-		//empty
+		ToDeg = Math.PI / 180.0;
+		ToRad = 180.0 / Math.PI;
 	}
 	
 	/*************************************************************
@@ -66,8 +69,12 @@ public class Calculator {
 		double orbitalPeriod = planet.getOrbitalPeriod();
 		double eccentricity = planet.getEccentricityOfOrbit();
 		double meanLong = planet.getMeanLongitude();
+		//find sin(meanAnomaly) and convert back to degrees
+		double radMeanAnomaly = meanAnomaly * ToRad;
+		meanAnomaly = Math.sin(radMeanAnomaly);
+		meanAnomaly = meanAnomaly * ToDeg;
 		
-		double helioLong = (360.0 / 365.242191) * (days / orbitalPeriod) + eccentricity * Math.sin(meanAnomaly) + meanLong;
+		double helioLong = (360.0 / 365.242191) * (days / orbitalPeriod) + eccentricity * meanAnomaly + meanLong;
 		
 		//adjust if outside 0 - 360 range
 		if(helioLong > 360.0)
@@ -105,8 +112,12 @@ public class Calculator {
 	{
 		double axis = planet.getSemimajorAxis();
 		double eccentricity = planet.getEccentricityOfOrbit();
+		//find cos(trueAnomaly) and convert back to degrees
+		double radTrueAnomaly = trueAnomaly * ToRad;
+		trueAnomaly = Math.cos(radTrueAnomaly);
+		trueAnomaly = trueAnomaly * ToDeg;
 		
-		double vectorRadius = (axis * (1 - Math.pow(eccentricity, 2.0))) / (1 + eccentricity * Math.cos(trueAnomaly));
+		double vectorRadius = (axis * (1 - Math.pow(eccentricity, 2.0))) / (1 + eccentricity * trueAnomaly);
 		
 		return vectorRadius;
 	}
@@ -122,9 +133,16 @@ public class Calculator {
 	{
 		double longAscNode = planet.getLongitudeOfAscendingNode();
 		double inclination = planet.getInclinationOnPlane();
+		//convert everything to radians for calculations
+		helioLongitude = ToRad * helioLongitude;
+		longAscNode = ToRad * longAscNode;
+		inclination = ToRad * inclination;
 		
 		double temp = Math.sin(helioLongitude - longAscNode) * Math.sin(inclination);
 		double helioLat = Math.sinh(temp);
+		
+		//convert back to degrees for return
+		helioLat = ToDeg * helioLat;
 		
 		return helioLat;
 	}
@@ -140,10 +158,19 @@ public class Calculator {
 	{
 		double longAscNode = planet.getLongitudeOfAscendingNode();
 		double inclination = planet.getInclinationOnPlane();
+		//convert to radians for calculations
+		helioLongitude = ToRad * helioLongitude;
+		double radLongAscNode = ToRad * longAscNode;
+		inclination = ToRad * inclination;
 		
-		double x = Math.cos(helioLongitude - longAscNode);
-		double y = Math.sin(helioLongitude - longAscNode) * Math.cos(inclination);
+		double x = Math.cos(helioLongitude - radLongAscNode);
+		double y = Math.sin(helioLongitude - radLongAscNode) * Math.cos(inclination);
 		double temp = Math.tanh(y / x);
+		//convert back to degrees to finish out function
+		x = ToDeg * x;
+		y = ToDeg * y;
+		temp = ToDeg * temp;
+		
 		temp = checkQuadrant(x, y, temp);
 		double projectedHelioLong = temp + longAscNode;
 
@@ -159,7 +186,12 @@ public class Calculator {
 	 **************************************************************/
 	public double findProjectedRadiusVector(double radiusVector, double helioLatitude) 
 	{
-		double projectedRadiusVector = radiusVector * Math.cos(helioLatitude);
+		//convert to radians for Math.cos
+		helioLatitude = ToRad * helioLatitude;
+		helioLatitude = Math.cos(helioLatitude);
+		helioLatitude = ToDeg * helioLatitude;
+		
+		double projectedRadiusVector = radiusVector * helioLatitude;
 		return projectedRadiusVector;
 	}
 
@@ -180,6 +212,11 @@ public class Calculator {
 		double bottom;
 		double temp;
 		double geoLong;
+		//convert everything to radians for Math.cos, etc
+		projectedRadiusVectorPlanet = ToRad * projectedRadiusVectorPlanet;
+		projectedHelioLongPlanet = ToRad * projectedHelioLongPlanet;
+		radiusVectorEarth = ToRad * radiusVectorEarth;
+		helioLongEarth = ToRad * helioLongEarth;
 		
 		if(name == "Mercury" || name == "Venus")
 		{
@@ -199,7 +236,8 @@ public class Calculator {
 			temp = Math.tanh(top / bottom);
 			geoLong = temp + projectedHelioLongPlanet;
 		}
-
+		//convert geoLong back to degrees
+		geoLong = ToDeg * geoLong;
 		//adjust if outside 0-360 range
 		if(geoLong < 0.0)
 			geoLong += 360.0;
@@ -223,9 +261,18 @@ public class Calculator {
 	public double findGeocentricLatitude(double projectedRadiusVectorPlanet, double helioLatPlanet,
 			double geoLongPlanet, double projectedHelioLongPlanet, double radiusVectorEarth, double helioLongEarth) 
 	{
+		//convert to radians for Math.tan, etc
+		projectedRadiusVectorPlanet = ToRad * projectedRadiusVectorPlanet;
+		helioLatPlanet = ToRad * helioLatPlanet;
+		geoLongPlanet = ToRad * geoLongPlanet;
+		projectedHelioLongPlanet = ToRad * projectedHelioLongPlanet;
+		helioLongEarth = ToRad * helioLongEarth;
+		
 		double top = projectedRadiusVectorPlanet * Math.tan(helioLatPlanet) * Math.sin(geoLongPlanet - projectedHelioLongPlanet);
 		double bottom = radiusVectorEarth * Math.sin(projectedHelioLongPlanet - helioLongEarth);
 		double geoLat = Math.tanh(top / bottom);
+		//convert back to degrees
+		geoLat = ToDeg * geoLat;
 
 		return geoLat;
 	}
@@ -239,13 +286,19 @@ public class Calculator {
 	 * @return declination of planet in degree form
 	 **************************************************************/
 	public double findPlanetDeclination(Planet planet, double geoLatPlanet, double geoLongPlanet) 
-	{
+	{		
 		double meanLongPlanet = planet.getMeanLongitude();
+		//convert to radians for Math.cos, etc
+		meanLongPlanet = ToRad * meanLongPlanet;
+		geoLatPlanet = ToRad * geoLatPlanet;
+		geoLongPlanet = ToRad * geoLongPlanet;
+		
 		double tempA = Math.sin(geoLatPlanet)*Math.cos(meanLongPlanet);
 		double tempB = Math.cos(geoLatPlanet) * Math.sin(meanLongPlanet) * Math.sin(geoLongPlanet);
 		double tempC = tempA + tempB;
 		double declination = Math.sinh(tempC);
-
+		//convert back to degrees
+		declination = ToDeg * declination;
 		return declination;
 	}
 
@@ -260,9 +313,19 @@ public class Calculator {
 	public double findPlanetRightAscension(Planet planet, double geoLatPlanet, double geoLongPlanet) 
 	{
 		double meanLongPlanet = planet.getMeanLongitude();
+		//convert to radians for Math.cos, etc
+		meanLongPlanet = ToRad * meanLongPlanet;
+		geoLatPlanet = ToRad * geoLatPlanet;
+		geoLongPlanet = ToRad * geoLongPlanet;
+		
 		double x = Math.cos(geoLongPlanet);
 		double y = Math.sin(geoLongPlanet) * Math.cos(meanLongPlanet) - Math.tan(geoLatPlanet) * Math.sin(meanLongPlanet);
 		double rightAsc = Math.tanh(y / x);
+		
+		//convert back to degrees
+		x = ToDeg * x;
+		y = ToDeg * y;
+		rightAsc = ToDeg * rightAsc;
 		rightAsc = checkQuadrant(x, y, rightAsc);
 		
 		//adjust if outside 0-360 range
@@ -405,5 +468,4 @@ public class Calculator {
 		
 		return temp; //adjusted
 	}
-	
 }
