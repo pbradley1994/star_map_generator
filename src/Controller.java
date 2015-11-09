@@ -455,7 +455,7 @@ public class Controller {
 			projectedRadiusVectorPlanet = theCalculator.findProjectedRadiusVector(radiusVectorPlanet, helioLatPlanet);
 			
 			//calculate geocentric longitude
-			String name = planet.getPlanetName();
+			String name = planet.getName();
 			geoLongPlanet = theCalculator.findGeocentricLongitude(name, projectedRadiusVectorPlanet, projectedHelioLongPlanet, radiusVectorEarth, helioLongEarth);
 			
 			//calculate geocentric latitude
