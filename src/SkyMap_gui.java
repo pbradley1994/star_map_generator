@@ -59,6 +59,7 @@ public class SkyMap_gui {
 	private double inputTimezone = 0.0;
 	private int scroll_x = 0;
 	private int scroll_y = 0;
+	private boolean generated = false;
 	
 	//variables for testing input
 	private double MIN_LAT = -90.000;
@@ -553,6 +554,8 @@ public class SkyMap_gui {
                         star_canvas.createObjects(my_controller);
                         star_canvas.revalidate();
                         star_canvas.repaint();
+                        // Sets boolean for use with checkboxes
+                        generated = true;
                     }
 		});
 		
@@ -611,105 +614,115 @@ public class SkyMap_gui {
 				  boolean selected2 = checkboxTwo.isSelected();
 				  boolean selected3 = checkboxThree.isSelected();
 				  boolean selected4 = checkboxFour.isSelected();
-				  
-				  // Star checkbox loop
-				  if (e.getSource() == checkboxOne) {
-			    	selected1 = checkboxOne.isSelected();
-					if (selected1) {
-						star_canvas.setScroll(scroll_x, scroll_y); 
-						star_canvas.StarLabels(my_controller);
-						// Will check to see which other labels are active to print them
-						if (selected2) { star_canvas.MessierLabels(my_controller); }
-						if (selected3) { star_canvas.PlanetLabels(my_controller); }
-						if (selected4) { star_canvas.ConstLabels(my_controller); }
-						star_canvas.revalidate();
-						star_canvas.repaint();
-					}
-					else {
-						star_canvas.clearObjects();
-						star_canvas.createObjects(my_controller);
-						// Will check to see which other labels are active to print them
-						if (selected2) { star_canvas.MessierLabels(my_controller); }
-						if (selected3) { star_canvas.PlanetLabels(my_controller); }
-						if (selected4) { star_canvas.ConstLabels(my_controller); }
-						star_canvas.setScroll(scroll_x, scroll_y); 
-			            star_canvas.revalidate();
-			            star_canvas.repaint();
-					}
-			    }
-				  
-				// Messier checkbox loop
-			    if (e.getSource() == checkboxTwo) {
-			    	selected2 = checkboxTwo.isSelected();
-					if (selected2) {
-						star_canvas.setScroll(scroll_x, scroll_y); 
-						star_canvas.MessierLabels(my_controller);
-						if (selected1) { star_canvas.StarLabels(my_controller); }
-						if (selected3) { star_canvas.PlanetLabels(my_controller); }
-						if (selected4) { star_canvas.ConstLabels(my_controller); }
-						star_canvas.revalidate();
-						star_canvas.repaint();
-					}
-					else {
-						star_canvas.clearObjects();
-						star_canvas.createObjects(my_controller);
-						if (selected1) { star_canvas.StarLabels(my_controller); }
-						if (selected3) { star_canvas.PlanetLabels(my_controller); }
-						if (selected4) { star_canvas.ConstLabels(my_controller); }
-						star_canvas.setScroll(scroll_x, scroll_y); 
-			            star_canvas.revalidate();
-			            star_canvas.repaint();
-					}
-			    }
-			    
-			    // Planet checkbox loop
-			    if (e.getSource() == checkboxThree) {
-			    	selected3 = checkboxThree.isSelected();
-					if (selected3) {
-						star_canvas.setScroll(scroll_x, scroll_y); 
-						star_canvas.PlanetLabels(my_controller);
-						if (selected1) { star_canvas.StarLabels(my_controller); }
-						if (selected2) { star_canvas.MessierLabels(my_controller); }
-						if (selected4) { star_canvas.ConstLabels(my_controller); }
-						star_canvas.revalidate();
-						star_canvas.repaint();
-					}
-					else {
-						star_canvas.clearObjects();
-						star_canvas.createObjects(my_controller);
-						if (selected1) { star_canvas.StarLabels(my_controller); }
-						if (selected2) { star_canvas.MessierLabels(my_controller); }
-						if (selected4) { star_canvas.ConstLabels(my_controller); }
-						star_canvas.setScroll(scroll_x, scroll_y); 
-			            star_canvas.revalidate();
-			            star_canvas.repaint();
-					}
-			    }
-			    
-			    // Constellation checkbox loop
-			    if (e.getSource() == checkboxFour) {
-			    	selected4 = checkboxFour.isSelected();
-					
-					if (selected4) {
-						star_canvas.setScroll(scroll_x, scroll_y); 
-						star_canvas.ConstLabels(my_controller);
-						if (selected1) { star_canvas.StarLabels(my_controller); }
-						if (selected2) { star_canvas.MessierLabels(my_controller); }
-						if (selected3) { star_canvas.PlanetLabels(my_controller); }
-						star_canvas.revalidate();
-						star_canvas.repaint();
-					}
-					else {
-						star_canvas.clearObjects();
-						star_canvas.createObjects(my_controller);
-						if (selected2) { star_canvas.MessierLabels(my_controller); }
-						if (selected1) { star_canvas.StarLabels(my_controller); }
-						if (selected3) { star_canvas.PlanetLabels(my_controller); }
-						star_canvas.setScroll(scroll_x, scroll_y); 
-			            star_canvas.revalidate();
-			            star_canvas.repaint();
-					}
-			    }
+				  // Will only add labels when map has been generated
+				  if (generated) {
+					  // Star checkbox loop
+					  if (e.getSource() == checkboxOne) {
+				    	selected1 = checkboxOne.isSelected();
+						if (selected1) {
+							star_canvas.setScroll(scroll_x, scroll_y); 
+							star_canvas.StarLabels(my_controller);
+							// Will check to see which other labels are active to print them
+							if (selected2) { star_canvas.MessierLabels(my_controller); }
+							if (selected3) { star_canvas.PlanetLabels(my_controller); }
+							if (selected4) { star_canvas.ConstLabels(my_controller); }
+							star_canvas.revalidate();
+							star_canvas.repaint();
+						}
+						else {
+							star_canvas.clearObjects();
+							star_canvas.createObjects(my_controller);
+							// Will check to see which other labels are active to print them
+							if (selected2) { star_canvas.MessierLabels(my_controller); }
+							if (selected3) { star_canvas.PlanetLabels(my_controller); }
+							if (selected4) { star_canvas.ConstLabels(my_controller); }
+							star_canvas.setScroll(scroll_x, scroll_y); 
+				            star_canvas.revalidate();
+				            star_canvas.repaint();
+						}
+				    }
+					  
+					// Messier checkbox loop
+				    if (e.getSource() == checkboxTwo) {
+				    	selected2 = checkboxTwo.isSelected();
+						if (selected2) {
+							star_canvas.setScroll(scroll_x, scroll_y); 
+							star_canvas.MessierLabels(my_controller);
+							if (selected1) { star_canvas.StarLabels(my_controller); }
+							if (selected3) { star_canvas.PlanetLabels(my_controller); }
+							if (selected4) { star_canvas.ConstLabels(my_controller); }
+							star_canvas.revalidate();
+							star_canvas.repaint();
+						}
+						else {
+							star_canvas.clearObjects();
+							star_canvas.createObjects(my_controller);
+							if (selected1) { star_canvas.StarLabels(my_controller); }
+							if (selected3) { star_canvas.PlanetLabels(my_controller); }
+							if (selected4) { star_canvas.ConstLabels(my_controller); }
+							star_canvas.setScroll(scroll_x, scroll_y); 
+				            star_canvas.revalidate();
+				            star_canvas.repaint();
+						}
+				    }
+				    
+				    // Planet checkbox loop
+				    if (e.getSource() == checkboxThree) {
+				    	selected3 = checkboxThree.isSelected();
+						if (selected3) {
+							star_canvas.setScroll(scroll_x, scroll_y); 
+							star_canvas.PlanetLabels(my_controller);
+							if (selected1) { star_canvas.StarLabels(my_controller); }
+							if (selected2) { star_canvas.MessierLabels(my_controller); }
+							if (selected4) { star_canvas.ConstLabels(my_controller); }
+							star_canvas.revalidate();
+							star_canvas.repaint();
+						}
+						else {
+							star_canvas.clearObjects();
+							star_canvas.createObjects(my_controller);
+							if (selected1) { star_canvas.StarLabels(my_controller); }
+							if (selected2) { star_canvas.MessierLabels(my_controller); }
+							if (selected4) { star_canvas.ConstLabels(my_controller); }
+							star_canvas.setScroll(scroll_x, scroll_y); 
+				            star_canvas.revalidate();
+				            star_canvas.repaint();
+						}
+				    }
+				    
+				    // Constellation checkbox loop
+				    if (e.getSource() == checkboxFour) {
+				    	selected4 = checkboxFour.isSelected();
+						
+						if (selected4) {
+							star_canvas.setScroll(scroll_x, scroll_y); 
+							star_canvas.ConstLabels(my_controller);
+							if (selected1) { star_canvas.StarLabels(my_controller); }
+							if (selected2) { star_canvas.MessierLabels(my_controller); }
+							if (selected3) { star_canvas.PlanetLabels(my_controller); }
+							star_canvas.revalidate();
+							star_canvas.repaint();
+						}
+						else {
+							star_canvas.clearObjects();
+							star_canvas.createObjects(my_controller);
+							if (selected2) { star_canvas.MessierLabels(my_controller); }
+							if (selected1) { star_canvas.StarLabels(my_controller); }
+							if (selected3) { star_canvas.PlanetLabels(my_controller); }
+							star_canvas.setScroll(scroll_x, scroll_y); 
+				            star_canvas.revalidate();
+				            star_canvas.repaint();
+						}
+				    }
+				  }
+				  // if map hasn't been generated, uncheck boxes, throw error message
+				  else {
+					  checkboxOne.setSelected(false);
+					  checkboxTwo.setSelected(false);
+					  checkboxThree.setSelected(false);
+					  checkboxFour.setSelected(false);
+					  JOptionPane.showMessageDialog(null,"Star map must be generated before adding labels.");
+				  }
 			  }
 			};
 		
