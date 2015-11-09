@@ -1,41 +1,20 @@
 //TO DO: clean up what you actually use 
 import java.awt.EventQueue;
-
-import javafx.scene.layout.Border;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-
 import java.awt.Color;
-
 import javax.swing.JLabel;
-
 import java.awt.Font;
-
 import javax.swing.JTextField;
-
-
 import javax.swing.JButton;
-
-import java.awt.Canvas;
-
-import javax.swing.JSeparator;
-
-import java.awt.Button;
-import java.awt.Panel;
-
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.ImageIcon;
-
 import java.awt.*;
 import java.util.*;
-
 import javax.swing.*;
 import javax.swing.plaf.basic.*;
 
