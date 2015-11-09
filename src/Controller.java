@@ -138,6 +138,7 @@ public class Controller {
 	private void createPlanets()
 	{
 		double cy = userJulianDate / 36525.0;
+                String unicode_icon;
 		double semimajorAxis;
 		double eccentricityOfOrbit;
 		double inclinationOnPlane;
@@ -151,6 +152,7 @@ public class Controller {
 		//create Mercury
 		//*****************
 		Planet mercury = new Planet("Mercury");
+                unicode_icon = "\u263f";
 		semimajorAxis = 0.38709893 + 0.00000066 * cy;
 		eccentricityOfOrbit = 0.20563069 + 0.00002527 * cy;
 		inclinationOnPlane = 7.00487  -  23.51 * cy / 3600;
@@ -162,6 +164,7 @@ public class Controller {
 		else if(meanLongitude < 0.0)
 			meanLongitude += 360.0;
 		
+                mercury.setUnicodeIcon(unicode_icon);
 		mercury.setSemimajorAxis(semimajorAxis);
 		mercury.setEccentricityOfOrbit(eccentricityOfOrbit);
 		mercury.setInclinationOnPlane(inclinationOnPlane);
@@ -175,6 +178,7 @@ public class Controller {
 		//create Venus
 		//*****************
 		Planet venus = new Planet("Venus");
+                unicode_icon = "\u2640";
 		semimajorAxis = 0.72333199 + 0.00000092 * cy;
 		eccentricityOfOrbit = 0.00677323 - 0.00004938 * cy;
 		inclinationOnPlane = 3.39471 - 2.86 * cy / 3600;
@@ -186,6 +190,7 @@ public class Controller {
 		else if(meanLongitude < 0.0)
 			meanLongitude += 360.0;
 		
+                venus.setUnicodeIcon(unicode_icon);
 		venus.setSemimajorAxis(semimajorAxis);
 		venus.setEccentricityOfOrbit(eccentricityOfOrbit);
 		venus.setInclinationOnPlane(inclinationOnPlane);
@@ -199,6 +204,7 @@ public class Controller {
 		//create Earth
 		//*****************
 		earth = new Planet("Earth");
+                unicode_icon = "\u2695";
 		semimajorAxis = 1.00000011 - 0.00000005 * cy;
 		eccentricityOfOrbit = 0.01671022 - 0.00003804 * cy;
 		inclinationOnPlane = 0.00005 - 46.94 * cy / 3600;
@@ -210,6 +216,7 @@ public class Controller {
 		else if(meanLongitude < 0.0)
 			meanLongitude += 360.0;
 		
+                earth.setUnicodeIcon(unicode_icon);
 		earth.setSemimajorAxis(semimajorAxis);
 		earth.setEccentricityOfOrbit(eccentricityOfOrbit);
 		earth.setInclinationOnPlane(inclinationOnPlane);
@@ -223,6 +230,7 @@ public class Controller {
 		//create Mars
 		//*****************
 		Planet mars = new Planet("Mars");
+                unicode_icon = "\u2642";
 		semimajorAxis = 1.52366231 - 0.00007221 * cy;
 		eccentricityOfOrbit = 0.09341233 + 0.00011902 * cy;
 		inclinationOnPlane = 1.85061 - 25.47 * cy / 3600;
@@ -234,6 +242,7 @@ public class Controller {
 		else if(meanLongitude < 0.0)
 			meanLongitude += 360.0;
 		
+                mars.setUnicodeIcon(unicode_icon);
 		mars.setSemimajorAxis(semimajorAxis);
 		mars.setEccentricityOfOrbit(eccentricityOfOrbit);
 		mars.setInclinationOnPlane(inclinationOnPlane);
@@ -247,6 +256,7 @@ public class Controller {
 		//create Jupiter
 		//*****************
 		Planet jupiter = new Planet("Jupiter");
+                unicode_icon = "\u2643";
 		semimajorAxis = 5.20336301 + 0.00060737 * cy;
 		eccentricityOfOrbit = 0.04839266 - 0.00012880 * cy;
 		inclinationOnPlane = 1.30530 -  4.15 * cy / 3600;
@@ -258,6 +268,7 @@ public class Controller {
 		else if(meanLongitude < 0.0)
 			meanLongitude += 360.0;
 		
+                jupiter.setUnicodeIcon(unicode_icon);
 		jupiter.setSemimajorAxis(semimajorAxis);
 		jupiter.setEccentricityOfOrbit(eccentricityOfOrbit);
 		jupiter.setInclinationOnPlane(inclinationOnPlane);
@@ -271,6 +282,7 @@ public class Controller {
 		//create Saturn
 		//*****************
 		Planet saturn = new Planet("Saturn");
+                unicode_icon = "\u2644";
 		semimajorAxis = 9.53707032 - 0.00301530 * cy;
 		eccentricityOfOrbit = 0.05415060 - 0.00036762 * cy;
 		inclinationOnPlane = 2.48446 +  6.11 * cy / 3600;
@@ -281,7 +293,8 @@ public class Controller {
 			meanLongitude -= 360.0;
 		else if(meanLongitude < 0.0)
 			meanLongitude += 360.0;
-				
+		
+                saturn.setUnicodeIcon(unicode_icon);
 		saturn.setSemimajorAxis(semimajorAxis);
 		saturn.setEccentricityOfOrbit(eccentricityOfOrbit);
 		saturn.setInclinationOnPlane(inclinationOnPlane);
@@ -295,6 +308,7 @@ public class Controller {
 		//create Uranus
 		//*****************
 		Planet uranus = new Planet("Uranus");
+                unicode_icon = "\u2645";
 		semimajorAxis = 19.19126393 + 0.00152025 * cy;
 		eccentricityOfOrbit = 0.04716771 - 0.00019150 * cy;
 		inclinationOnPlane = 0.76986  -  2.09 * cy / 3600;
@@ -306,6 +320,7 @@ public class Controller {
 		else if(meanLongitude < 0.0)
 			meanLongitude += 360.0;
 		
+                uranus.setUnicodeIcon(unicode_icon);
 		uranus.setSemimajorAxis(semimajorAxis);
 		uranus.setEccentricityOfOrbit(eccentricityOfOrbit);
 		uranus.setInclinationOnPlane(inclinationOnPlane);
@@ -319,6 +334,7 @@ public class Controller {
 		//create Neptune
 		//*****************
 		Planet neptune = new Planet("Neptune");
+                unicode_icon = "\u2646";
 		semimajorAxis = 30.06896348 - 0.00125196 * cy;
 		eccentricityOfOrbit = 0.00858587 + 0.00002510 * cy;
 		inclinationOnPlane = 1.76917  -  3.64 * cy / 3600;
@@ -330,6 +346,7 @@ public class Controller {
 		else if(meanLongitude < 0.0)
 			meanLongitude += 360.0;
 		
+                neptune.setUnicodeIcon(unicode_icon);
 		neptune.setSemimajorAxis(semimajorAxis);
 		neptune.setEccentricityOfOrbit(eccentricityOfOrbit);
 		neptune.setInclinationOnPlane(inclinationOnPlane);
@@ -343,6 +360,7 @@ public class Controller {
 		//create Pluto
 		//*****************
 		Planet pluto = new Planet("Pluto");
+                unicode_icon = "\u263f";
 		semimajorAxis = 39.48168677 - 0.00076912 * cy;
 		eccentricityOfOrbit = 0.24880766 + 0.00006465 * cy;
 		inclinationOnPlane = 17.14175  +  11.07 * cy / 3600;
@@ -354,6 +372,7 @@ public class Controller {
 		else if(meanLongitude < 0.0)
 			meanLongitude += 360.0;
 		
+                pluto.setUnicodeIcon(unicode_icon);
 		pluto.setSemimajorAxis(semimajorAxis);
 		pluto.setEccentricityOfOrbit(eccentricityOfOrbit);
 		pluto.setInclinationOnPlane(inclinationOnPlane);

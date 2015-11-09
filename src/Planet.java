@@ -7,6 +7,7 @@ public class Planet {
 	* Class Variables
 	************************/
 	String m_name;
+        String m_unicode_icon;
 	double m_rightAscension;
 	double m_declination;
 	double m_hourAngle;
@@ -37,6 +38,10 @@ public class Planet {
 	{
 		return m_name;
 	}
+        public String getIcon()
+        {
+                return m_unicode_icon;
+        }
 	public double getRightAscension()
 	{
 		return m_rightAscension;
@@ -80,6 +85,10 @@ public class Planet {
 	/*******************************
 	 * Planet Setters
 	 *******************************/
+        public void setUnicodeIcon(String unicode_icon)
+        {
+                m_unicode_icon = unicode_icon;
+        }
 	public void setRightAscension(double rightAsc)
 	{
 		m_rightAscension = rightAsc;
