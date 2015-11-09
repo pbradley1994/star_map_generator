@@ -1,6 +1,8 @@
 //TO DO: clean up what you actually use 
 import java.awt.EventQueue;
 
+import javafx.scene.layout.Border;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
@@ -21,6 +23,7 @@ import javax.swing.JSeparator;
 
 import java.awt.Button;
 import java.awt.Panel;
+
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -35,9 +38,6 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 
 /**
  * This class builds and implements the GUI.
@@ -57,12 +57,12 @@ public class SkyMap_gui {
 	 * Class Variables 
 	 */
     /** Globals */
-        private Globals globals = new Globals();
+    private Globals globals = new Globals();
         
 	// Fields
 	private JFrame frmSkymap;
-        private StarMapPanel star_canvas = new StarMapPanel();
-        private Controller my_controller = new Controller();
+    private StarMapPanel star_canvas = new StarMapPanel();
+    private Controller my_controller = new Controller();
 	private JTextField txtLatitude;
 	private JTextField txtLongitude;
 	private JTextField txtYear;
@@ -79,6 +79,8 @@ public class SkyMap_gui {
 	private int inputHour = 0;
 	private int inputMin = 0;
 	private double inputTimezone = 0.0;
+	private int scroll_x = 0;
+	private int scroll_y = 0;
 	
 	//variables for testing input
 	private double MIN_LAT = -90.000;
@@ -127,6 +129,7 @@ public class SkyMap_gui {
 		frmSkymap.setBounds(100, 100, Globals.GUIWIDTH + Globals.WINWIDTH, Globals.WINHEIGHT);
 		frmSkymap.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSkymap.getContentPane().setLayout(null);
+		frmSkymap.setResizable(false);
 
 		// "Logo" label -- "SkyMap"
 		JLabel lblSkymap = new JLabel("SkyMap");
@@ -134,6 +137,7 @@ public class SkyMap_gui {
 		lblSkymap.setForeground(Color.WHITE);
 		lblSkymap.setBounds(17, 8, 176, 55);
 		frmSkymap.getContentPane().add(lblSkymap);
+		
 		
 		/** Begin Lat/Long */	
 		// Latitude Field -- takes text input
@@ -183,7 +187,6 @@ public class SkyMap_gui {
 		 * text which is just for the user.
 		 */
 		Vector Month = new Vector();
-			Month.addElement( new Item(0, 0.0, "Mo." ) );
 			Month.addElement( new Item(1, 0.0, "Jan." ) );
 			Month.addElement( new Item(2, 0.0, "Feb." ) );
 			Month.addElement( new Item(3, 0.0, "March" ) );
@@ -280,7 +283,6 @@ public class SkyMap_gui {
 		 * just for the user.
 		 */
 		Vector GMT = new Vector();
-			GMT.addElement( new Item(-1, 0.0, "Select a Timezone." ) );
 			GMT.addElement( new Item(0, 0.0, "GMT - Greenwich Mean Time" ) );
 			GMT.addElement( new Item(1, 0.0, "GMT - Universal Coordinated Time" ) );
 			GMT.addElement( new Item(2, 1.0, "GMT+1:00 - European Central Time" ) );
@@ -338,49 +340,49 @@ public class SkyMap_gui {
 		JLabel lblCurrentLatitude = new JLabel("Current Latitude:");
 		lblCurrentLatitude.setForeground(new Color(255, 255, 255));
 		lblCurrentLatitude.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		lblCurrentLatitude.setBounds(17, 367, 156, 20);
+		lblCurrentLatitude.setBounds(17, 334, 156, 20);
 		frmSkymap.getContentPane().add(lblCurrentLatitude);
 		
 		// Label: Current Longitude
 		JLabel lblCurrentLongitude = new JLabel("Current Longitude:");
 		lblCurrentLongitude.setForeground(Color.WHITE);
 		lblCurrentLongitude.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		lblCurrentLongitude.setBounds(17, 417, 156, 20);
+		lblCurrentLongitude.setBounds(17, 384, 156, 20);
 		frmSkymap.getContentPane().add(lblCurrentLongitude);
 		
 		// Label: Current Date Parameters
 		JLabel lblCurrentDatetime = new JLabel("Current Date/Time:");
 		lblCurrentDatetime.setForeground(Color.WHITE);
 		lblCurrentDatetime.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		lblCurrentDatetime.setBounds(17, 464, 156, 20);
+		lblCurrentDatetime.setBounds(17, 431, 156, 20);
 		frmSkymap.getContentPane().add(lblCurrentDatetime);
 		
 		// Current Latitude
 		JLabel lblLat = new JLabel("LAT");
 		lblLat.setForeground(new Color(255, 255, 255));
 		lblLat.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		lblLat.setBounds(27, 386, 91, 20);
+		lblLat.setBounds(27, 353, 91, 20);
 		frmSkymap.getContentPane().add(lblLat);
 		
 		// Current Longitude
 		JLabel lblLong = new JLabel("LONG");
 		lblLong.setForeground(Color.WHITE);
 		lblLong.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		lblLong.setBounds(27, 436, 91, 20);
+		lblLong.setBounds(27, 403, 91, 20);
 		frmSkymap.getContentPane().add(lblLong);
 		
 		// Current Date Parameters
 		JLabel lblGeneratedDate = new JLabel("mm/dd/yyyy");
 		lblGeneratedDate.setForeground(Color.WHITE);
 		lblGeneratedDate.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		lblGeneratedDate.setBounds(27, 483, 165, 20);
+		lblGeneratedDate.setBounds(27, 450, 165, 20);
 		frmSkymap.getContentPane().add(lblGeneratedDate);
 		
 		//Current Time Parameters
 		JLabel lblGeneratedTime = new JLabel("hh:mm, GMT +0");
 		lblGeneratedTime.setForeground(Color.WHITE);
 		lblGeneratedTime.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		lblGeneratedTime.setBounds(27, 495, 165, 37);
+		lblGeneratedTime.setBounds(27, 462, 165, 37);
 		frmSkymap.getContentPane().add(lblGeneratedTime);
 		
 		/**
@@ -391,7 +393,7 @@ public class SkyMap_gui {
 		JButton btnGenerate = new JButton("Generate Map");
 		btnGenerate.setForeground(Color.WHITE);
 		btnGenerate.setBackground(Color.BLACK);
-		btnGenerate.setBounds(17, 312, 101, 23);
+		btnGenerate.setBounds(17, 300, 101, 23);
 		frmSkymap.getContentPane().add(btnGenerate);
 		
 		// Action Listener for btnGenerate.
@@ -560,11 +562,14 @@ public class SkyMap_gui {
                         else {
                             lblGeneratedTime.setText(String.valueOf(inputHour) + ":" + String.valueOf(inputMin) + ", GMT +" + String.valueOf(inputTimezone));
                         }
+                        
                         // DO THE THING!
+                        scroll_x = 0;
+                        scroll_y = 0;
                         my_controller.setUserData(inputLat, inputLong, inputMonth, inputDay, inputYear, inputTimezone, inputHour, inputMin);
                         star_canvas.clearObjects();
                         star_canvas.setCameraPosition((int) inputLat, (int) inputLong);
-                        star_canvas.setScroll(0, 0); // star_canvas.setScroll(scroll_x, scroll_y);
+                        //star_canvas.setScroll(100, 100); // star_canvas.setScroll(scroll_x, scroll_y);
                         star_canvas.createObjects(my_controller);
                         star_canvas.revalidate();
                         star_canvas.repaint();
@@ -572,20 +577,144 @@ public class SkyMap_gui {
 		});
 		
 		
+        // Add canvas
+        //star_canvas = new StarMapPanel(); Done above
+        star_canvas.setBounds(280, 15, 600, 522); //-15, -35
+		//star_canvas.setBounds(Globals.GUIWIDTH, 0, Globals.WINWIDTH, Globals.WINHEIGHT); //-15, -35
+        frmSkymap.getContentPane().add(star_canvas);
+		
+		
+		/**Checkboxes - Allows user to decide which object labels they'll see*/
+		// Label: Display Names Of
+		JLabel lblLabels = new JLabel("Display Names Of:");
+		lblLabels.setForeground(Color.WHITE);
+		lblLabels.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		lblLabels.setBounds(19, 506, 156, 20);
+		frmSkymap.getContentPane().add(lblLabels);
+		
+		//Create Checkboxes 
+		JCheckBox checkboxOne = new JCheckBox("Stars");
+		checkboxOne.setOpaque(false);
+		checkboxOne.setBounds(17, 514, 75, 50);
+		checkboxOne.setForeground(Color.WHITE);
+		checkboxOne.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		JCheckBox checkboxTwo = new JCheckBox("Messier Objects");
+		checkboxTwo.setOpaque(false);
+		checkboxTwo.setBounds(87, 514, 125, 50);
+		checkboxTwo.setForeground(Color.WHITE);
+		checkboxTwo.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		JCheckBox checkboxThree = new JCheckBox("Planets");
+		checkboxThree.setOpaque(false);
+		checkboxThree.setBounds(17, 535, 80, 50);
+		checkboxThree.setForeground(Color.WHITE);
+		checkboxThree.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		JCheckBox checkboxFour = new JCheckBox("Constellations");
+		checkboxFour.setOpaque(false);
+		checkboxFour.setBounds(87, 535, 125, 50);
+		checkboxFour.setForeground(Color.WHITE);
+		checkboxFour.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		//Display Checkboxes
+		frmSkymap.getContentPane().add(checkboxOne);
+		frmSkymap.getContentPane().add(checkboxTwo);
+		frmSkymap.getContentPane().add(checkboxThree);
+		frmSkymap.getContentPane().add(checkboxFour);
+
+		
+		/** Scroll Buttons: Includes Action Handlers to move the x and y for the image view by 25 units (pixels) */
+		// Down Scroll Button
+		JButton btnDownScroll = new JButton("");
+		btnDownScroll.setBackground(Color.BLACK);
+		btnDownScroll.setForeground(Color.BLACK);
+		btnDownScroll.setBorder(null);
+		btnDownScroll.setFocusPainted(false);
+		btnDownScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_down.gif")));
+		btnDownScroll.setBounds(546, 534, 53, 53);
+		frmSkymap.getContentPane().add(btnDownScroll);
+		
+		btnDownScroll.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	scroll_y = scroll_y + 25;
+            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
+            	star_canvas.createObjects(my_controller);
+                star_canvas.revalidate();
+                star_canvas.repaint();
+            	}
+            });
+		
+		// Up Scroll Button
+		JButton btnUpScroll = new JButton("");
+		btnUpScroll.setBackground(Color.BLACK);
+		btnUpScroll.setForeground(Color.BLACK);
+		btnUpScroll.setBorder(null);
+		btnUpScroll.setFocusPainted(false);
+		btnUpScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_up.gif")));
+		btnUpScroll.setBounds(609, 534, 53, 53);
+		frmSkymap.getContentPane().add(btnUpScroll);
+		
+		btnUpScroll.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	scroll_y = scroll_y - 25;
+            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
+            	star_canvas.createObjects(my_controller);
+                star_canvas.revalidate();
+                star_canvas.repaint();
+            	}
+            });
+		
+		// Left Scroll
+		JButton btnLeftScroll = new JButton("");
+		btnLeftScroll.setBackground(Color.BLACK);
+		btnLeftScroll.setForeground(Color.BLACK);
+		btnLeftScroll.setBorder(null);
+		btnLeftScroll.setFocusPainted(false);
+		btnLeftScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_left.gif")));
+		btnLeftScroll.setBounds(483, 534, 53, 53);
+		frmSkymap.getContentPane().add(btnLeftScroll);
+		
+		btnLeftScroll.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	scroll_x = scroll_x - 25;
+            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
+            	star_canvas.createObjects(my_controller);
+                star_canvas.revalidate();
+                star_canvas.repaint();
+            	}
+            });
+		
+		// Right Scroll
+		JButton btnRightScroll = new JButton("");
+		btnRightScroll.setBackground(Color.BLACK);
+		btnRightScroll.setForeground(Color.BLACK);
+		btnRightScroll.setBorder(null);
+		btnRightScroll.setFocusPainted(false);
+		btnRightScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_right.gif")));
+		btnRightScroll.setBounds(672, 534, 53, 53);
+		frmSkymap.getContentPane().add(btnRightScroll);
+		
+		btnRightScroll.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	scroll_x = scroll_x + 25;
+            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
+            	star_canvas.createObjects(my_controller);
+                star_canvas.revalidate();
+                star_canvas.repaint();
+            	}
+            });
+		
+        
 		// Button: Print Map
 		/** TO-DO: Event handler to print map */
 		JButton btnPrint = new JButton("Print Map");
 		btnPrint.setForeground(Color.WHITE);
 		btnPrint.setBackground(Color.BLACK);
-		btnPrint.setBounds(17, 543, 89, 23);
+		btnPrint.setBounds(781, 550, 89, 23);
 		frmSkymap.getContentPane().add(btnPrint);
-                
-                // Add canvas
-                //star_canvas = new StarMapPanel(); Done above
-                star_canvas.setBounds(Globals.GUIWIDTH, 0, Globals.WINWIDTH, Globals.WINHEIGHT); //-15, -35
-                frmSkymap.getContentPane().add(star_canvas);
-		
-                // Gui Background image
+        
+        // Sidebar Image
 		JLabel label_2 = new JLabel("");
 		label_2.setIcon(new ImageIcon(this.getClass().getResource("/images/ex.png")));
 		label_2.setBounds(0, 0, 292, 587);
