@@ -54,11 +54,11 @@ public class StarMapPanel extends JPanel {
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
-        /*for (Planet planet : the_controller.planetList) {
-            PlanetDisplay current_object = new PlanetDisplay(planet.getHourAngle()*15, planet.getDeclination(), planet.getName());
+        for (Planet planet : the_controller.planetList) {
+            PlanetDisplay current_object = new PlanetDisplay(planet.getHourAngle()*15, planet.getDeclination(), planet.getName(), planet.getIcon());
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
-        }*/
+        }
     }
     
     public void StarLabels(Controller the_controller) {

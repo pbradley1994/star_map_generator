@@ -740,7 +740,7 @@ public class SkyMap_gui {
 		btnDownScroll.setForeground(Color.BLACK);
 		btnDownScroll.setBorder(null);
 		btnDownScroll.setFocusPainted(false);
-		btnDownScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_down.gif")));
+		//btnDownScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_down.gif")));
 		btnDownScroll.setBounds(546, 534, 53, 53);
 		frmSkymap.getContentPane().add(btnDownScroll);
 		
@@ -760,7 +760,7 @@ public class SkyMap_gui {
 		btnUpScroll.setForeground(Color.BLACK);
 		btnUpScroll.setBorder(null);
 		btnUpScroll.setFocusPainted(false);
-		btnUpScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_up.gif")));
+		//btnUpScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_up.gif")));
 		btnUpScroll.setBounds(609, 534, 53, 53);
 		frmSkymap.getContentPane().add(btnUpScroll);
 		
@@ -780,7 +780,7 @@ public class SkyMap_gui {
 		btnLeftScroll.setForeground(Color.BLACK);
 		btnLeftScroll.setBorder(null);
 		btnLeftScroll.setFocusPainted(false);
-		btnLeftScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_left.gif")));
+		//btnLeftScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_left.gif")));
 		btnLeftScroll.setBounds(483, 534, 53, 53);
 		frmSkymap.getContentPane().add(btnLeftScroll);
 		
@@ -800,7 +800,7 @@ public class SkyMap_gui {
 		btnRightScroll.setForeground(Color.BLACK);
 		btnRightScroll.setBorder(null);
 		btnRightScroll.setFocusPainted(false);
-		btnRightScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_right.gif")));
+		//btnRightScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_right.gif")));
 		btnRightScroll.setBounds(672, 534, 53, 53);
 		frmSkymap.getContentPane().add(btnRightScroll);
 		
