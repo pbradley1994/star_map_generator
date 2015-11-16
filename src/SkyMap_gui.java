@@ -1,21 +1,23 @@
 //TO DO: clean up what you actually use 
-import java.awt.EventQueue;
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
 import java.awt.*;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.util.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JTextField;
 import javax.swing.plaf.basic.*;
 
 /**
@@ -37,7 +39,7 @@ public class SkyMap_gui {
 	 */
     /** Globals */
     private Globals globals = new Globals();
-        
+    
 	// Fields
 	private JFrame frmSkymap;
     private StarMapPanel star_canvas = new StarMapPanel();
@@ -72,6 +74,9 @@ public class SkyMap_gui {
 	private int MAX_HOUR = 24;
 	private int MIN_MIN = 0;
 	private int MAX_MIN = 59;
+        
+        // Printing job
+        private PrinterJob job = PrinterJob.getPrinterJob();
 
 	/**
 	 * Launch the application.
@@ -740,13 +745,13 @@ public class SkyMap_gui {
 		btnDownScroll.setForeground(Color.BLACK);
 		btnDownScroll.setBorder(null);
 		btnDownScroll.setFocusPainted(false);
-		//btnDownScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_down.gif")));
+		btnDownScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_down.gif")));
 		btnDownScroll.setBounds(546, 534, 53, 53);
 		frmSkymap.getContentPane().add(btnDownScroll);
 		
 		btnDownScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	scroll_y = scroll_y + 25;
+            	scroll_y = scroll_y - 25;
             	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
             	star_canvas.createObjects(my_controller);
                 star_canvas.revalidate();
@@ -760,13 +765,13 @@ public class SkyMap_gui {
 		btnUpScroll.setForeground(Color.BLACK);
 		btnUpScroll.setBorder(null);
 		btnUpScroll.setFocusPainted(false);
-		//btnUpScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_up.gif")));
+		btnUpScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_up.gif")));
 		btnUpScroll.setBounds(609, 534, 53, 53);
 		frmSkymap.getContentPane().add(btnUpScroll);
 		
 		btnUpScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	scroll_y = scroll_y - 25;
+            	scroll_y = scroll_y + 25;
             	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
             	star_canvas.createObjects(my_controller);
                 star_canvas.revalidate();
@@ -780,13 +785,13 @@ public class SkyMap_gui {
 		btnLeftScroll.setForeground(Color.BLACK);
 		btnLeftScroll.setBorder(null);
 		btnLeftScroll.setFocusPainted(false);
-		//btnLeftScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_left.gif")));
+		btnLeftScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_left.gif")));
 		btnLeftScroll.setBounds(483, 534, 53, 53);
 		frmSkymap.getContentPane().add(btnLeftScroll);
 		
 		btnLeftScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	scroll_x = scroll_x - 25;
+            	scroll_x = scroll_x + 25;
             	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
             	star_canvas.createObjects(my_controller);
                 star_canvas.revalidate();
@@ -800,13 +805,13 @@ public class SkyMap_gui {
 		btnRightScroll.setForeground(Color.BLACK);
 		btnRightScroll.setBorder(null);
 		btnRightScroll.setFocusPainted(false);
-		//btnRightScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_right.gif")));
+		btnRightScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_right.gif")));
 		btnRightScroll.setBounds(672, 534, 53, 53);
 		frmSkymap.getContentPane().add(btnRightScroll);
 		
 		btnRightScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	scroll_x = scroll_x + 25;
+            	scroll_x = scroll_x - 25;
             	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
             	star_canvas.createObjects(my_controller);
                 star_canvas.revalidate();
@@ -822,6 +827,22 @@ public class SkyMap_gui {
 		btnPrint.setBackground(Color.BLACK);
 		btnPrint.setBounds(781, 550, 89, 23);
 		frmSkymap.getContentPane().add(btnPrint);
+                
+                btnPrint.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                job.setPrintable(star_canvas);
+                boolean doPrint = job.printDialog();
+                if (doPrint) {
+                    try {
+                        job.print();
+                    } catch (PrinterException error) {
+                    // The job did not successfully
+                    // complete
+                    }
+                }
+            }
+            });
+                
         
         // Sidebar Image
 		JLabel label_2 = new JLabel("");

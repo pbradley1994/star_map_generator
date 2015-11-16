@@ -1,15 +1,18 @@
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Patrick
  */
-public class StarMapPanel extends JPanel {
+public class StarMapPanel extends JPanel implements Printable {
     /** Globals */
     private Globals globals = new Globals();
     /** List of Star */
@@ -118,6 +121,18 @@ public class StarMapPanel extends JPanel {
         //g.setColor(Color.white);
         //g.drawString("This is my custom panel!", 15, 15);
         //System.out.println("This is a panel!");
+    }
+
+    @Override
+    public int print(Graphics grphcs, PageFormat pf, int page) throws PrinterException {
+        if (page > 0) {
+            return NO_SUCH_PAGE;
+        }
+        
+        // perform rendering - this might work?
+        paintComponent(grphcs);
+        
+        return PAGE_EXISTS;
     }
    
 }
