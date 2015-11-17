@@ -139,7 +139,7 @@ public class Calculator {
 		inclination = ToRad * inclination;
 		
 		double temp = Math.sin(helioLongitude - longAscNode) * Math.sin(inclination);
-		double helioLat = Math.sinh(temp);
+		double helioLat = Math.asin(temp);
 		
 		//convert back to degrees for return
 		helioLat = ToDeg * helioLat;
@@ -165,13 +165,12 @@ public class Calculator {
 		
 		double x = Math.cos(helioLongitude - radLongAscNode);
 		double y = Math.sin(helioLongitude - radLongAscNode) * Math.cos(inclination);
-		double temp = Math.tanh(y / x);
+		double temp = Math.atan2(y, x);
 		//convert back to degrees to finish out function
 		x = ToDeg * x;
 		y = ToDeg * y;
 		temp = ToDeg * temp;
 		
-		temp = checkQuadrant(x, y, temp);
 		double projectedHelioLong = temp + longAscNode;
 
 		return projectedHelioLong;
@@ -226,14 +225,14 @@ public class Calculator {
 		{
 			top = projectedRadiusVectorPlanet * Math.sin(helioLongEarth - projectedHelioLongPlanet);
 			bottom = radiusVectorEarth - projectedRadiusVectorPlanet * Math.cos(helioLongEarth - projectedHelioLongPlanet);
-			temp = Math.tanh(top / bottom);
+			temp = Math.atan(top / bottom);
 			geoLong = 180.0 + helioLongEarth + temp;
 		}
 		else //outer planet
 		{
 			top = radiusVectorEarth * Math.sin(projectedHelioLongPlanet - helioLongEarth);
 			bottom = projectedRadiusVectorPlanet - radiusVectorEarth * Math.cos(projectedHelioLongPlanet - helioLongEarth);
-			temp = Math.tanh(top / bottom);
+			temp = Math.atan(top / bottom);
 			geoLong = temp + projectedHelioLongPlanet;
 		}
 		//convert geoLong back to degrees
@@ -270,7 +269,7 @@ public class Calculator {
 		
 		double top = projectedRadiusVectorPlanet * Math.tan(helioLatPlanet) * Math.sin(geoLongPlanet - projectedHelioLongPlanet);
 		double bottom = radiusVectorEarth * Math.sin(projectedHelioLongPlanet - helioLongEarth);
-		double geoLat = Math.tanh(top / bottom);
+		double geoLat = Math.atan(top / bottom);
 		//convert back to degrees
 		geoLat = ToDeg * geoLat;
 
@@ -296,7 +295,7 @@ public class Calculator {
 		double tempA = Math.sin(geoLatPlanet)*Math.cos(meanLongPlanet);
 		double tempB = Math.cos(geoLatPlanet) * Math.sin(meanLongPlanet) * Math.sin(geoLongPlanet);
 		double tempC = tempA + tempB;
-		double declination = Math.sinh(tempC);
+		double declination = Math.asin(tempC);
 		//convert back to degrees
 		declination = ToDeg * declination;
 		return declination;
@@ -320,13 +319,12 @@ public class Calculator {
 		
 		double x = Math.cos(geoLongPlanet);
 		double y = Math.sin(geoLongPlanet) * Math.cos(meanLongPlanet) - Math.tan(geoLatPlanet) * Math.sin(meanLongPlanet);
-		double rightAsc = Math.tanh(y / x);
+		double rightAsc = Math.atan2(y, x);
 		
 		//convert back to degrees
 		x = ToDeg * x;
 		y = ToDeg * y;
 		rightAsc = ToDeg * rightAsc;
-		rightAsc = checkQuadrant(x, y, rightAsc);
 		
 		//adjust if outside 0-360 range
 		if (rightAsc > 360.0)
@@ -337,135 +335,5 @@ public class Calculator {
 		rightAsc = rightAsc / 15.0; //to get decimal hours
 		
 		return rightAsc;
-	}
-	
-	/***************************************************************
-	 * This function checks removes the ambiguity that arises from 
-	 * taking tanh(y/x).  The rule is that temp should lie in the 
-	 * quadrant indicated by the signs of x and y. 
-	 * If it is already there, do nothing.
-	 * UpperLeft Quadrant = 90 to 180 = y-pos, x-neg
-	 * UpperRight Quadrant = 0 to 90 = y-pos, x-pos
-	 * LowerLeft Quadrant = -90 to -180 / 180 to 270 = y-neg, x-neg
-	 * LowerRightQuadrant = 0 to -90 / 270 to 360 = y-neg, x-pos
-	 * 
-	 * @param x as x-axis param to check temp against
-	 * @param y as y-axis param to check temp against
-	 * @param temp as value that needs checking
-	 * @return temp as adjusted if necessary
-	 ***************************************************************/
-	private double checkQuadrant(double x, double y, double temp) 
-	{
-		Boolean yIsPos;
-		Boolean xIsPos;
-		int ULQuad = 1;
-		int URQuad = 2;
-		int LLQuad = 3;
-		int LRQuad = 4;
-		int xyQuad = 0;
-		int tempQuad = 0;
-		
-		//find +/- values of x and y
-		if(x >= 0.0)
-			xIsPos = true;
-		else
-			xIsPos = false;
-		
-		if(y >= 0.0)
-			yIsPos = true;
-		else
-			yIsPos = false;
-		
-		//find quadrant of x and y
-		if (!xIsPos && yIsPos)
-			xyQuad = 1;
-		else if(xIsPos && yIsPos)
-			xyQuad = 2;
-		else if (!xIsPos && !yIsPos)
-			xyQuad = 3;
-		else if (xIsPos && !yIsPos)
-			xyQuad = 4;
-		
-		//find quadrant of temp
-		if(temp >= 90.0 && temp <= 180.0)
-			tempQuad = 1;
-		else if(temp >= 0.0 && temp <= 90.0)
-			tempQuad = 2;
-		else if(temp >= 180.0 && temp <= 270.0)
-			tempQuad = 3;
-		else if(temp >= -180.0 && temp <= -90.0)
-			tempQuad = 3;
-		else if(temp >= 270.0 && temp <= 360.0)
-			tempQuad = 4;
-		else if(temp >= -90.0 && temp <= 0.0)
-			tempQuad = 4;
-		
-		//check if temp needs adjusting
-		if(xyQuad == tempQuad)
-			return temp; //no adjustments needed
-		
-		//adjust temp
-		if(xyQuad == ULQuad) //xy in quad 1
-		{
-			if(tempQuad == URQuad) //temp in quad 2
-			{
-				temp += 90.0;
-			}
-			else if(tempQuad == LLQuad) //temp in quad 3
-			{
-				temp -= 90.0;
-			}
-			else if(tempQuad == LRQuad) //temp in quad 4
-			{
-				temp -= 180.0;
-			}
-		}
-		else if(xyQuad == URQuad) //xy in quad 2
-		{
-			if(tempQuad == ULQuad) //temp in quad 1
-			{
-				temp -= 90.0;
-			}
-			else if(tempQuad == LLQuad) //temp in quad 3
-			{
-				temp -= 180.0;
-			}
-			else if(tempQuad == LRQuad) //temp in quad 4
-			{
-				temp -= 270.0;
-			}
-		}
-		else if(xyQuad == LLQuad) //xy in quad 3
-		{
-			if(tempQuad == ULQuad) //temp in quad 1
-			{
-				temp += 90.0;
-			}
-			else if(tempQuad == URQuad) //temp in quad 2
-			{
-				temp += 180.0;
-			}
-			else if(tempQuad == LRQuad) //temp in quad 4
-			{
-				temp -= 90.0;
-			}
-		}
-		else if(xyQuad == LRQuad) //xy in quad 4
-		{
-			if(tempQuad == ULQuad) //temp in quad 1
-			{
-				temp += 180.0;
-			}
-			else if(tempQuad == URQuad) //temp in quad 2
-			{
-				temp += 270.0;
-			}
-			else if(tempQuad == LLQuad) //temp in quad 3
-			{
-				temp += 90.0;
-			}
-		}
-		
-		return temp; //adjusted
 	}
 }
