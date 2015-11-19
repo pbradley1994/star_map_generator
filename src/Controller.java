@@ -40,11 +40,11 @@ public class Controller {
 	 ***********************************************/
 	public Controller()
 	{
-		theParser = new Parser();
-		starList = theParser.getStars();
-		messierList = theParser.getMessierObjects();
+//		theParser = new Parser();
+//		starList = theParser.getStars();
+//		messierList = theParser.getMessierObjects();
 		//moon = theParser.getMoon();
-		constellationList = theParser.getConstellations();
+//		constellationList = theParser.getConstellations();
 		planetList = new ArrayList<Planet>();
 		theCalculator = new Calculator();
 		epoch2000JD = 2451545.0;
@@ -101,9 +101,9 @@ public class Controller {
 		//*****************************
 		//adjust star map data to user
 		//*****************************
-		adjustStarData();
-		adjustMessierData();
-		adjustMoonData(); //TODO
+//		adjustStarData();
+//		adjustMessierData();
+//		adjustMoonData(); //TODO
 		createPlanets();
 		adjustPlanetData();	
 	}
@@ -133,6 +133,32 @@ public class Controller {
 		
 	}
 	
+	/***************************************************
+	 *  This function is used below in calculating
+	 *  the Mean Longitude of each planet
+	 *  Note: Given by Dr. Coleman
+	 *  @param value as a mean long in radians
+	 *  @return value as adjusted mean long in degrees
+	 ***************************************************/
+	private double mod2pi(double value)
+	{
+		double absB;
+		double B = value / (2 * Math.PI);
+		
+		if(B >= 0)
+			absB = Math.floor(B);
+		else
+			absB = Math.ceil(B);
+		
+		double A = (2 * Math.PI) * (B - absB);
+		if(A < 0) 
+			A = (2 * Math.PI) + A;
+		value = A;
+		//convert back to degrees
+		value = value * (180.0 / Math.PI);
+
+		return value;
+	}
 	/*************************************************
 	 * This function creates the nine planets based on
 	 * user input to find each of the planets' constants
@@ -162,11 +188,8 @@ public class Controller {
 		inclinationOnPlane = 7.00487  -  23.51 * cy / 3600;
 		perihelion = 77.45645  + 573.57 * cy / 3600;
 		longitudeOfAscendingNode = 48.33167 - 446.30 * cy / 3600;
-		meanLongitude = 252.25084 + 538101628.29 * cy / 3600;
-		if(meanLongitude > 360.0)
-			meanLongitude -= 360.0;
-		else if(meanLongitude < 0.0)
-			meanLongitude += 360.0;
+		meanLongitude = (252.25084 + 538101628.29 * cy / 3600) * (Math.PI / 180.0);
+		meanLongitude = mod2pi(meanLongitude);	
 		
 		mercury.setUnicodeIcon(unicode_icon);
 		mercury.setSemimajorAxis(semimajorAxis);
@@ -188,11 +211,8 @@ public class Controller {
 		inclinationOnPlane = 3.39471 - 2.86 * cy / 3600;
 		perihelion = 131.53298 - 108.80 * cy / 3600;
 		longitudeOfAscendingNode = 76.68069 - 996.89 * cy / 3600; 
-		meanLongitude = 181.97973 + 210664136.06 * cy / 3600;
-		if(meanLongitude > 360.0)
-			meanLongitude -= 360.0;
-		else if(meanLongitude < 0.0)
-			meanLongitude += 360.0;
+		meanLongitude = (181.97973 + 210664136.06 * cy / 3600) * (Math.PI / 180.0);
+		meanLongitude = mod2pi(meanLongitude);
 		
 		venus.setUnicodeIcon(unicode_icon);
 		venus.setSemimajorAxis(semimajorAxis);
@@ -214,11 +234,8 @@ public class Controller {
 		inclinationOnPlane = 0.00005 - 46.94 * cy / 3600;
 		perihelion = 102.94719 +  1198.28 * cy / 3600;
 		longitudeOfAscendingNode = -11.26064 - 18228.25 * cy/ 3600;
-		meanLongitude = 100.46435 + 129597740.63 * cy / 3600;
-		if(meanLongitude > 360.0)
-			meanLongitude -= 360.0;
-		else if(meanLongitude < 0.0)
-			meanLongitude += 360.0;
+		meanLongitude = (100.46435 + 129597740.63 * cy / 3600) * (Math.PI / 180.0);
+		meanLongitude = mod2pi(meanLongitude);
 		
 		earth.setUnicodeIcon(unicode_icon);
 		earth.setSemimajorAxis(semimajorAxis);
@@ -240,11 +257,8 @@ public class Controller {
 		inclinationOnPlane = 1.85061 - 25.47 * cy / 3600;
 		perihelion = 336.04084 + 1560.78 * cy / 3600;
 		longitudeOfAscendingNode = 49.57854 - 1020.19 * cy / 3600;
-		meanLongitude = 355.45332 + 68905103.78 * cy / 3600;
-		if(meanLongitude > 360.0)
-			meanLongitude -= 360.0;
-		else if(meanLongitude < 0.0)
-			meanLongitude += 360.0;
+		meanLongitude = (355.45332 + 68905103.78 * cy / 3600) * (Math.PI / 180.0);
+		meanLongitude = mod2pi(meanLongitude);
 		
 		mars.setUnicodeIcon(unicode_icon);
 		mars.setSemimajorAxis(semimajorAxis);
@@ -266,11 +280,8 @@ public class Controller {
 		inclinationOnPlane = 1.30530 -  4.15 * cy / 3600;
 		perihelion = 14.75385 +  839.93 * cy / 3600;
 		longitudeOfAscendingNode = 100.55615 + 1217.17 * cy / 3600;
-		meanLongitude = 34.40438 + 10925078.35 * cy / 3600;
-		if(meanLongitude > 360.0)
-			meanLongitude -= 360.0;
-		else if(meanLongitude < 0.0)
-			meanLongitude += 360.0;
+		meanLongitude = (34.40438 + 10925078.35 * cy / 3600) * (Math.PI / 180.0);
+		meanLongitude = mod2pi(meanLongitude);
 		
 		jupiter.setUnicodeIcon(unicode_icon);
 		jupiter.setSemimajorAxis(semimajorAxis);
@@ -292,11 +303,8 @@ public class Controller {
 		inclinationOnPlane = 2.48446 +  6.11 * cy / 3600;
 		perihelion = 92.43194 - 1948.89 * cy / 3600;
 		longitudeOfAscendingNode =  113.71504 - 1591.05 * cy / 3600;
-		meanLongitude = 49.94432 + 4401052.95 * cy / 3600;
-		if(meanLongitude > 360.0)
-			meanLongitude -= 360.0;
-		else if(meanLongitude < 0.0)
-			meanLongitude += 360.0;
+		meanLongitude = (49.94432 + 4401052.95 * cy / 3600) * (Math.PI / 180.0);
+		meanLongitude = mod2pi(meanLongitude);
 				
 		saturn.setUnicodeIcon(unicode_icon);
 		saturn.setSemimajorAxis(semimajorAxis);
@@ -318,11 +326,8 @@ public class Controller {
 		inclinationOnPlane = 0.76986  -  2.09 * cy / 3600;
 		perihelion = 170.96424  + 1312.56 * cy / 3600;
 		longitudeOfAscendingNode = 74.22988  - 1681.40 * cy / 3600;
-		meanLongitude = 313.23218 + 1542547.79 * cy / 3600;
-		if(meanLongitude > 360.0)
-			meanLongitude -= 360.0;
-		else if(meanLongitude < 0.0)
-			meanLongitude += 360.0;
+		meanLongitude = (313.23218 + 1542547.79 * cy / 3600) * (Math.PI / 180.0);
+		meanLongitude = mod2pi(meanLongitude);
 		
 		uranus.setUnicodeIcon(unicode_icon);
 		uranus.setSemimajorAxis(semimajorAxis);
@@ -344,11 +349,8 @@ public class Controller {
 		inclinationOnPlane = 1.76917  -  3.64 * cy / 3600;
 		perihelion = 44.97135  - 844.43 * cy / 3600;
 		longitudeOfAscendingNode = 131.72169 - 151.25 * cy / 3600;
-		meanLongitude = 304.88003 + 786449.21 * cy / 3600;
-		if(meanLongitude > 360.0)
-			meanLongitude -= 360.0;
-		else if(meanLongitude < 0.0)
-			meanLongitude += 360.0;
+		meanLongitude = (304.88003 + 786449.21 * cy / 3600) * (Math.PI / 180.0);
+		meanLongitude = mod2pi(meanLongitude);
 		
 		neptune.setUnicodeIcon(unicode_icon);
 		neptune.setSemimajorAxis(semimajorAxis);
@@ -370,11 +372,8 @@ public class Controller {
 		inclinationOnPlane = 17.14175  +  11.07 * cy / 3600;
 		perihelion = 224.06676  - 132.25 * cy / 3600;
 		longitudeOfAscendingNode = 110.30347  -  37.33 * cy / 3600;
-		meanLongitude = 238.92881 + 522747.90 * cy / 3600;
-		if(meanLongitude > 360.0)
-			meanLongitude -= 360.0;
-		else if(meanLongitude < 0.0)
-			meanLongitude += 360.0;
+		meanLongitude = (238.92881 + 522747.90 * cy / 3600) * (Math.PI / 180.0);
+		meanLongitude = mod2pi(meanLongitude);
 		
 		pluto.setUnicodeIcon(unicode_icon);
 		pluto.setSemimajorAxis(semimajorAxis);
@@ -393,7 +392,6 @@ public class Controller {
 	private void adjustPlanetData()
 	{
 		//variables for function
-		double days;
 		double meanAnomalyEarth;
 		double helioLongEarth;
 		double trueAnomalyEarth;
@@ -411,15 +409,12 @@ public class Controller {
 		double rightAscensionPlanet;
 		double hourAnglePlanet;
 		Planet planet;
-		
-		//Find number of days since epoch 2000
-		days = userJulianDate - epoch2000JD; 
-		
+				
 		//calculate Mean Anomaly of earth
-		meanAnomalyEarth = theCalculator.findMeanAnomaly(earth, days);
+		meanAnomalyEarth = theCalculator.findMeanAnomaly(earth);
 		
 		//calculate heliocentric longitude of earth
-		helioLongEarth = theCalculator.findHeliocentricLongitude(earth, meanAnomalyEarth, days);
+		helioLongEarth = theCalculator.findHeliocentricLongitude(earth, meanAnomalyEarth);
 		
 		//calculate true anomaly of earth
 		trueAnomalyEarth = theCalculator.findTrueAnomaly(earth, helioLongEarth);
@@ -434,10 +429,10 @@ public class Controller {
 			planet = planetList.get(i);
 			
 			//calculate mean anomaly
-			meanAnomalyPlanet = theCalculator.findMeanAnomaly(planet, days);
+			meanAnomalyPlanet = theCalculator.findMeanAnomaly(planet);
 			
 			//calculate heliocentric longitude
-			helioLongPlanet = theCalculator.findHeliocentricLongitude(planet, meanAnomalyPlanet, days);
+			helioLongPlanet = theCalculator.findHeliocentricLongitude(planet, meanAnomalyPlanet);
 			
 			//calculate true anomaly
 			trueAnomalyPlanet = theCalculator.findTrueAnomaly(planet, helioLongPlanet);
