@@ -48,12 +48,12 @@ public class StarMapPanel extends JPanel implements Printable {
     	// When adding the planets/constellations, the string needs to be null here
     	// Then just add that code into the Label methods below
         for (Messier messier : the_controller.messierList) {
-        	MessierDisplay current_object = new MessierDisplay(messier.getRADecimalDegree(), messier.getDeclination(), null);
+        	MessierDisplay current_object = new MessierDisplay(messier.getHourAngle()*15, messier.getDeclination(), null);
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
         for (Star star : the_controller.starList) {
-        	StarDisplay current_object = new StarDisplay(star.getRA()*15, star.getDeclination(), star.getMagnitude(), null);
+        	StarDisplay current_object = new StarDisplay(star.getHourAngle()*15, star.getDeclination(), star.getMagnitude(), null);
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
@@ -112,7 +112,7 @@ public class StarMapPanel extends JPanel implements Printable {
         
         // Draw black background
         g.setColor(Color.black);
-        g.fillRect(0, 0, Globals.WINWIDTH + Globals.GUIWIDTH, Globals.WINHEIGHT);
+        g.fillRect(0, 0, Globals.WINWIDTH + Globals.GUIWIDTH, (Globals.WINHEIGHT)*2);
         // Draw each star
         for (ObjDisplay object : objects) {
             object.draw(g, scroll_x, scroll_y);

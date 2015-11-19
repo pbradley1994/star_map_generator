@@ -554,7 +554,7 @@ public class SkyMap_gui {
                         scroll_y = 0;
                         my_controller.setUserData(inputLat, inputLong, inputMonth, inputDay, inputYear, inputTimezone, inputHour, inputMin);
                         star_canvas.clearObjects();
-                        star_canvas.setCameraPosition((int) inputLat, (int) inputLong);
+                        star_canvas.setCameraPosition((int) inputLong, (int) inputLat);
                         //star_canvas.setScroll(100, 100); // star_canvas.setScroll(scroll_x, scroll_y);
                         star_canvas.createObjects(my_controller);
                         star_canvas.revalidate();
