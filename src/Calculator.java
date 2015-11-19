@@ -18,10 +18,33 @@ public class Calculator {
 	*****************************/
 	public Calculator()
 	{
-		ToDeg = Math.PI / 180.0;
-		ToRad = 180.0 / Math.PI;
+		ToDeg = 180.0 / Math.PI;
+		ToRad = Math.PI / 180.0;
 	}
-	
+	/***************************************************
+	 *  This function is used below in calculating
+	 *  the Mean Longitude of each planet
+	 *  Note: Given by Dr. Coleman
+	 *  @param value as a mean long in radians
+	 *  @return value as adjusted mean long in degrees
+	 ***************************************************/
+	private double mod2pi(double value)
+	{
+		double absB;
+		double B = value / (2 * Math.PI);
+		
+		if(B >= 0)
+			absB = Math.floor(B);
+		else
+			absB = Math.ceil(B);
+		
+		double A = (2 * Math.PI) * (B - absB);
+		if(A < 0) 
+			A = (2 * Math.PI) + A;
+		value = A;
+
+		return value;
+	}
 	/*************************************************************
 	 * This function calculates the local hour angle of a star or
 	 * any other fixed space object. The hour angle is used to track
@@ -45,13 +68,12 @@ public class Calculator {
 	 * @param days as the number of days since epoch 2000
 	 * @return mean anomaly of planet in degree form
 	 **************************************************************/
-	public double findMeanAnomaly(Planet planet, double days) 
+	public double findMeanAnomaly(Planet planet) 
 	{
-		double orbitalPeriod = planet.getOrbitalPeriod();
 		double meanLong = planet.getMeanLongitude();
 		double perihelion = planet.getPerihelion();
 		
-		double meanAnomaly = (360.0 / 365.242191) * (days / orbitalPeriod) + meanLong - perihelion;
+		double meanAnomaly = meanLong - perihelion;
 
 		return meanAnomaly;
 	}
@@ -64,9 +86,8 @@ public class Calculator {
 	 * @param days as the number of days since Epoch 2000
 	 * @return heliocentric longitude of the planet in degree form
 	 *******************************************************************/
-	public double findHeliocentricLongitude(Planet planet, double meanAnomaly, double days) 
+	public double findHeliocentricLongitude(Planet planet, double meanAnomaly) 
 	{
-		double orbitalPeriod = planet.getOrbitalPeriod();
 		double eccentricity = planet.getEccentricityOfOrbit();
 		double meanLong = planet.getMeanLongitude();
 		//find sin(meanAnomaly) and convert back to degrees
@@ -74,13 +95,15 @@ public class Calculator {
 		meanAnomaly = Math.sin(radMeanAnomaly);
 		meanAnomaly = meanAnomaly * ToDeg;
 		
-		double helioLong = (360.0 / 365.242191) * (days / orbitalPeriod) + eccentricity * meanAnomaly + meanLong;
+		double helioLong = eccentricity * meanAnomaly + meanLong;
 		
 		//adjust if outside 0 - 360 range
-		if(helioLong > 360.0)
-			helioLong -= 360.0;
-		if(helioLong < 0.0)
-			helioLong += 360.0;
+		if(helioLong > 360.0 || helioLong < 0.0)
+		{
+			helioLong = helioLong * ToRad;
+			helioLong = mod2pi(helioLong);
+			helioLong = helioLong * ToDeg;
+		}
 		
 		return helioLong;
 	}
@@ -167,10 +190,7 @@ public class Calculator {
 		double y = Math.sin(helioLongitude - radLongAscNode) * Math.cos(inclination);
 		double temp = Math.atan2(y, x);
 		//convert back to degrees to finish out function
-		x = ToDeg * x;
-		y = ToDeg * y;
 		temp = ToDeg * temp;
-		
 		double projectedHelioLong = temp + longAscNode;
 
 		return projectedHelioLong;
@@ -235,13 +255,10 @@ public class Calculator {
 			temp = Math.atan(top / bottom);
 			geoLong = temp + projectedHelioLongPlanet;
 		}
+		//adjust if outside 0-360 range
+		geoLong = mod2pi(geoLong);
 		//convert geoLong back to degrees
 		geoLong = ToDeg * geoLong;
-		//adjust if outside 0-360 range
-		if(geoLong < 0.0)
-			geoLong += 360.0;
-		if(geoLong > 360.0)
-			geoLong -= 360.0;
 		
 		return geoLong;
 	}
@@ -320,18 +337,11 @@ public class Calculator {
 		double x = Math.cos(geoLongPlanet);
 		double y = Math.sin(geoLongPlanet) * Math.cos(meanLongPlanet) - Math.tan(geoLatPlanet) * Math.sin(meanLongPlanet);
 		double rightAsc = Math.atan2(y, x);
-		
-		//convert back to degrees
-		x = ToDeg * x;
-		y = ToDeg * y;
-		rightAsc = ToDeg * rightAsc;
-		
+				
 		//adjust if outside 0-360 range
-		if (rightAsc > 360.0)
-			rightAsc -= 360.0;
-		if (rightAsc < 0.0)
-			rightAsc += 360;
+		rightAsc = mod2pi(rightAsc);
 		
+		rightAsc = ToDeg * rightAsc;
 		rightAsc = rightAsc / 15.0; //to get decimal hours
 		
 		return rightAsc;
