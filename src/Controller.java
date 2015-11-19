@@ -40,11 +40,11 @@ public class Controller {
 	 ***********************************************/
 	public Controller()
 	{
-//		theParser = new Parser();
-//		starList = theParser.getStars();
-//		messierList = theParser.getMessierObjects();
+		theParser = new Parser();
+		starList = theParser.getStars();
+		messierList = theParser.getMessierObjects();
 		//moon = theParser.getMoon();
-//		constellationList = theParser.getConstellations();
+		constellationList = theParser.getConstellations();
 		planetList = new ArrayList<Planet>();
 		theCalculator = new Calculator();
 		epoch2000JD = 2451545.0;
@@ -101,9 +101,9 @@ public class Controller {
 		//*****************************
 		//adjust star map data to user
 		//*****************************
-//		adjustStarData();
-//		adjustMessierData();
-//		adjustMoonData(); //TODO
+		adjustStarData();
+		adjustMessierData();
+		adjustMoonData(); //TODO
 		createPlanets();
 		adjustPlanetData();	
 	}
