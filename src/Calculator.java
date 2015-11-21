@@ -296,14 +296,13 @@ public class Calculator {
 	/**************************************************************
 	 * This Function finds the declination of a planet.
 	 * 
-	 * @param planet as the planet to find declination of
+	 * @param meanLongPlanet in degrees
 	 * @param geoLatPlanet in degrees
 	 * @param geoLongPlanet in degrees
 	 * @return declination of planet in degree form
 	 **************************************************************/
-	public double findPlanetDeclination(Planet planet, double geoLatPlanet, double geoLongPlanet) 
+	public double findPlanetDeclination(double meanLongPlanet, double geoLatPlanet, double geoLongPlanet) 
 	{		
-		double meanLongPlanet = planet.getMeanLongitude();
 		//convert to radians for Math.cos, etc
 		meanLongPlanet = ToRad * meanLongPlanet;
 		geoLatPlanet = ToRad * geoLatPlanet;
@@ -321,14 +320,13 @@ public class Calculator {
 	/**************************************************************
 	 * This function finds the right ascension of a planet.
 	 * 
-	 * @param planet as the planet to find the right ascension of
+	 * @param meanLongPlanet in degrees
 	 * @param geoLatPlanet in degrees
 	 * @param geoLongplanet in degrees
 	 * @return right ascension of planet in degree form
 	 **************************************************************/
-	public double findPlanetRightAscension(Planet planet, double geoLatPlanet, double geoLongPlanet) 
+	public double findPlanetRightAscension(double meanLongPlanet, double geoLatPlanet, double geoLongPlanet) 
 	{
-		double meanLongPlanet = planet.getMeanLongitude();
 		//convert to radians for Math.cos, etc
 		meanLongPlanet = ToRad * meanLongPlanet;
 		geoLatPlanet = ToRad * geoLatPlanet;
@@ -345,5 +343,21 @@ public class Calculator {
 		rightAsc = rightAsc / 15.0; //to get decimal hours
 		
 		return rightAsc;
+	}
+	/*************************************************************************
+	 * This function corrects for the moon evection when finding its position
+	 * @param sunGeoLong in degrees
+	 * @param meanLongitude in degrees
+	 * @param moonMeanAnomaly in degrees
+	 * @return correction in degrees
+	 *************************************************************************/
+	public double correctMoonEvection(double sunGeoLong, double meanLongitude, double moonMeanAnomaly) 
+	{
+		double radSunGeoLong = sunGeoLong * ToRad;
+		double radMeanLong = meanLongitude * ToRad;
+		double radMoonMeanAnomaly = moonMeanAnomaly * ToRad;
+		double correction = 1.2739 * Math.sin(2 * (radMeanLong - radSunGeoLong) - radMoonMeanAnomaly);
+		correction = correction * ToDeg;
+		return correction;
 	}
 }
