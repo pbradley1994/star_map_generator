@@ -1,12 +1,13 @@
 
 /**
- * @author kexline
+ * @author kexline and cpence
  *
  */
 
-public class Moon {
+public class Moon extends Planet {
 
-	public Moon() {
-		
+	public Moon(String name) {
+		super(name);
 	}
+
 }
