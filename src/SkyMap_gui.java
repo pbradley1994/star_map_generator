@@ -734,15 +734,20 @@ public class SkyMap_gui {
                 
                 btnPrint.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                job.setPrintable(star_canvas);
-                boolean doPrint = job.printDialog();
-                if (doPrint) {
-                    try {
-                        job.print();
-                    } catch (PrinterException error) {
-                    // The job did not successfully
-                    // complete
-                    }
+                if (generated) {
+                    job.setPrintable(star_canvas);
+                    boolean doPrint = job.printDialog();
+                    if (doPrint) {
+                        try {
+                            job.print();
+                        } catch (PrinterException error) {
+                        // The job did not successfully
+                        // complete
+                        }
+                    }   
+                }
+                else {
+                    JOptionPane.showMessageDialog(null,"Star map must be generated before printing.");
                 }
             }
             });
