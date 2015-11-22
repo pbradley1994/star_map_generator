@@ -49,6 +49,10 @@ public class SkyMap_gui {
 	private JTextField txtYear;
 	private JTextField txtHour;
 	private JTextField textMinutes;
+        private JCheckBox checkboxOne;
+        private JCheckBox checkboxTwo;
+        private JCheckBox checkboxThree;
+        private JCheckBox checkboxFour;
 	
 	// variables for storing input
 	private double inputLat = 0.0;
@@ -153,7 +157,6 @@ public class SkyMap_gui {
 		lblLongitude.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		lblLongitude.setBounds(17, 113, 127, 31);
 		frmSkymap.getContentPane().add(lblLongitude);
-		
 		
 		/** Begin Date */
 		// Date Label
@@ -555,8 +558,9 @@ public class SkyMap_gui {
                         my_controller.setUserData(inputLat, inputLong, inputMonth, inputDay, inputYear, inputTimezone, inputHour, inputMin);
                         star_canvas.clearObjects();
                         star_canvas.setCameraPosition((int) inputLong, (int) inputLat);
-                        //star_canvas.setScroll(100, 100); // star_canvas.setScroll(scroll_x, scroll_y);
+                        star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
                         star_canvas.createObjects(my_controller);
+                        star_canvas.setLabels(checkboxOne.isSelected(), checkboxTwo.isSelected(), checkboxThree.isSelected(), checkboxFour.isSelected());
                         star_canvas.revalidate();
                         star_canvas.repaint();
                         // Sets boolean for use with checkboxes
@@ -581,25 +585,25 @@ public class SkyMap_gui {
 		frmSkymap.getContentPane().add(lblLabels);
 		
 		//Create Checkboxes 
-		JCheckBox checkboxOne = new JCheckBox("Stars");
+		checkboxOne = new JCheckBox("Stars");
 		checkboxOne.setOpaque(false);
 		checkboxOne.setBounds(17, 529, 75, 20);
 		checkboxOne.setForeground(Color.WHITE);
 		checkboxOne.setFont(new Font("Century Gothic", Font.PLAIN, 12));
 		
-		JCheckBox checkboxTwo = new JCheckBox("Messier Objects");
+		checkboxTwo = new JCheckBox("Messier Objects");
 		checkboxTwo.setOpaque(false);
 		checkboxTwo.setBounds(87, 529, 120, 20);
 		checkboxTwo.setForeground(Color.WHITE);
 		checkboxTwo.setFont(new Font("Century Gothic", Font.PLAIN, 12));
 		
-		JCheckBox checkboxThree = new JCheckBox("Planets");
+		checkboxThree = new JCheckBox("Planets");
 		checkboxThree.setOpaque(false);
 		checkboxThree.setBounds(17, 536, 75, 50);
 		checkboxThree.setForeground(Color.WHITE);
 		checkboxThree.setFont(new Font("Century Gothic", Font.PLAIN, 12));
 		
-		JCheckBox checkboxFour = new JCheckBox("Constellations");
+		checkboxFour = new JCheckBox("Constellations");
 		checkboxFour.setOpaque(false);
 		checkboxFour.setBounds(87, 552, 120, 20);
 		checkboxFour.setForeground(Color.WHITE);
@@ -614,111 +618,11 @@ public class SkyMap_gui {
 		// Action Listener for checkboxes - Adds/Removes Labels
 		ActionListener checks = new ActionListener() {
 			  public void actionPerformed(ActionEvent e) {
-				  // Booleans for tracking checkbox states
-				  boolean selected1 = checkboxOne.isSelected();
-				  boolean selected2 = checkboxTwo.isSelected();
-				  boolean selected3 = checkboxThree.isSelected();
-				  boolean selected4 = checkboxFour.isSelected();
 				  // Will only add labels when map has been generated
 				  if (generated) {
-					  // Star checkbox loop
-					  if (e.getSource() == checkboxOne) {
-				    	selected1 = checkboxOne.isSelected();
-						if (selected1) {
-							star_canvas.setScroll(scroll_x, scroll_y); 
-							star_canvas.StarLabels(my_controller);
-							// Will check to see which other labels are active to print them
-							if (selected2) { star_canvas.MessierLabels(my_controller); }
-							if (selected3) { star_canvas.PlanetLabels(my_controller); }
-							if (selected4) { star_canvas.ConstLabels(my_controller); }
-							star_canvas.revalidate();
-							star_canvas.repaint();
-						}
-						else {
-							star_canvas.clearObjects();
-							star_canvas.createObjects(my_controller);
-							// Will check to see which other labels are active to print them
-							if (selected2) { star_canvas.MessierLabels(my_controller); }
-							if (selected3) { star_canvas.PlanetLabels(my_controller); }
-							if (selected4) { star_canvas.ConstLabels(my_controller); }
-							star_canvas.setScroll(scroll_x, scroll_y); 
-				            star_canvas.revalidate();
-				            star_canvas.repaint();
-						}
-				    }
-					  
-					// Messier checkbox loop
-				    if (e.getSource() == checkboxTwo) {
-				    	selected2 = checkboxTwo.isSelected();
-						if (selected2) {
-							star_canvas.setScroll(scroll_x, scroll_y); 
-							star_canvas.MessierLabels(my_controller);
-							if (selected1) { star_canvas.StarLabels(my_controller); }
-							if (selected3) { star_canvas.PlanetLabels(my_controller); }
-							if (selected4) { star_canvas.ConstLabels(my_controller); }
-							star_canvas.revalidate();
-							star_canvas.repaint();
-						}
-						else {
-							star_canvas.clearObjects();
-							star_canvas.createObjects(my_controller);
-							if (selected1) { star_canvas.StarLabels(my_controller); }
-							if (selected3) { star_canvas.PlanetLabels(my_controller); }
-							if (selected4) { star_canvas.ConstLabels(my_controller); }
-							star_canvas.setScroll(scroll_x, scroll_y); 
-				            star_canvas.revalidate();
-				            star_canvas.repaint();
-						}
-				    }
-				    
-				    // Planet checkbox loop
-				    if (e.getSource() == checkboxThree) {
-				    	selected3 = checkboxThree.isSelected();
-						if (selected3) {
-							star_canvas.setScroll(scroll_x, scroll_y); 
-							star_canvas.PlanetLabels(my_controller);
-							if (selected1) { star_canvas.StarLabels(my_controller); }
-							if (selected2) { star_canvas.MessierLabels(my_controller); }
-							if (selected4) { star_canvas.ConstLabels(my_controller); }
-							star_canvas.revalidate();
-							star_canvas.repaint();
-						}
-						else {
-							star_canvas.clearObjects();
-							star_canvas.createObjects(my_controller);
-							if (selected1) { star_canvas.StarLabels(my_controller); }
-							if (selected2) { star_canvas.MessierLabels(my_controller); }
-							if (selected4) { star_canvas.ConstLabels(my_controller); }
-							star_canvas.setScroll(scroll_x, scroll_y); 
-				            star_canvas.revalidate();
-				            star_canvas.repaint();
-						}
-				    }
-				    
-				    // Constellation checkbox loop
-				    if (e.getSource() == checkboxFour) {
-				    	selected4 = checkboxFour.isSelected();
-						
-						if (selected4) {
-							star_canvas.setScroll(scroll_x, scroll_y); 
-							star_canvas.ConstLabels(my_controller);
-							if (selected1) { star_canvas.StarLabels(my_controller); }
-							if (selected2) { star_canvas.MessierLabels(my_controller); }
-							if (selected3) { star_canvas.PlanetLabels(my_controller); }
-							star_canvas.revalidate();
-							star_canvas.repaint();
-						}
-						else {
-							star_canvas.clearObjects();
-							star_canvas.createObjects(my_controller);
-							if (selected2) { star_canvas.MessierLabels(my_controller); }
-							if (selected1) { star_canvas.StarLabels(my_controller); }
-							if (selected3) { star_canvas.PlanetLabels(my_controller); }
-							star_canvas.setScroll(scroll_x, scroll_y); 
-				            star_canvas.revalidate();
-				            star_canvas.repaint();
-						}
-				    }
+                                        star_canvas.setLabels(checkboxOne.isSelected(), checkboxTwo.isSelected(), checkboxThree.isSelected(), checkboxFour.isSelected());
+                                        star_canvas.revalidate();
+                                        star_canvas.repaint();
 				  }
 				  // if map hasn't been generated, uncheck boxes, throw error message
 				  else {
@@ -843,7 +747,6 @@ public class SkyMap_gui {
             }
             });
                 
-        
         // Sidebar Image
 		JLabel label_2 = new JLabel("");
 		label_2.setIcon(new ImageIcon(this.getClass().getResource("/images/ex.png")));

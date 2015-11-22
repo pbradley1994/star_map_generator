@@ -9,12 +9,14 @@ public class ObjDisplay {
     private double sphere_x;
     private double sphere_y;
     private int sphere_z;
+    protected String tag;
     // Sprite (not needed yet)
     //private Image my_sprite;
     //private Circle my_sprite;
     // Grid coords (2D) Pixels
     int grid_x;
     int grid_y;
+    boolean show_labels = false;
     
     public ObjDisplay(double x, double y)
     {
@@ -47,6 +49,11 @@ public class ObjDisplay {
         
         //my_sprite = new Circle(grid_x, grid_y, 5);
 
+    }
+    
+    public String getTag()
+    {
+        return tag;
     }
     
     public void print_grid_coords()

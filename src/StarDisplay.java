@@ -15,6 +15,7 @@ public class StarDisplay extends ObjDisplay {
         super(x, y);
         label = name;
         star_mag = magnitude;
+        tag = "star";
     }
     
     public void draw(Graphics g, double scroll_x, double scroll_y)
@@ -34,8 +35,8 @@ public class StarDisplay extends ObjDisplay {
         g2d.fill(circle);
         
         g.setColor(Color.yellow);
-        if (label != null) {
-            g.drawString(label, (int) (grid_x + scroll_x), (int) (grid_y + scroll_y));
+        if (show_labels == true && label != null) {
+            g.drawString(label, (int) (grid_x + scroll_x + 2), (int) (grid_y + scroll_y - 2));
         }
     }
     

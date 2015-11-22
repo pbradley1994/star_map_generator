@@ -48,12 +48,12 @@ public class StarMapPanel extends JPanel implements Printable {
     	// When adding the planets/constellations, the string needs to be null here
     	// Then just add that code into the Label methods below
         for (Messier messier : the_controller.messierList) {
-        	MessierDisplay current_object = new MessierDisplay(messier.getHourAngle()*15, messier.getDeclination(), null);
+            MessierDisplay current_object = new MessierDisplay(messier.getHourAngle()*15, messier.getDeclination(), messier.getName());
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
         for (Star star : the_controller.starList) {
-        	StarDisplay current_object = new StarDisplay(star.getHourAngle()*15, star.getDeclination(), star.getMagnitude(), null);
+            StarDisplay current_object = new StarDisplay(star.getHourAngle()*15, star.getDeclination(), star.getMagnitude(), star.getName());
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
@@ -64,7 +64,16 @@ public class StarMapPanel extends JPanel implements Printable {
         }
     }
     
-    public void StarLabels(Controller the_controller) {
+    public void setLabels(boolean star_label, boolean messier_label, boolean planet_label, boolean constellation_label) {
+        for (ObjDisplay m_object : objects) {
+            if (m_object.getTag() == "star") {m_object.show_labels = star_label;}
+            else if (m_object.getTag() == "messier") {m_object.show_labels = messier_label;}
+            else if (m_object.getTag() == "planet") {m_object.show_labels = planet_label;}
+            else if (m_object.getTag() == "constellation") {m_object.show_labels = constellation_label;}
+        }
+    }
+    
+    /*public void StarLabels(Controller the_controller) {
         for (Star star : the_controller.starList) {
             StarDisplay current_object = new StarDisplay(star.getRA()*15, star.getDeclination(), star.getMagnitude(), star.getName());
             current_object.sphere_to_grid(camera_x, camera_y);
@@ -86,7 +95,7 @@ public class StarMapPanel extends JPanel implements Printable {
     
     public void ConstLabels(Controller the_controller) {
     	// Constellation label method
-   }
+   }*/
     
     public void clearObjects() {
         objects.clear();

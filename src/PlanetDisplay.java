@@ -15,6 +15,7 @@ public class PlanetDisplay extends ObjDisplay {
         super(x, y);
         label = name;
         icon = u_icon;
+        tag = "planet";
     }
     
     public void draw(Graphics g, double scroll_x, double scroll_y)
@@ -29,8 +30,8 @@ public class PlanetDisplay extends ObjDisplay {
         
         g.setColor(Color.cyan);
         System.out.println(label);
-        if (label != null) {
-            g.drawString(label, (int) (grid_x + scroll_x), (int) (grid_y + scroll_y));
+        if (show_labels == true && label != null) {
+            g.drawString(label, (int) (grid_x + scroll_x + 2), (int) (grid_y + scroll_y - 2));
         }
     }
     
