@@ -242,7 +242,7 @@ public class Controller {
 				value -= 360.0;
 			}
 		}
-		if(value > 0.0)
+		if(value < 0.0)
 		{
 			while (value < 0.0)
 			{
