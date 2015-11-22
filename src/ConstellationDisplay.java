@@ -6,6 +6,7 @@ import java.awt.Graphics;
 public class ConstellationDisplay {
     private String label;
     private String tag;
+    boolean show_labels = false;
     
     public ConstellationDisplay(String name) {
         label = name;
@@ -23,8 +24,9 @@ public class ConstellationDisplay {
         
         g.setColor(Color.cyan);
         System.out.println(label);
-        if (show_labels == true && label != null) {
-            g.drawString(label, (int) (grid_x + scroll_x + 2), (int) (grid_y + scroll_y - 2));
-        }*/
+        */
+        //if (show_labels == true && label != null) {
+        //    g.drawString(label, (int) (grid_x + scroll_x + 2), (int) (grid_y + scroll_y - 2));
+        //}
     }
 }

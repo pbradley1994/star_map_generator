@@ -32,8 +32,8 @@ public class ObjDisplay {
         // Converts spherical coordinates to 2d cartesian coordinates. Uses center_x, center_y as origin.
         // Assumes spherical coords are in degrees
         // Must convert to radians for below equation
-        double camera_x_rad = Math.toRadians(camera_sphere_x%360);
-        double camera_y_rad = Math.toRadians(camera_sphere_y%180);
+        double camera_x_rad = Math.toRadians(camera_sphere_x);
+        double camera_y_rad = Math.toRadians(camera_sphere_y);
         double center_x = Globals.WINWIDTH/2;
         double center_y = Globals.WINHEIGHT/2;
         double sphere_x_rad = Math.toRadians(sphere_x);

@@ -62,6 +62,9 @@ public class StarMapPanel extends JPanel implements Printable {
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
+        for (Constellation constellation : the_controller.constellationList) {
+            ConstellationDisplay current_object = new ConstellationDisplay(constellation.getName());
+        }
     }
     
     public void setLabels(boolean star_label, boolean messier_label, boolean planet_label, boolean constellation_label) {
@@ -73,35 +76,11 @@ public class StarMapPanel extends JPanel implements Printable {
         }
     }
     
-    /*public void StarLabels(Controller the_controller) {
-        for (Star star : the_controller.starList) {
-            StarDisplay current_object = new StarDisplay(star.getRA()*15, star.getDeclination(), star.getMagnitude(), star.getName());
-            current_object.sphere_to_grid(camera_x, camera_y);
-            objects.add(current_object);
-        }
-    }
-    
-    public void MessierLabels(Controller the_controller) {
-    	 for (Messier messier : the_controller.messierList) {
-        	MessierDisplay current_object = new MessierDisplay(messier.getRADecimalDegree(), messier.getDeclination(), messier.getName());
-            current_object.sphere_to_grid(camera_x, camera_y);
-            objects.add(current_object);
-        }
-    }
-    
-    public void PlanetLabels(Controller the_controller) {
-      	 // Planet label method
-      }
-    
-    public void ConstLabels(Controller the_controller) {
-    	// Constellation label method
-   }*/
-    
     public void clearObjects() {
         objects.clear();
     }
     
-    public void setCameraPosition(int x, int y) {
+    public void setCameraPosition(double x, double y) {
         camera_x = x;
         camera_y = y;
     }

@@ -557,7 +557,7 @@ public class SkyMap_gui {
                         scroll_y = 0;
                         my_controller.setUserData(inputLat, inputLong, inputMonth, inputDay, inputYear, inputTimezone, inputHour, inputMin);
                         star_canvas.clearObjects();
-                        star_canvas.setCameraPosition((int) inputLong, (int) inputLat);
+                        star_canvas.setCameraPosition(inputLong, inputLat);
                         star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
                         star_canvas.createObjects(my_controller);
                         star_canvas.setLabels(checkboxOne.isSelected(), checkboxTwo.isSelected(), checkboxThree.isSelected(), checkboxFour.isSelected());
