@@ -17,6 +17,7 @@ public class ObjDisplay {
     int grid_x;
     int grid_y;
     boolean show_labels = false;
+    boolean draw_me = true;
     
     public ObjDisplay(double x, double y)
     {
@@ -38,9 +39,12 @@ public class ObjDisplay {
         double center_y = Globals.WINHEIGHT/2;
         double sphere_x_rad = Math.toRadians(sphere_x);
         double sphere_y_rad = Math.toRadians(sphere_y);
+        //System.out.println(camera_sphere_x + ", " + camera_x_rad + ", " + camera_sphere_y + ", " + camera_y_rad);
+        //System.out.println(sphere_x + ", " + sphere_x_rad + ", " + sphere_y + ", " + sphere_y_rad);
         
         // c = The angular distance of the point x, y from the center of the projection
         double cos_c = Math.sin(camera_y_rad)*Math.sin(sphere_y_rad) + Math.cos(camera_y_rad)*Math.cos(sphere_y_rad)*Math.cos(sphere_x_rad-camera_x_rad);
+        if (cos_c <= 0) {draw_me = false;}
         double offset_x = Math.cos(sphere_y_rad)*Math.sin(sphere_x_rad-camera_x_rad) / cos_c;
         double offset_y = (Math.cos(camera_y_rad)*Math.sin(sphere_y_rad) - Math.sin(camera_y_rad)*Math.cos(sphere_y_rad)*Math.cos(sphere_x_rad-camera_x_rad)) / cos_c;
 

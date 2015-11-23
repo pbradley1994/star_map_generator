@@ -31,7 +31,7 @@ public class MessierDisplay extends ObjDisplay {
         int size = 12;
         Ellipse2D.Double circle = new Ellipse2D.Double(grid_x + scroll_x - size/2, grid_y + scroll_y - size/2, size, size);
         g2d.fill(circle);*/
-        
+        if (!draw_me) {return;}
         BufferedImage image = null;
         try {
             image = ImageIO.read(getClass().getResource("/images/Messier1.png"));

@@ -23,6 +23,7 @@ public class StarDisplay extends ObjDisplay {
         // We're not using a sprite yet
         // Don't print if greater than 6 magnitude
         if (star_mag > 6) {return;}
+        if (!draw_me) {return;}
         
         //if(sphere_x == 0 && sphere_y == 0) {g.setColor(Color.red);}
         //else {g.setColor(Color.white);}

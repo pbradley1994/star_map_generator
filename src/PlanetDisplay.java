@@ -23,6 +23,7 @@ public class PlanetDisplay extends ObjDisplay {
         
         //if(sphere_x == 0 && sphere_y == 0) {g.setColor(Color.red);}
         //else {g.setColor(Color.white);}
+        if (!draw_me) {return;} 
         g.setColor(Color.red);
         if (icon != null) {
             g.drawString(icon, (int) (grid_x + scroll_x), (int) (grid_y + scroll_y + 4));
