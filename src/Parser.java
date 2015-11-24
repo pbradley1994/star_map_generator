@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class Parser {
 
-	final static boolean DEBUG=true;	
+	final static boolean DEBUG=false;	
 	
 	// Maintain a list of each type of object.
 	ArrayList<Star> listOfStars=new ArrayList<Star>();
@@ -29,9 +29,10 @@ public class Parser {
  */
 public Parser() {
 //	ArrayList<File> listOfFiles=findDataFiles("./data");
-	if (DEBUG) { System.out.println("Parser()"); }
+	if (DEBUG) { System.out.println("Parser:32 - Parser()"); }
 	listOfStars=readStars();
  	listOfMessierObjects=readMessier();
+ 	listOfConstellations=readConstellations();
 	//listOfPlanets=readPlanets();
 	
 //	BufferedReader b=BufferedReader(FileReader(File))
@@ -56,7 +57,7 @@ private ArrayList<File> findDataFiles(String pathname) {
  */
 public ArrayList<Star> readStars() {
 	
-	System.out.println("readStars() start");
+	if (DEBUG) {System.out.println("readStars() start"); }
 	
 	ArrayList<Star> l=new ArrayList<Star>();
 	String fileToParse = "./data/Star.csv";
@@ -141,6 +142,53 @@ public ArrayList<Messier> readMessier() {
 		
 	 return l;
 }
+
+/** 
+ * readConstellations():  Create an ArrayList of Messier Deep Space Objects from provided file handle.
+ * @return
+ */
+public ArrayList<Constellation> readConstellations() {
+	
+	if (DEBUG) { System.out.println("readMessier() start"); }
+	
+	ArrayList<Constellation> l=new ArrayList<Constellation>();
+	String fileToParse = "./data/Constellation.csv";
+	BufferedReader fileReader = null;
+
+	 try
+	 {
+	     String line = "";
+	     //Create the file reader
+	     fileReader = new BufferedReader(new FileReader(fileToParse));
+	      
+	     // Throw away the first line, which contains column names.
+	     fileReader.readLine();
+	     
+	     //Read the file line by line
+	     while ((line = fileReader.readLine()) != null)
+	     {
+	     	Constellation c = new Constellation(l.size(), line);    // use the list index as object id 
+	     	l.add(c);
+	     }
+	 }
+	 catch (Exception e) {
+	     e.printStackTrace();
+	 }
+	 finally
+	 {
+	     try {
+	         fileReader.close();
+	     } catch (IOException e) {
+	         e.printStackTrace();
+	     }
+	 }
+	
+	 if (DEBUG && l != null) { System.out.println("readConstellations: length of l is "+l.size());}
+		
+	 return l;
+}
+
+
 
 //public ArrayList<Planet> readPlanets() {
 //	
