@@ -77,6 +77,10 @@ public class SkyMap_gui {
 	private int MAX_HOUR = 24;
 	private int MIN_MIN = 0;
 	private int MAX_MIN = 59;
+	private int MAX_X = 500;
+	private int MIN_X = -500;
+	private int MAX_Y = 500;
+	private int MIN_Y = -500;
         
         // Printing job
         private PrinterJob job = PrinterJob.getPrinterJob();
@@ -646,7 +650,7 @@ public class SkyMap_gui {
 		
 		btnDownScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	if (scroll_y <= -500){
+            	if (scroll_y >= MIN_Y){
 	            	scroll_y = scroll_y - 25;
 	            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
 	            	star_canvas.createObjects(my_controller);
@@ -669,7 +673,7 @@ public class SkyMap_gui {
 		
 		btnUpScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	if (scroll_y <= 500){
+            	if (scroll_y <= MAX_Y){
 	            	scroll_y = scroll_y + 25;
 	            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
 	            	star_canvas.createObjects(my_controller);
@@ -692,7 +696,7 @@ public class SkyMap_gui {
 		
 		btnLeftScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	if (scroll_x <= 500){
+            	if (scroll_x <= MAX_X){
 	            	scroll_x = scroll_x + 25;
 	            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
 	            	star_canvas.createObjects(my_controller);
@@ -715,7 +719,7 @@ public class SkyMap_gui {
 		
 		btnRightScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	if (scroll_x <= -500){
+            	if (scroll_x >= MIN_X){
 	            	scroll_x = scroll_x - 25;
 	            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
 	            	star_canvas.createObjects(my_controller);
