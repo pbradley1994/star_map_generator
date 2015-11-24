@@ -11,6 +11,8 @@ public class PlanetDisplay extends ObjDisplay {
     private String label;
     private String icon;
     
+	final static boolean DEBUG=false;	
+    
     public PlanetDisplay(double x, double y, String name, String u_icon) {
         super(x, y);
         label = name;
@@ -30,7 +32,7 @@ public class PlanetDisplay extends ObjDisplay {
         }
         
         g.setColor(Color.cyan);
-        System.out.println(label);
+        if (DEBUG) { System.out.println(label); }
         if (show_labels == true && label != null) {
             g.drawString(label, (int) (grid_x + scroll_x + 2), (int) (grid_y + scroll_y - 2));
         }
