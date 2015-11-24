@@ -52,10 +52,21 @@ public class Constellation {
 	private ArrayList<Pair<Integer>> stringToPairs(String s) {
 		ArrayList<Pair<Integer>> a = new ArrayList<Pair<Integer>>();
 		
-    	String delimiter = " ";
-        String[] tokens = s.split(delimiter);
+    	final String space = " ";
+        String[] tokens = s.split(space);
         for (int i=0; i<tokens.length; i++) {
-        	
+        	final String colon = ":";
+            String[] endpoints = tokens[i].split(colon);
+            Pair<Integer> p;
+            if (endpoints.length >= 2) {
+            	Integer e0 = Integer.parseInt(endpoints[0]);
+            	Integer e1 = Integer.parseInt(endpoints[1]);
+            	p = new Pair<Integer>(e0,e1);
+            }
+            else {
+            	p = new Pair<Integer>(-1,-1);
+            }
+            a.add(p);
         }
 		
 		return a;
@@ -80,7 +91,6 @@ public class Constellation {
 	
 	// Ascending node longitude is not guaranteed to be set.
 	// Since 0 is a valid value, will default to 190 instead.
-	
 	public double getAscendingNodeLongitude() {
 		return this.ascNodeLongi; 
 	}
