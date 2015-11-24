@@ -9,7 +9,7 @@ import java.util.Arrays;
 // Each object is initially read from flatfile by Parser class.
 public class Constellation {
 	
-	final static boolean DEBUG=true;	
+	final static boolean DEBUG=false;	
 
 	int constID;					// arbitrary index ID  
 	String name;					// familiar name, usually the Latin
@@ -40,7 +40,7 @@ public class Constellation {
         }
         // Asterisms are not guaranteed by datasource
         if (tokens.length >= 7) {
-    		if (tokens[6] != null) {
+    		if ( tokens[6].trim() != "") {
     			this.ast=stringToPairs(tokens[0]);
     			this.plottable=true;
     		}
