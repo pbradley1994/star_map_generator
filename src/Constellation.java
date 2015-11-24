@@ -133,6 +133,10 @@ public class Constellation {
 	public double getHourAngle() {
 		return hourAngle;
 	}
+        
+        public double getDeclination() {
+            return decl;
+        }
 
 	public void setHourAngle(double ha) {
 		this.hourAngle=ha;

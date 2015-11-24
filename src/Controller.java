@@ -49,6 +49,21 @@ public class Controller {
 		theCalculator = new Calculator();
 		epoch2000JD = 2451545.0;
 	}
+        
+        /************************************************
+         * Return a star object given the star objects id.
+         * @param StarID id of star you are looking for 
+         ************************************************/
+        public Star getStarfromStarID(Integer StarID)
+        {
+            for (Star star : starList) {
+                if (star.id == StarID) {
+                    return star;
+                }
+            }
+            System.out.println("StarID " + StarID + " was not found in starList.");
+            return null;
+        }
 	
 	/***********************************************************
 	 * This function is called by the GUI once the user inputs
