@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -398,8 +397,6 @@ public class SkyMap_gui {
 
                             if ((testLat >= MIN_LAT) && (testLat <= MAX_LAT)) {
                                 inputLat = testLat;
-                                /** DEBUG: remove. just outputs the variables so that I know it's set */
-                                //  System.out.println("INPUT LATITUDE: " + inputLat);
                             }
                             else if (testLat < MIN_LAT){
                                 JOptionPane.showMessageDialog(null,"This latitude is less than -90.0. "
@@ -427,8 +424,6 @@ public class SkyMap_gui {
 
                             if ((testLong >= MIN_LONG) && (testLong <= MAX_LONG)) {
                                 inputLong = testLong;
-                                /** DEBUG: remove. just outputs the variables so that I know it's working */
-                                //  System.out.println("INPUT Longitude: " + inputLong);
                             }
                             else if (testLong < MIN_LONG){
                                 JOptionPane.showMessageDialog(null,"This longitude you have entered is less than -180.0. "
@@ -460,8 +455,6 @@ public class SkyMap_gui {
 
                             if ((testYear >= MIN_YEAR) && (testYear <= MAX_YEAR)) {
                                 inputYear = testYear;
-                                /** DEBUG: remove. just outputs the variables so that I know it's working */
-                                //  System.out.println("INPUT YEAR: " + inputYear);
                             }
                             else if (testYear < MIN_YEAR){
                                 JOptionPane.showMessageDialog(null,"The year you have entered is before 1900. "
@@ -489,8 +482,6 @@ public class SkyMap_gui {
 
                             if ((testHour >= MIN_HOUR) && (testHour <= MAX_HOUR)) {
                                 inputHour = testHour;
-                                /** DEBUG: remove. just outputs the variables so that I know it's working */
-                                //  System.out.println("INPUT HOUR: " + inputHour);
                             }
                             else if (testHour < MIN_HOUR){
                                 JOptionPane.showMessageDialog(null,"This is not a valid hour. "
@@ -655,11 +646,14 @@ public class SkyMap_gui {
 		
 		btnDownScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	scroll_y = scroll_y - 25;
-            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
-            	star_canvas.createObjects(my_controller);
-                star_canvas.revalidate();
-                star_canvas.repaint();
+            	if (scroll_y <= -500){
+	            	scroll_y = scroll_y - 25;
+	            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
+	            	star_canvas.createObjects(my_controller);
+	                star_canvas.revalidate();
+	                star_canvas.repaint();
+            	}
+            	else { scroll_y = -500; }
             	}
             });
 		
@@ -675,11 +669,14 @@ public class SkyMap_gui {
 		
 		btnUpScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	scroll_y = scroll_y + 25;
-            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
-            	star_canvas.createObjects(my_controller);
-                star_canvas.revalidate();
-                star_canvas.repaint();
+            	if (scroll_y <= 500){
+	            	scroll_y = scroll_y + 25;
+	            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
+	            	star_canvas.createObjects(my_controller);
+	                star_canvas.revalidate();
+	                star_canvas.repaint();
+            	}
+            	else { scroll_y = 500; }
             	}
             });
 		
@@ -695,11 +692,14 @@ public class SkyMap_gui {
 		
 		btnLeftScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	scroll_x = scroll_x + 25;
-            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
-            	star_canvas.createObjects(my_controller);
-                star_canvas.revalidate();
-                star_canvas.repaint();
+            	if (scroll_x <= 500){
+	            	scroll_x = scroll_x + 25;
+	            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
+	            	star_canvas.createObjects(my_controller);
+	                star_canvas.revalidate();
+	                star_canvas.repaint();
+            	}
+            	else { scroll_x = 500; }
             	}
             });
 		
@@ -715,11 +715,14 @@ public class SkyMap_gui {
 		
 		btnRightScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	scroll_x = scroll_x - 25;
-            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
-            	star_canvas.createObjects(my_controller);
-                star_canvas.revalidate();
-                star_canvas.repaint();
+            	if (scroll_x <= -500){
+	            	scroll_x = scroll_x - 25;
+	            	star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
+	            	star_canvas.createObjects(my_controller);
+	                star_canvas.revalidate();
+	                star_canvas.repaint();
+            	}
+            	else { scroll_x = -500; }
             	}
             });
 		
