@@ -52,7 +52,7 @@ public Messier(int serial, String csvString) {
   
 	// Take desired info from token string
 	this.id=serial; 			    					 // calling function passes arbitrary id#
-	if (tokens[11] != null) {   // this is the only field which may be null
+	if (tokens.length >= 12) {  			 // this is the only field which may be null
 		this.name=tokens[11];                			 // Description
 	}
 	
