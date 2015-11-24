@@ -8,11 +8,14 @@ import java.util.Arrays;
 // Data structure for Constellations
 // Each object is initially read from flatfile by Parser class.
 public class Constellation {
+	
+	final static boolean DEBUG=true;	
 
-	    
+	int constID;					// arbitrary index ID  
 	String name;					// familiar name, usually the Latin
 	String shortName;				// 3 letter abbreviation
 	boolean zodiac;					// is it a member of the zodiac?
+	boolean plottable;				// Has at least one asterism link
 	double rasc; 					// right ascension
 	double decl; 					// declination
 	double ascNodeLongi;	 		// ascending node longitude
@@ -20,33 +23,54 @@ public class Constellation {
 	double hourAngle;				// hour angle
 	ArrayList<Pair<Integer>> ast;	// Unbounded list of pairs of StarIDs	
 	
-	public Constellation(String s) {
+	public Constellation(int id, String s) {
     	String delimiter = ",";
         String[] tokens = s.split(delimiter);
+        
+		this.constID=id;
+		if (DEBUG) { System.out.println("ConstellationID "+id); }
+        if (tokens.length >= 2) {
+    		this.name=tokens[0];
+    		this.shortName=tokens[1];
+        }	
+    	if (tokens.length >= 6) {
+    		this.zodiac=Boolean.parseBoolean(tokens[5]);
+    		this.rasc=Double.parseDouble(tokens[3]);
+    		this.decl=Double.parseDouble(tokens[4]);	
+        }
+        // Asterisms are not guaranteed by datasource
+        if (tokens.length >= 7) {
+    		if (tokens[6] != null) {
+    			this.ast=stringToPairs(tokens[0]);
+    			this.plottable=true;
+    		}
+    		else { this.plottable=false; }
+    		if (this.ast.isEmpty() ) { this.plottable=false; }
+        }
+		else { this.plottable = false; }
+
 		
-		this.name=tokens[0];
-		this.shortName=tokens[1];
-		this.zodiac=Boolean.parseBoolean(tokens[5]);
-		this.rasc=Double.parseDouble(tokens[3]);
-		this.decl=Double.parseDouble(tokens[4]);
-		if (tokens[6] != null) {
-			this.ast=stringToPairs(tokens[0]);
-		}
 	} // constructor
 	
-	public Constellation(String n, boolean z, double ra, double dec, String asterisms) {
+	public Constellation(int id, String n, boolean z, double ra, double dec, String asterisms) {
+		this.constID=id;
 		this.name=n;
 		this.zodiac=z;
 		this.rasc=ra;
 		this.decl=dec;
 		this.ast=stringToPairs(asterisms);
+		if (this.ast.size() > 0) {
+			this.plottable=true;
+		}
 	} // constructor
 
-	public Constellation(String n, boolean z, double ra, double dec) {
+	public Constellation(int id, String n, boolean z, double ra, double dec) {
+		this.constID=id;
 		this.name=n;
 		this.zodiac=z;
 		this.rasc=ra;
 		this.decl=dec;
+		this.plottable=false;
 	} // constructor, no asterisms
 	
 	private ArrayList<Pair<Integer>> stringToPairs(String s) {
@@ -70,6 +94,10 @@ public class Constellation {
         }
 		
 		return a;
+	}
+	
+	public boolean isPlottable() {
+		return this.plottable;
 	}
 	
 	public String getName() {
@@ -116,6 +144,16 @@ public class Constellation {
 	
 	public void setAscendingNodeLongitude(double an) {
 		this.ascNodeLongi=an;
+	}
+	
+	public boolean verifyPlottable() {
+		if (this.ast.size() > 0) {
+			this.plottable=true;
+		}
+		else {
+			this.plottable=false;
+		}
+		return this.plottable;
 	}
 	
 }
