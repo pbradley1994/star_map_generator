@@ -63,6 +63,7 @@ public class ConstellationDisplay {
     
     public void draw(Graphics g, double scroll_x, double scroll_y)
     {
+        if (!draw_me) {return;}
         g.setColor(Color.white);
         for (Pair<Pair<Integer>> grid_coord : grid_coords) {
             // Draw line from  grid_coord.p1 to grid_coord.p2

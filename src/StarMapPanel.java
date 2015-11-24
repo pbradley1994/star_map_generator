@@ -62,10 +62,12 @@ public class StarMapPanel extends JPanel implements Printable {
         }
         for (Constellation constellation : the_controller.constellationList) {
             // Convert asterisms starID's to starObjects
+            if(!constellation.isPlottable()) {continue;}
             ArrayList<Pair<Star>> star_list = new ArrayList<Pair<Star>>();
             for (Pair<Integer> asterism_line : constellation.getAsterisms()) {
                 Integer StarID1 = asterism_line.p1;
                 Integer StarID2 = asterism_line.p2;
+                System.out.println(constellation.getName() + " " + StarID1 + " " + StarID2);
                 Star star1 = the_controller.getStarfromStarID(StarID1);
                 Star star2 = the_controller.getStarfromStarID(StarID2);
                 star_list.add(new Pair<Star>(star1,star2));

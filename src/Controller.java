@@ -61,7 +61,7 @@ public class Controller {
                     return star;
                 }
             }
-            System.out.println("StarID " + StarID + "was not found in starList.");
+            System.out.println("StarID " + StarID + " was not found in starList.");
             return null;
         }
 	
