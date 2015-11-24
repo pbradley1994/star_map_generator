@@ -1,6 +1,6 @@
 ﻿Constellation Abbrev. English name R.A.  (hours) DEC. (degrees), Zodiac, HYGstarID:HYGstarID
 Andromeda, And, Andromeda (Chained Lady), 1, +43, n, 
-Aquarius, Aqr, Water Bearer, 23, -13, y,
+Aquarius, Aqr, Water Bearer, 23, -13, y, 74474:74803 74803:77257 77257:79284 79284:79976 79976:79334 79284:80250 80250:80644 80644:80999 80999:83242 83242:82014 82014:81843 81843:82126
 Aquila, Aql, Eagle, 20, +4, n, 
 Aries, Ari, Ram, 2, +19, y, 9257:6888 6888:6195 
 Auriga, Aur, Charioteer, 6, +42,n,
@@ -8,7 +8,7 @@ Boötes, Boo, Herdsman, 15, +34,n,
 Cancer, Cnc, Crab, 8, +14, y, 31816:31577 31577:31661 31661:32566 32566:29788
 Canis Major, CMa, Large Dog, 7, -23, n,
 Canis Minor, CMi, Small Dog, 7, +25, n,
-Capricornus, Cap (Sea) Goat 21 -21, y,
+Capricornus, Cap (Sea) Goat 21 -21, y, 72769:74379 74379:74748 74748:76950 76950:77585 77585:78188 78188:77773 77773:76670 76670:75605
 Cassiopeia, Cas, Cassiopeia (Seated Lady), 1, +64, n,
 Centaurus, Cen, Centaur, 13, -44, n,
 Cepheus, Cep, Cepheus (the King), 22, +68, n,
@@ -25,7 +25,7 @@ Orion, Ori, Orion (the Hunter), 5, +2, n,
 Pegasus, Peg, Pegasus (Winged Horse), 22, +18, n,
 Perseus, Per, Perseus (Rescuer of Andromeda), 4, +44,n
 Pisces, Psc, Fishes, 1, +12,y, 
-Sagittarius, Sgr, Archer, 19, -32, n,
+Sagittarius, Sgr, Archer, 19, -32, n,67811:67014 67014:66393 66393:67523 67523:67811 66393:65228 65228:64804 64804:64997 64997:67523 64804:63828 63828:64997
 Scorpio, Sco, Scorpion, 17, -32,y,61677:61845 61845:62385 62385:62676 62676:62069 62069:60538 60538:59500 59500:59345 59345:59254 59254:58437 58437:58094 58094:57640 57640:56460 56460:56747 56747:57143 56460:56365 56365:56260
 Taurus, Tau, Bull, 4, +25,y,18796:15108 15108:14714 14714:14183 14183:14373 14373:14710 14710:18021
 Ursa Major, UMa, Large Bear, 10, +48, n,
