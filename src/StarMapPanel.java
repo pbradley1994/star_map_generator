@@ -15,8 +15,9 @@ import javax.swing.JPanel;
 public class StarMapPanel extends JPanel implements Printable {
     /** Globals */
     private Globals globals = new Globals();
-    /** List of Star */
+    /** List of Solitary Objects */
     private ArrayList<ObjDisplay> objects = new ArrayList();
+    private ArrayList<ConstellationDisplay> constellations = new ArrayList();
     /** Camera Position */
     double camera_x = 0;
     double camera_y = 0;
@@ -44,9 +45,6 @@ public class StarMapPanel extends JPanel implements Printable {
     }*/
     
     public void createObjects(Controller the_controller) {
-    	// Note from Christy:
-    	// When adding the planets/constellations, the string needs to be null here
-    	// Then just add that code into the Label methods below
         for (Messier messier : the_controller.messierList) {
             MessierDisplay current_object = new MessierDisplay(messier.getHourAngle()*15, messier.getDeclination(), messier.getName());
             current_object.sphere_to_grid(camera_x, camera_y);
@@ -63,7 +61,18 @@ public class StarMapPanel extends JPanel implements Printable {
             objects.add(current_object);
         }
         for (Constellation constellation : the_controller.constellationList) {
-            ConstellationDisplay current_object = new ConstellationDisplay(constellation.getName());
+            // Convert asterisms starID's to starObjects
+            ArrayList<Pair<Star>> star_list = new ArrayList<Pair<Star>>();
+            for (Pair<Integer> asterism_line : constellation.getAsterisms()) {
+                Integer StarID1 = asterism_line.p1;
+                Integer StarID2 = asterism_line.p2;
+                Star star1 = the_controller.getStarfromStarID(StarID1);
+                Star star2 = the_controller.getStarfromStarID(StarID2);
+                star_list.add(new Pair<Star>(star1,star2));
+            }
+            ConstellationDisplay current_object = new ConstellationDisplay(star_list, constellation.getHourAngle()*15, constellation.getDeclination()*15, constellation.getName());
+            current_object.calculate_grid_positions(camera_x, camera_y);
+            constellations.add(current_object);
         }
     }
     
@@ -78,6 +87,7 @@ public class StarMapPanel extends JPanel implements Printable {
     
     public void clearObjects() {
         objects.clear();
+        constellations.clear();
     }
     
     public void setCameraPosition(double x, double y) {
@@ -101,9 +111,13 @@ public class StarMapPanel extends JPanel implements Printable {
         // Draw black background
         g.setColor(Color.black);
         g.fillRect(0, 0, Globals.WINWIDTH + Globals.GUIWIDTH, (Globals.WINHEIGHT)*2);
-        // Draw each star
+        // Draw each solitary object
         for (ObjDisplay object : objects) {
             object.draw(g, scroll_x, scroll_y);
+        }
+        // Draw each constellation
+        for (ConstellationDisplay constellation : constellations) {
+            constellation.draw(g, scroll_x, scroll_y);
         }
 
         //g.setColor(Color.white);
