@@ -64,6 +64,7 @@ public class SkyMap_gui {
 	private int scroll_x = 0;
 	private int scroll_y = 0;
 	private boolean generated = false;
+	private boolean generatedError = true;
 	
 	//variables for testing input
 	private double MIN_LAT = -90.000;
@@ -350,28 +351,31 @@ public class SkyMap_gui {
 		lblLat.setForeground(new Color(255, 255, 255));
 		lblLat.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		lblLat.setBounds(27, 353, 91, 20);
-		frmSkymap.getContentPane().add(lblLat);
-		
+
 		// Current Longitude
 		JLabel lblLong = new JLabel("LONG");
 		lblLong.setForeground(Color.WHITE);
 		lblLong.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		lblLong.setBounds(27, 403, 91, 20);
-		frmSkymap.getContentPane().add(lblLong);
-		
+
 		// Current Date Parameters
 		JLabel lblGeneratedDate = new JLabel("mm/dd/yyyy");
 		lblGeneratedDate.setForeground(Color.WHITE);
 		lblGeneratedDate.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		lblGeneratedDate.setBounds(27, 450, 165, 20);
-		frmSkymap.getContentPane().add(lblGeneratedDate);
-		
+
 		//Current Time Parameters
 		JLabel lblGeneratedTime = new JLabel("hh:mm, GMT +0");
 		lblGeneratedTime.setForeground(Color.WHITE);
 		lblGeneratedTime.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		lblGeneratedTime.setBounds(27, 462, 165, 37);
+	
+		frmSkymap.getContentPane().add(lblLat);
+		frmSkymap.getContentPane().add(lblLong);
+		frmSkymap.getContentPane().add(lblGeneratedDate);
+		frmSkymap.getContentPane().add(lblGeneratedDate);
 		frmSkymap.getContentPane().add(lblGeneratedTime);
+		
 		
 		/** On Button click, set user-input input to variables. Drop-down menus
 		 * are handled in their implementations since they're set immediately. */
@@ -393,6 +397,7 @@ public class SkyMap_gui {
 
 					if ((testLat >= MIN_LAT) && (testLat <= MAX_LAT)) {
 						inputLat = testLat;
+						generatedError = false;
 					}
 					else if (testLat < MIN_LAT){
 						JOptionPane.showMessageDialog(null,"This latitude is less than -90.0. "
@@ -419,6 +424,7 @@ public class SkyMap_gui {
 
 					if ((testLong >= MIN_LONG) && (testLong <= MAX_LONG)) {
 						inputLong = testLong;
+						generatedError = false;
 					}
 					else if (testLong < MIN_LONG){
 						JOptionPane.showMessageDialog(null,"This longitude you have entered is less than -180.0. "
@@ -534,18 +540,22 @@ public class SkyMap_gui {
 				}
 
 				// DO THE THING!
-				scroll_x = 0;
-				scroll_y = 0;
-				my_controller.setUserData(inputLat, inputLong, inputMonth, inputDay, inputYear, inputTimezone, inputHour, inputMin);
-				star_canvas.clearObjects();
-				star_canvas.setCameraPosition(inputLong, inputLat);
-				star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
-				star_canvas.createObjects(my_controller);
-				star_canvas.setLabels(checkboxOne.isSelected(), checkboxTwo.isSelected(), checkboxThree.isSelected(), checkboxFour.isSelected());
-				star_canvas.revalidate();
-				star_canvas.repaint();
-				// Sets boolean for use with checkboxes
-				generated = true;
+				if (!generatedError) {
+					scroll_x = 0;
+					scroll_y = 0;
+					my_controller.setUserData(inputLat, inputLong, inputMonth, inputDay, inputYear, inputTimezone, inputHour, inputMin);
+					star_canvas.clearObjects();
+					star_canvas.setCameraPosition(inputLong, inputLat);
+					star_canvas.setScroll(scroll_x, scroll_y); // star_canvas.setScroll(scroll_x, scroll_y);
+					star_canvas.createObjects(my_controller);
+					star_canvas.setLabels(checkboxOne.isSelected(), checkboxTwo.isSelected(), checkboxThree.isSelected(), checkboxFour.isSelected());
+					star_canvas.revalidate();
+					star_canvas.repaint();
+					// Sets boolean for use with checkboxes
+					generated = true;
+					
+
+				}
 			}
 		});
 		
@@ -637,7 +647,7 @@ public class SkyMap_gui {
 		btnDownScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if (scroll_y >= MIN_Y){
-	            	scroll_y = scroll_y - 25;
+	            	scroll_y = scroll_y - 50;
 	            	star_canvas.setScroll(scroll_x, scroll_y); 
 	            	star_canvas.createObjects(my_controller);
 	                star_canvas.revalidate();
@@ -660,7 +670,7 @@ public class SkyMap_gui {
 		btnUpScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if (scroll_y <= MAX_Y){
-	            	scroll_y = scroll_y + 25;
+	            	scroll_y = scroll_y + 50;
 	            	star_canvas.setScroll(scroll_x, scroll_y); 
 	            	star_canvas.createObjects(my_controller);
 	                star_canvas.revalidate();
@@ -683,7 +693,7 @@ public class SkyMap_gui {
 		btnLeftScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if (scroll_x <= MAX_X){
-	            	scroll_x = scroll_x + 25;
+	            	scroll_x = scroll_x + 50;
 	            	star_canvas.setScroll(scroll_x, scroll_y); 
 	            	star_canvas.createObjects(my_controller);
 	                star_canvas.revalidate();
@@ -706,7 +716,7 @@ public class SkyMap_gui {
 		btnRightScroll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if (scroll_x >= MIN_X){
-	            	scroll_x = scroll_x - 25;
+	            	scroll_x = scroll_x - 50;
 	            	star_canvas.setScroll(scroll_x, scroll_y);
 	            	star_canvas.createObjects(my_controller);
 	                star_canvas.revalidate();
