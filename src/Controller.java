@@ -28,7 +28,9 @@ public class Controller {
 	double userJulianDate;
 	double epoch2000JD; 
 	double userDecimalDay;
+	double userDecimalYear;
 	int userYear;
+	int userMonth;
 	
 	/************************************************
 	 * Class Constructor
@@ -49,21 +51,6 @@ public class Controller {
 		theCalculator = new Calculator();
 		epoch2000JD = 2451545.0;
 	}
-        
-        /************************************************
-         * Return a star object given the star objects id.
-         * @param StarID id of star you are looking for 
-         ************************************************/
-        public Star getStarfromStarID(Integer StarID)
-        {
-            for (Star star : starList) {
-                if (star.id == StarID) {
-                    return star;
-                }
-            }
-            System.out.println("StarID " + StarID + " was not found in starList.");
-            return null;
-        }
 	
 	/***********************************************************
 	 * This function is called by the GUI once the user inputs
@@ -83,6 +70,7 @@ public class Controller {
 		userLat = latitude;
 		userLong = longitude;
 		userYear = year;
+		userMonth = month;
 		//********************************************
 		//find local time of the user in decimal form
 		//********************************************
@@ -105,14 +93,14 @@ public class Controller {
 		//*****************************************
 		if(month < 3) //adjust date if in Jan or Feb
 		{
-			userYear -= 1;
+			year -= 1;
 			month += 12;
 		}
 		userDecimalDay = (double)day + (userGMT / 24.0);
 		int tempA = (int)(year/100);
 		int tempB =  2 - tempA + (int)(tempA/4);
-		userJulianDate = (int)(365.25 * userYear) + (int)(30.6001 * (month + 1)) + userDecimalDay + 1720994.5 + tempB;
-		
+		userJulianDate = (int)(365.25 * year) + (int)(30.6001 * (month + 1)) + userDecimalDay + 1720994.5 + tempB;
+		userDecimalYear = year + (((30.6001 * (month + 1)) + userDecimalDay)/365.25);
 		//*****************************
 		//adjust star map data to user
 		//*****************************
@@ -145,25 +133,33 @@ public class Controller {
 	 ************************************************/
 	private void adjustMoonData()
 	{
-		double toDeg = 180.0 / Math.PI;
 		double toRad = Math.PI / 180.0;
 		
 		//find the number of days since the epoch 2000
-		double D = ((userYear - 2000)* 365.25) + userDecimalDay;
-		//find geocentric longitude of the sun (in degrees)
-		double T = (epoch2000JD - 2415020.0)/36525.0;
-		double sunGeoLong = 279.6966778 + (36000.7689 * T) + (T * T *0.0003025);
-		//find mean anomaly of the sun (in degrees)
-		double sunW = 281.2208444 + (1.719175 * T) + (T * T * 0.000452778);
-		double sunMeanAnomaly = (365 / 365.242191) * D + sunGeoLong - sunW;
+		double D = ((userYear - 1990)* 365.3) + userDecimalDay + ((userMonth - 1) * 30);
+		double sunEg = 279.403303; //at epoch
+		double sunE = 0.016713;
+		double sunW = 282.768422;
+		//find mean anomaly of the sun (in degrees)		
+		double sunMeanAnomaly = ((360 / 365.242191) * D) + sunEg - sunW;
+		sunMeanAnomaly = AdjustDegree(sunMeanAnomaly);
+		//find true anomaly of the sun
+		double temp = sunMeanAnomaly * toRad;
+		temp = Math.sin(temp);
+		double sunEc = (360 / Math.PI) * sunE * temp;
+		double sunTrueAnomaly = sunMeanAnomaly + sunEc;
+		sunTrueAnomaly = AdjustDegree(sunTrueAnomaly);
+		//find ecliptic longitude of the sun (in degrees)
+		double sunEcLong = sunTrueAnomaly + sunW;
+		sunEcLong = AdjustDegree(sunEcLong);
 		
 		//find moon mean longitude (in degrees)
-		double temp = 13.1763966 * D + 318.351648;
+		temp = 13.1763966 * D + 318.351648;
 		temp = AdjustDegree(temp);
 		moon.setMeanLongitude(temp);
 		
 		//find moon mean anomaly (in degrees)
-		temp = moon.getMeanLongitude() - 0.111404 * D - 36.340410;
+		temp = moon.getMeanLongitude() - (0.1114041 * D) - 36.340410;
 		temp = AdjustDegree(temp);
 		double moonMeanAnomaly = temp;
 		
@@ -173,16 +169,14 @@ public class Controller {
 		moon.setLongitudeOfAscendingNode(temp);
 		
 		//calculate moons correction for evection (in degrees)
-		double evectionCorrection = theCalculator.correctMoonEvection(sunGeoLong, moon.getMeanLongitude(), moonMeanAnomaly);
+		double evectionCorrection = theCalculator.correctMoonEvection(sunEcLong, moon.getMeanLongitude(), moonMeanAnomaly);
 		
 		//calculate moons correction for the annual equation
 		temp = sunMeanAnomaly * toRad;
 		double annualEquation = 0.1858 * Math.sin(temp);
-		annualEquation *= toDeg;
 		
 		//find moon's third correction (in degrees)
 		double A3 = 0.37 * Math.sin(temp);
-		A3 *= toDeg;
 		
 		//find moon corrected anomaly (in degrees)
 		double correctedAnomaly = moonMeanAnomaly + evectionCorrection - annualEquation - A3;
@@ -190,26 +184,22 @@ public class Controller {
 		//find moon's correction for the equation of the centre (in degrees)
 		temp = correctedAnomaly * toRad;
 		double equationCentre = 6.2886 * Math.sin(temp);
-		equationCentre *= toDeg;
 		
 		//find moon's 4th correction (in degrees)
 		double A4 = 0.214 * Math.sin(2.0*temp);
-		A4 *= toDeg;
 		
 		//find moon's corrected longitude (in degrees)
 		double correctedLong = moon.getMeanLongitude() + evectionCorrection + equationCentre - annualEquation + A4;
 		
 		//correct moon's longitude for variation (in degrees)
-		temp = (2 * (correctedLong - sunGeoLong)) * toRad;
+		temp = (2 * (correctedLong - sunEcLong)) * toRad;
 		double variation = 0.6583 * Math.sin(temp);
-		variation *= toDeg;
 		
 		//find moon's true longitude (in degrees)
 		double trueLong = correctedLong + variation;
 		
 		//calculate moon's corrected longitude of the node (in degrees)
 		temp = 0.16 * Math.sin(sunMeanAnomaly * toRad);
-		temp *= toDeg;
 		double correctedLongNode = moon.getLongitudeOfAscendingNode() - temp;
 		
 		//find ecliptic longitude of moon (in degrees)
@@ -220,14 +210,13 @@ public class Controller {
 		//find x (in radians)
 		double x = Math.cos(temp);
 		double tan = Math.atan2(y, x);
-		tan *= toDeg;
 		double eclipticLong = tan + correctedLongNode;
 		
 		//find ecliptic latitude of moon (in degrees)
 		double eclipticLat = Math.asin(Math.sin(temp * Math.sin(i)));
-		eclipticLat *= toDeg;
 		
 		//find moon mean obliquity (in degrees)
+		double T = (userJulianDate - epoch2000JD) / 36525.0;
 		double obliquity = 23.439292 - (((46.815 * T) + (T * T * 0.0006) - (T * T * T * 0.00181))/3600.0);
 		
 		//find moon declination
@@ -241,6 +230,92 @@ public class Controller {
 		//find moon hour angle
 		double hourAngle = theCalculator.findHourAngle(rightAsc, userLocalTime);
 		moon.setHourAngle(hourAngle);
+		
+		//find moon phase - book's method
+		double phase = Math.abs((trueLong - sunEcLong) * toRad);
+				
+		//find moon phase
+		if ( phase > 4.71 ) //third quarter to new moon
+		{			 
+			if (phase <= 4.72) //third quarter
+				moon.setUnicodeIcon("m17.png");
+			if (phase <= 5.03) 
+				moon.setUnicodeIcon("m18.png");
+			if (phase <= 5.34) 
+				moon.setUnicodeIcon("m19.png");
+			if (phase <= 5.65) 
+				moon.setUnicodeIcon("m20.png");
+			if (phase <= 5.97) 
+				moon.setUnicodeIcon("m21.png");
+			if (phase <= 6.28) 
+				moon.setUnicodeIcon("m22.png");
+			else
+				moon.setUnicodeIcon("m00.png"); //new moon
+		}   
+		else if ( phase > 3.14 ) //full moon to third quarter
+		{			
+			if (phase <= 3.16) //full
+				moon.setUnicodeIcon("m10.png");
+			if (phase <= 3.45) 
+				moon.setUnicodeIcon("m11.png");
+			if (phase <= 3.77) 
+				moon.setUnicodeIcon("m12.png");
+			if (phase <= 4.08) 
+				moon.setUnicodeIcon("m13.png");
+			if (phase <= 4.40) 
+				moon.setUnicodeIcon("m14.png");
+			if (phase <= 2.83) 
+				moon.setUnicodeIcon("m15.png");
+			else
+				moon.setUnicodeIcon("m16.png"); //third quarter
+		} 
+		else if ( phase > 1.57 ) //first quarter to full moon
+		{			
+			if (phase <= 1.58) //new moon
+				moon.setUnicodeIcon("m05.png");
+			if (phase <= 1.88) 
+				moon.setUnicodeIcon("m06.png");
+			if (phase <= 2.20) 
+				moon.setUnicodeIcon("m07.png");
+			if (phase <= 2.25) 
+				moon.setUnicodeIcon("m08.png");
+			if (phase <= 2.83) 
+				moon.setUnicodeIcon("m09.png");
+			else
+				moon.setUnicodeIcon("m10.png"); //full moon
+		} 
+		else 	 //new moon to first quarter
+		{			
+			if (phase <= 0.1) //new moon
+				moon.setUnicodeIcon("m00.png");
+			if (phase <= 0.314) 
+				moon.setUnicodeIcon("m01.png");
+			if (phase <= 0.628) 
+				moon.setUnicodeIcon("m02.png");
+			if (phase <= 0.942) 
+				moon.setUnicodeIcon("m03.png");
+			if (phase <= 1.256) 
+				moon.setUnicodeIcon("m04.png");
+			else
+				moon.setUnicodeIcon("m05.png"); //first quarter
+		} 
+ 	}
+	/************************************************************
+	 * This function finds the julian date of the last full mooon
+	 * @param julianDate in decimal form
+	 * @return julian date of the last full moon.
+	 ************************************************************/
+	public double getLastFullMoonJD() {
+		//JD = 2415020.75933 + (29.53058868 * k) + (0.0001178 * T2) – (0.000000155 * T3) +
+		//(0.00033 * sin((166.56 + (132.87 * T) – (0.009173 * T2)) * RAD);
+		double toRad = Math.PI / 180.0;
+		double jd=0.0;
+		double k = (userDecimalYear - 1900.0)*12.3685;
+		double t = k / 1236.85;
+		jd = 2415020.75933 + (29.53058868 * k) + (0.0001178 * Math.pow(t,2.0)) - (0.000000155 * Math.pow(t, 3.0));
+	    double temp = (166.56 + (132.87 * t) - (0.009173 * Math.pow(t, 2))) * toRad;
+	    jd += (0.00033 * Math.sin(temp));
+		return jd;
 	}
 	/******************************************************
 	 *  This function is used to adjust a degree into the
