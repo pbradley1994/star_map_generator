@@ -9,7 +9,7 @@ import java.util.Arrays;
 // Each object is initially read from flatfile by Parser class.
 public class Constellation {
 	
-	final static boolean DEBUG=false;	
+	final static boolean DEBUG=true;	
 
 	int constID;					// arbitrary index ID  
 	String name;					// familiar name, usually the Latin
@@ -28,28 +28,35 @@ public class Constellation {
         String[] tokens = s.split(delimiter);
         
 		this.constID=id;
-		if (DEBUG) { System.out.println("ConstellationID "+id); }
         if (tokens.length >= 2) {
     		this.name=tokens[0];
     		this.shortName=tokens[1];
+    		if (DEBUG) { System.out.println("ConstellationID "+id+" name "+this.name); }
         }	
     	if (tokens.length >= 6) {
     		this.zodiac=Boolean.parseBoolean(tokens[5]);
     		this.rasc=Double.parseDouble(tokens[3]);
     		this.decl=Double.parseDouble(tokens[4]);	
+    		if (DEBUG) { System.out.println("is zodiac = "+this.zodiac); }
         }
+    	
         // Asterisms are not guaranteed by datasource
         if (tokens.length >= 7) {
     		if ( tokens[6].trim() != "") {
-    			this.ast=stringToPairs(tokens[0]);
+    			this.ast=stringToPairs(tokens[6]);
     			this.plottable=true;
     		}
-    		else { this.plottable=false; }
-    		if (this.ast.isEmpty() ) { this.plottable=false; }
+    		else { 
+    			this.plottable=false; 
+			}
+    		if (this.ast.isEmpty() ) { 
+        		if (DEBUG) { System.out.println("this.ast.isEmpty()=true"); }
+    			this.plottable=false; 
+			}
         }
 		else { this.plottable = false; }
+		if (DEBUG) { System.out.println("plottable= "+this.plottable); }
 
-		
 	} // constructor
 	
 	public Constellation(int id, String n, boolean z, double ra, double dec, String asterisms) {
@@ -76,19 +83,25 @@ public class Constellation {
 	private ArrayList<Pair<Integer>> stringToPairs(String s) {
 		ArrayList<Pair<Integer>> a = new ArrayList<Pair<Integer>>();
 		
+		if (DEBUG) { System.out.println("string s="+s); }
+
     	final String space = " ";
         String[] tokens = s.split(space);
         for (int i=0; i<tokens.length; i++) {
         	final String colon = ":";
             String[] endpoints = tokens[i].split(colon);
             Pair<Integer> p;
+    		if (DEBUG) { System.out.println("endpoints.length="+endpoints.length); }
+
             if (endpoints.length >= 2) {
             	Integer e0 = Integer.parseInt(endpoints[0]);
             	Integer e1 = Integer.parseInt(endpoints[1]);
             	p = new Pair<Integer>(e0,e1);
+        		if (DEBUG) { System.out.println("pair = "+p.p1+", "+p.p2); }
             }
             else {
             	p = new Pair<Integer>(-1,-1);
+        		if (DEBUG) { System.out.println("pair = "+p.p1+", "+p.p2); }
             }
             a.add(p);
         }
