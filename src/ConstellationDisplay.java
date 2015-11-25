@@ -10,7 +10,7 @@ public class ConstellationDisplay {
     private Double label_y;
     private String tag;
     private ArrayList<Pair<Star>> line_pairs;
-    private ArrayList<Pair<Pair<Integer>>> grid_coords;
+    private ArrayList<Pair<Pair<Integer>>> grid_coords = new ArrayList<>();
     //private ArrayList<Pair<Pair<Double>>> sphere_coords;
     boolean show_labels = false;
     boolean draw_me = true;
