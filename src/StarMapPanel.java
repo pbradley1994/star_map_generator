@@ -47,6 +47,7 @@ public class StarMapPanel extends JPanel implements Printable {
     public void createObjects(Controller the_controller) {
         for (Messier messier : the_controller.messierList) {
             MessierDisplay current_object = new MessierDisplay(messier.getHourAngle()*15, messier.getDeclination(), messier.getName());
+            System.out.println("Messier: " + messier.getHourAngle()*15 + ", " + messier.getDeclination());
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
