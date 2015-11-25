@@ -68,6 +68,7 @@ public class StarMapPanel extends JPanel implements Printable {
                 Integer StarID1 = asterism_line.p1;
                 Integer StarID2 = asterism_line.p2;
                 System.out.println(constellation.getName() + " " + StarID1 + " " + StarID2);
+                if (StarID1 == -1 || StarID2 == -1) {continue;}
                 Star star1 = the_controller.getStarfromStarID(StarID1);
                 Star star2 = the_controller.getStarfromStarID(StarID2);
                 star_list.add(new Pair<Star>(star1,star2));
