@@ -357,7 +357,6 @@ public class Calculator {
 		double radMeanLong = meanLongitude * ToRad;
 		double radMoonMeanAnomaly = moonMeanAnomaly * ToRad;
 		double correction = 1.2739 * Math.sin(2 * (radMeanLong - radSunGeoLong) - radMoonMeanAnomaly);
-		correction = correction * ToDeg;
 		return correction;
 	}
 }
