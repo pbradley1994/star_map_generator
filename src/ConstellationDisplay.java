@@ -29,8 +29,7 @@ public class ConstellationDisplay {
             Pair<Integer> grid_coords2 = sphere_to_grid(camera_sphere_x, camera_sphere_y, line_pair.p2.getHourAngle()*15, line_pair.p2.getDeclination());
             Pair<Pair<Integer>> grid_line = new Pair<>(grid_coords1, grid_coords2);
             grid_coords.add(grid_line);
-        }
-        
+        }    
     }
     
     public Pair<Integer> sphere_to_grid(double camera_sphere_x, double camera_sphere_y, double sphere_x, double sphere_y)
@@ -65,20 +64,23 @@ public class ConstellationDisplay {
     {
         if (!draw_me) {return;}
         g.setColor(Color.white);
+        int avg_x = 0;
+        int avg_y = 0;
+        int count = 0; // Also finds average position of constellation stars
         for (Pair<Pair<Integer>> grid_coord : grid_coords) {
             // Draw line from  grid_coord.p1 to grid_coord.p2
-            g.drawLine(grid_coord.p1.p1, grid_coord.p1.p2, grid_coord.p2.p1, grid_coord.p2.p1);
-        } 
-        /*//if(sphere_x == 0 && sphere_y == 0) {g.setColor(Color.red);}
-        //else {g.setColor(Color.white);}
-        g.setColor(Color.red);
-        if (icon != null) {
-            g.drawString(icon, (int) (grid_x + scroll_x), (int) (grid_y + scroll_y + 4));
+            System.out.println(label + ", " + grid_coord.p1.p1 + ", " + grid_coord.p1.p2 + ", " + grid_coord.p2.p1 + ", " + grid_coord.p2.p2);
+            g.drawLine((int)(grid_coord.p1.p1 + scroll_x), (int)(grid_coord.p1.p2 + scroll_y), (int)(grid_coord.p2.p1 + scroll_x), (int)(grid_coord.p2.p2 + scroll_y));
+            avg_x += grid_coord.p1.p1 + grid_coord.p2.p1;
+            avg_y += grid_coord.p1.p2 + grid_coord.p2.p2;
+            count += 2;
         }
-        */
-        g.setColor(Color.cyan);
+        avg_x /= count;
+        avg_y /= count;
+        System.out.println("Position of Label: " + label + ": " + avg_x  + ", " + avg_y + ", " + show_labels);
+        g.setColor(Color.yellow);
         if (show_labels == true && label != null) {
-            g.drawString(label, (int) (label_x + scroll_x + 2), (int) (label_y + scroll_y - 2));
+            g.drawString(label, (int) (avg_x + scroll_x), (int) (avg_y + scroll_y));
             //g.drawString(label, (int) (grid_x + scroll_x + 2), (int) (grid_y + scroll_y - 2));
         }
     }

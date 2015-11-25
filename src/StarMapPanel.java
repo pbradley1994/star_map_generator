@@ -84,7 +84,9 @@ public class StarMapPanel extends JPanel implements Printable {
             if (m_object.getTag() == "star") {m_object.show_labels = star_label;}
             else if (m_object.getTag() == "messier") {m_object.show_labels = messier_label;}
             else if (m_object.getTag() == "planet") {m_object.show_labels = planet_label;}
-            else if (m_object.getTag() == "constellation") {m_object.show_labels = constellation_label;}
+        }
+        for (ConstellationDisplay m_constellation: constellations) {
+            m_constellation.show_labels = constellation_label;
         }
     }
     
