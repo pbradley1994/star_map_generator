@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Hashtable;
 
 // Read data from flat files into object arrays.
 
@@ -22,6 +23,7 @@ public class Parser {
 	ArrayList<Messier> listOfMessierObjects=new ArrayList<Messier>();
 	//ArrayList<Planet> listOfPlanets=new ArrayList<Planet>();
 	ArrayList<Constellation> listOfConstellations=new ArrayList<Constellation>();
+	Hashtable<Integer,Star> starDictionary=new Hashtable<Integer,Star>();
 	
 /**
  * Constructor
@@ -34,6 +36,7 @@ public Parser() {
  	listOfMessierObjects=readMessier();
  	listOfConstellations=readConstellations();
 	//listOfPlanets=readPlanets();
+ 	starDictionary=makeStarDictionary();
 	
 //	BufferedReader b=BufferedReader(FileReader(File))
 //	String[] thingy = myString.split(",");
@@ -188,6 +191,13 @@ public ArrayList<Constellation> readConstellations() {
 	 return l;
 }
 
+public Hashtable<Integer,Star> makeStarDictionary() {
+	Hashtable<Integer,Star> ht = new Hashtable<Integer,Star>();
+	for (Star star : this.listOfStars) {
+		ht.put(star.getID(), star);
+	}
+	return ht;
+}
 
 
 //public ArrayList<Planet> readPlanets() {
