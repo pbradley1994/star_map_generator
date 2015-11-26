@@ -191,12 +191,16 @@ public ArrayList<Constellation> readConstellations() {
 	 return l;
 }
 
-public Hashtable<Integer,Star> makeStarDictionary() {
+private Hashtable<Integer,Star> makeStarDictionary() {
 	Hashtable<Integer,Star> ht = new Hashtable<Integer,Star>();
 	for (Star star : this.listOfStars) {
 		ht.put(star.getID(), star);
 	}
 	return ht;
+}
+
+public Star getStarfromStarID(int sid) {
+	return starDictionary.get(sid); 
 }
 
 
