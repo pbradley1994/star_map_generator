@@ -13,11 +13,17 @@ import javax.swing.JPanel;
  * @author Patrick
  */
 public class StarMapPanel extends JPanel implements Printable {
+
+	/** Debug */
+	final static boolean DEBUG=false;	
+
     /** Globals */
     private Globals globals = new Globals();
+    
     /** List of Solitary Objects */
     private ArrayList<ObjDisplay> objects = new ArrayList();
     private ArrayList<ConstellationDisplay> constellations = new ArrayList();
+    
     /** Camera Position */
     double camera_x = 0;
     double camera_y = 0;
@@ -47,7 +53,7 @@ public class StarMapPanel extends JPanel implements Printable {
     public void createObjects(Controller the_controller) {
         for (Messier messier : the_controller.messierList) {
             MessierDisplay current_object = new MessierDisplay(messier.getHourAngle()*15, messier.getDeclination(), messier.getName());
-            System.out.println("Messier: " + messier.getHourAngle()*15 + ", " + messier.getDeclination());
+            if (DEBUG) { System.out.println("Messier: " + messier.getHourAngle()*15 + ", " + messier.getDeclination()); }
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
@@ -68,7 +74,7 @@ public class StarMapPanel extends JPanel implements Printable {
             for (Pair<Integer> asterism_line : constellation.getAsterisms()) {
                 Integer StarID1 = asterism_line.p1;
                 Integer StarID2 = asterism_line.p2;
-                System.out.println(constellation.getName() + " " + StarID1 + " " + StarID2);
+                if (DEBUG) { System.out.println(constellation.getName() + " " + StarID1 + " " + StarID2); }
                 if (StarID1 == -1 || StarID2 == -1) {continue;}
                 Star star1 = the_controller.getStarfromStarID(StarID1);
                 Star star2 = the_controller.getStarfromStarID(StarID2);

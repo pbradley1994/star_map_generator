@@ -57,6 +57,10 @@ public String getName() {
 	return name;
 }
 
+public int getID() {
+	return id;
+}
+
 public double getMagnitude() {
 	return magnitude;
 }

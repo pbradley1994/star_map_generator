@@ -9,7 +9,7 @@ import java.util.Arrays;
 // Each object is initially read from flatfile by Parser class.
 public class Constellation {
 	
-	final static boolean DEBUG=true;	
+	final static boolean DEBUG=false;	
 
 	int constID;					// arbitrary index ID  
 	String name;					// familiar name, usually the Latin

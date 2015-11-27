@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 // DOES NOT EXTEND OBJECT DISPLAY. AS A CONSTELLATION IS NOT ONE OBJECT BUT MANY!
 public class ConstellationDisplay {
+	
+	final static boolean DEBUG=false;	
+	
     private String label;
     private Double label_x;
     private Double label_y;
@@ -69,7 +72,7 @@ public class ConstellationDisplay {
         int count = 0; // Also finds average position of constellation stars
         for (Pair<Pair<Integer>> grid_coord : grid_coords) {
             // Draw line from  grid_coord.p1 to grid_coord.p2
-            System.out.println(label + ", " + grid_coord.p1.p1 + ", " + grid_coord.p1.p2 + ", " + grid_coord.p2.p1 + ", " + grid_coord.p2.p2);
+            if (DEBUG) { System.out.println(label + ", " + grid_coord.p1.p1 + ", " + grid_coord.p1.p2 + ", " + grid_coord.p2.p1 + ", " + grid_coord.p2.p2); }
             g.drawLine((int)(grid_coord.p1.p1 + scroll_x), (int)(grid_coord.p1.p2 + scroll_y), (int)(grid_coord.p2.p1 + scroll_x), (int)(grid_coord.p2.p2 + scroll_y));
             avg_x += grid_coord.p1.p1 + grid_coord.p2.p1;
             avg_y += grid_coord.p1.p2 + grid_coord.p2.p2;
@@ -77,7 +80,7 @@ public class ConstellationDisplay {
         }
         avg_x /= count;
         avg_y /= count;
-        System.out.println("Position of Label: " + label + ": " + avg_x  + ", " + avg_y + ", " + show_labels);
+        if (DEBUG) { System.out.println("Position of Label: " + label + ": " + avg_x  + ", " + avg_y + ", " + show_labels); }
         g.setColor(Color.yellow);
         if (show_labels == true && label != null) {
             g.drawString(label, (int) (avg_x + scroll_x), (int) (avg_y + scroll_y));

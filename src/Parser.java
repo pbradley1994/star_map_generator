@@ -16,7 +16,7 @@ import java.util.Hashtable;
 
 public class Parser {
 
-	final static boolean DEBUG=true;	
+	final static boolean DEBUG=false;	
 	
 	// Maintain a list of each type of object.
 	ArrayList<Star> listOfStars=new ArrayList<Star>();
