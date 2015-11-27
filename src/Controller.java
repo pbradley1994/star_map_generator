@@ -57,14 +57,14 @@ public class Controller {
 	 * Return a star object given the star objects id.
 	 * @param StarID id of star you are looking for 
 	 ************************************************/
-    public Star getStarfromStarID(Integer StarID)
+	// Changed use the parser's faster method
+    public Star getStarfromStarID(Integer starID)
     {
-        for (Star star : starList) {
-            if (star.id == StarID) {
-                return star;
-            }
+    	Star s = theParser.getStarfromStarID(starID);
+    	if (s.getID() == starID) {
+            return s;
         }
-        System.out.println("StarID " + StarID + "was not found in starList.");
+        System.out.println("StarID " + starID + "was not found in starList.");
         return null;
     }
 	

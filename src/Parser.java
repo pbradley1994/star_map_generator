@@ -16,7 +16,7 @@ import java.util.Hashtable;
 
 public class Parser {
 
-	final static boolean DEBUG=false;	
+	final static boolean DEBUG=true;	
 	
 	// Maintain a list of each type of object.
 	ArrayList<Star> listOfStars=new ArrayList<Star>();
@@ -31,12 +31,13 @@ public class Parser {
  */
 public Parser() {
 //	ArrayList<File> listOfFiles=findDataFiles("./data");
-	if (DEBUG) { System.out.println("Parser:32 - Parser()"); }
+	if (DEBUG) { System.out.println("Parser:34"); }
 	listOfStars=readStars();
  	listOfMessierObjects=readMessier();
  	listOfConstellations=readConstellations();
 	//listOfPlanets=readPlanets();
  	starDictionary=makeStarDictionary();
+
 	
 //	BufferedReader b=BufferedReader(FileReader(File))
 //	String[] thingy = myString.split(",");
@@ -200,7 +201,14 @@ private Hashtable<Integer,Star> makeStarDictionary() {
 }
 
 public Star getStarfromStarID(int sid) {
-	return starDictionary.get(sid); 
+	try {
+		return starDictionary.get(sid); 
+	}
+	catch (Exception e) {
+		e.printStackTrace();
+	}
+    System.out.println("StarID " + sid + "was not found in starList.");
+    return null;
 }
 
 
