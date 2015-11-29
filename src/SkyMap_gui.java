@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.text.*;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -65,6 +66,13 @@ public class SkyMap_gui {
 	private int scroll_y = 0;
 	private boolean generated = false;
 	private boolean generatedError = true;
+	Calendar javaCalendar = null;
+	private int currentDay = 0;
+	private int currentMonth = 0;
+	private int currentYear = 0;
+	private int currentHour = 0;
+	private int currentMin = 0;
+	TimeZone currentTZ;
 	
 	//variables for testing input
 	private double MIN_LAT = -90.000;
@@ -236,6 +244,7 @@ public class SkyMap_gui {
 		txtHour.setColumns(10);
 		txtHour.setBounds(65, 240, 25, 20);
 		frmSkymap.getContentPane().add(txtHour);
+		
 		// Minutes
 		textMinutes = new JTextField();
 		textMinutes.setText("00");
@@ -322,6 +331,20 @@ public class SkyMap_gui {
                     inputTimezone = InputItem.getOffset();
                     }
 		});
+		
+		/**Begin Section: Set fields to current date/time/etc */
+		Calendar cal = Calendar.getInstance();
+		currentDay = cal.get(Calendar.DATE);
+		currentMonth = cal.get(Calendar.MONTH); 
+		currentYear = cal.get(Calendar.YEAR);
+		currentHour = cal.get(Calendar.HOUR);
+		currentMin = cal.get(Calendar.MINUTE);
+		
+		txtHour.setText(String.valueOf(currentHour));
+		textMinutes.setText(String.valueOf(currentMin));
+		txtYear.setText(String.valueOf(currentYear));
+		comboBoxDay.setSelectedItem(String.valueOf(currentDay));
+        comboBoxMonth.setSelectedItem(Month.get(currentMonth));
 
 		
 		/** Begin Section: Current Map's Output */
@@ -788,7 +811,7 @@ class ItemRenderer extends BasicComboBoxRenderer
  */
 class Item
 {
-    private int id;
+    protected int id;
     private double offset;
     private String description;
 
@@ -799,6 +822,11 @@ class Item
     }
 
     public int getId() {
+        return id;
+    }
+    
+    public int setId(int inID) {
+        id = inID;
         return id;
     }
     
