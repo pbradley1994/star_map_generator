@@ -281,7 +281,7 @@ public class Controller {
 				moon.setUnicodeIcon("m13.png");
 			if (phase <= 4.40) 
 				moon.setUnicodeIcon("m14.png");
-			if (phase <= 2.83) 
+			if (phase <= 4.72) 
 				moon.setUnicodeIcon("m15.png");
 			else
 				moon.setUnicodeIcon("m16.png"); //third quarter

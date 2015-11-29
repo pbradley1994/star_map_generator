@@ -1,9 +1,11 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
 // DOES NOT EXTEND OBJECT DISPLAY. AS A CONSTELLATION IS NOT ONE OBJECT BUT MANY!
+/**
+ * @author Patrick
+ */
 public class ConstellationDisplay {
 	
 	final static boolean DEBUG=false;	

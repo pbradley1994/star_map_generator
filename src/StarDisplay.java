@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
 /**
- *
  * @author Patrick
  */
 public class StarDisplay extends ObjDisplay {

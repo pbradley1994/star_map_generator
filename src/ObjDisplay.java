@@ -1,7 +1,6 @@
 import java.awt.Graphics;
 
 /**
- *
  * @author Patrick
  */
 public class ObjDisplay {
@@ -10,10 +9,6 @@ public class ObjDisplay {
     private double sphere_y;
     private int sphere_z;
     protected String tag;
-    // Sprite (not needed yet)
-    //private Image my_sprite;
-    //private Circle my_sprite;
-    // Grid coords (2D) Pixels
     int grid_x;
     int grid_y;
     boolean show_labels = false;
@@ -24,7 +19,6 @@ public class ObjDisplay {
         sphere_x = x;
         sphere_y = y;
         sphere_z = 1;
-        //my_sprite = new Image("Sprites/Star1.png");
     }
     
     public void sphere_to_grid(double camera_sphere_x, double camera_sphere_y)
