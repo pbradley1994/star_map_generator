@@ -697,17 +697,18 @@ public class Controller {
 		return moon;
 	}
 	/************************************************
--	 * Return a star object given the star objects id.
--	 * @param StarID id of star you are looking for 
--	 ************************************************/
--	// Changed use the parser's faster method
--    public Star getStarfromStarID(Integer starID)
--    {
--    	Star s = theParser.getStarfromStarID(starID);
--    	if (s.getID() == starID) {
--            return s;
--        }
--        System.out.println("StarID " + starID + "was not found in starList.");
--        return null;
--    }
+	 * Return a star object given the star objects id.
+	 * @param StarID id of star you are looking for 
+	 ************************************************/
+	// Changed use the parser's faster method
+    public Star getStarfromStarID(Integer starID)
+    {
+    	Star s = theParser.getStarfromStarID(starID);
+    	if (s.getID() == starID) {
+            return s;
+        }
+        System.out.println("StarID " + starID + "was not found in starList.");
+        return null;
+    }
 }
+
