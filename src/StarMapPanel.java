@@ -92,6 +92,10 @@ public class StarMapPanel extends JPanel implements Printable {
         MoonDisplay current_object = new MoonDisplay(the_controller.moon.getHourAngle()*15, the_controller.moon.getDeclination(), the_controller.moon.getIcon());
         current_object.sphere_to_grid(camera_x, camera_y);
         objects.add(current_object);
+        // Add Sum to screen
+        SunDisplay current_sun = new SunDisplay(the_controller.sun.getHourAngle()*15, the_controller.sun.getDeclination(), the_controller.sun.getMagnitude());
+        current_sun.sphere_to_grid(camera_x, camera_y);
+        objects.add(current_sun);
     }
     
     public void setLabels(boolean star_label, boolean messier_label, boolean planet_label, boolean constellation_label) {
