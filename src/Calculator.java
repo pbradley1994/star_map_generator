@@ -60,20 +60,47 @@ public class Calculator {
 			hourAngle = hourAngle + 24.0;
 		return hourAngle;
 	}
-	
+	/************************************************************
+	 * This function normalizes days for a planet according to its
+	 * orbital period
+	 * 
+	 * @param orbitalPeriod of the planet
+	 * @param days as number of days since the epoch
+	 * @return n as the normalized days
+	 ************************************************************/
+	public double findN(double orbitalPeriod, double days) 
+	{
+		double n = (360/365.242191) * (days / orbitalPeriod);
+		if(n > 360.0)
+		{
+			while (n > 360.0)
+			{
+				n -= 360.0;
+			}
+		}
+		if(n < 0.0)
+		{
+			while (n < 0.0)
+			{
+				n += 360.0;
+			}
+		}
+		return n;
+	}
 	/**************************************************************
 	 * This function finds the mean anomaly of a Planet.
 	 * 
 	 * @param planet as the planet to find mean anomaly of
+	 * @param n 
 	 * @param days as the number of days since epoch 2000
 	 * @return mean anomaly of planet in degree form
 	 **************************************************************/
-	public double findMeanAnomaly(Planet planet) 
+	public double findMeanAnomaly(Planet planet, double n) 
 	{
 		double meanLong = planet.getMeanLongitude();
 		double perihelion = planet.getPerihelion();
 		
-		double meanAnomaly = meanLong - perihelion;
+		double meanAnomaly = n + meanLong - perihelion;
 
 		return meanAnomaly;
 	}
@@ -83,19 +110,20 @@ public class Calculator {
 	 * 
 	 * @param planet as the planet to find helio long of
 	 * @param meanAnomaly of the planet
+	 * @param n 
 	 * @param days as the number of days since Epoch 2000
 	 * @return heliocentric longitude of the planet in degree form
 	 *******************************************************************/
-	public double findHeliocentricLongitude(Planet planet, double meanAnomaly) 
+	public double findHeliocentricLongitude(Planet planet, double meanAnomaly, double n) 
 	{
 		double eccentricity = planet.getEccentricityOfOrbit();
 		double meanLong = planet.getMeanLongitude();
 		//find sin(meanAnomaly) and convert back to degrees
 		double radMeanAnomaly = meanAnomaly * ToRad;
 		meanAnomaly = Math.sin(radMeanAnomaly);
-		meanAnomaly = meanAnomaly * ToDeg;
+//		meanAnomaly = meanAnomaly * ToDeg;
 		
-		double helioLong = eccentricity * meanAnomaly + meanLong;
+		double helioLong = n + ((360/Math.PI) * eccentricity * meanAnomaly) + meanLong;
 		
 		//adjust if outside 0 - 360 range
 		if(helioLong > 360.0 || helioLong < 0.0)
@@ -138,80 +166,10 @@ public class Calculator {
 		//find cos(trueAnomaly) and convert back to degrees
 		double radTrueAnomaly = trueAnomaly * ToRad;
 		trueAnomaly = Math.cos(radTrueAnomaly);
-		trueAnomaly = trueAnomaly * ToDeg;
 		
 		double vectorRadius = (axis * (1 - Math.pow(eccentricity, 2.0))) / (1 + eccentricity * trueAnomaly);
 		
 		return vectorRadius;
-	}
-
-	/**************************************************************
-	 * This function finds the heliocentric latitude of a Planet.
-	 * 
-	 * @param planet as the planet to find helio lat of
-	 * @param helioLongitude of the planet in degree form
-	 * @return helio lat of planet in degree form
-	 **************************************************************/
-	public double findHeliocentricLatitude(Planet planet, double helioLongitude) 
-	{
-		double longAscNode = planet.getLongitudeOfAscendingNode();
-		double inclination = planet.getInclinationOnPlane();
-		//convert everything to radians for calculations
-		helioLongitude = ToRad * helioLongitude;
-		longAscNode = ToRad * longAscNode;
-		inclination = ToRad * inclination;
-		
-		double temp = Math.sin(helioLongitude - longAscNode) * Math.sin(inclination);
-		double helioLat = Math.asin(temp);
-		
-		//convert back to degrees for return
-		helioLat = ToDeg * helioLat;
-		
-		return helioLat;
-	}
-
-	/************************************************************************
-	 * This function finds the projected heliocentric longitude of a planet
-	 * 
-	 * @param planet as the planet to find projected helio long of
-	 * @param helioLongitude of the planet in degree form
-	 * @return projected helio long of planet in degree form
-	 ************************************************************************/
-	public double findProjectedHelioLong(Planet planet, double helioLongitude) 
-	{
-		double longAscNode = planet.getLongitudeOfAscendingNode();
-		double inclination = planet.getInclinationOnPlane();
-		//convert to radians for calculations
-		helioLongitude = ToRad * helioLongitude;
-		double radLongAscNode = ToRad * longAscNode;
-		inclination = ToRad * inclination;
-		
-		double x = Math.cos(helioLongitude - radLongAscNode);
-		double y = Math.sin(helioLongitude - radLongAscNode) * Math.cos(inclination);
-		double temp = Math.atan2(y, x);
-		//convert back to degrees to finish out function
-		temp = ToDeg * temp;
-		double projectedHelioLong = temp + longAscNode;
-
-		return projectedHelioLong;
-	}
-
-	/**************************************************************
-	 * This function finds the projected radius vector of a planet
-	 * 
-	 * @param radiusVector of the planet in AU
-	 * @param helioLatitude of planet in degrees
-	 * @return projected radius vector of planet in AU
-	 **************************************************************/
-	public double findProjectedRadiusVector(double radiusVector, double helioLatitude) 
-	{
-		//convert to radians for Math.cos
-		helioLatitude = ToRad * helioLatitude;
-		helioLatitude = Math.cos(helioLatitude);
-		helioLatitude = ToDeg * helioLatitude;
-		
-		double projectedRadiusVector = radiusVector * helioLatitude;
-		return projectedRadiusVector;
 	}
 
 	/**************************************************************
@@ -223,7 +181,7 @@ public class Calculator {
 	 * @param helioLongEarth in degrees
 	 * @return geocentric longitude of planet in degree form
 	 **************************************************************/
-	public double findGeocentricLongitude(String name, double projectedRadiusVectorPlanet, double projectedHelioLongPlanet,
+	public double findGeocentricLongitude(String name, double radiusVectorPlanet, double helioLongPlanet,
 			double radiusVectorEarth, double helioLongEarth) 
 	{
 		Boolean inner = false;
@@ -232,10 +190,8 @@ public class Calculator {
 		double temp;
 		double geoLong;
 		//convert everything to radians for Math.cos, etc
-		projectedRadiusVectorPlanet = ToRad * projectedRadiusVectorPlanet;
-		projectedHelioLongPlanet = ToRad * projectedHelioLongPlanet;
-		radiusVectorEarth = ToRad * radiusVectorEarth;
-		helioLongEarth = ToRad * helioLongEarth;
+		double radHelioLongPlanet = ToRad * helioLongPlanet;
+		double radHelioLongEarth = ToRad * helioLongEarth;
 		
 		if(name == "Mercury" || name == "Venus")
 		{
@@ -243,54 +199,35 @@ public class Calculator {
 		}
 		if(inner)
 		{
-			top = projectedRadiusVectorPlanet * Math.sin(helioLongEarth - projectedHelioLongPlanet);
-			bottom = radiusVectorEarth - projectedRadiusVectorPlanet * Math.cos(helioLongEarth - projectedHelioLongPlanet);
-			temp = Math.atan(top / bottom);
-			geoLong = 180.0 + helioLongEarth + temp;
+			top = radiusVectorEarth * Math.sin(radHelioLongEarth - radHelioLongPlanet);
+			bottom = 1.0 - radiusVectorEarth * Math.cos(radHelioLongEarth - radHelioLongPlanet);
+			temp = Math.atan2(top, bottom);
+			geoLong = temp + helioLongEarth + 180.0;
 		}
 		else //outer planet
 		{
-			top = radiusVectorEarth * Math.sin(projectedHelioLongPlanet - helioLongEarth);
-			bottom = projectedRadiusVectorPlanet - radiusVectorEarth * Math.cos(projectedHelioLongPlanet - helioLongEarth);
-			temp = Math.atan(top / bottom);
-			geoLong = temp + projectedHelioLongPlanet;
+			top = Math.sin(radHelioLongPlanet - radHelioLongEarth);
+			bottom = radiusVectorEarth - Math.cos(radHelioLongPlanet - radHelioLongEarth);
+			geoLong = Math.atan2(top, bottom);
+			geoLong = geoLong + helioLongPlanet;
 		}
 		//adjust if outside 0-360 range
-		geoLong = mod2pi(geoLong);
-		//convert geoLong back to degrees
-		geoLong = ToDeg * geoLong;
+		if(geoLong > 360.0)
+		{
+			while (geoLong > 360.0)
+			{
+				geoLong -= 360.0;
+			}
+		}
+		if(geoLong < 0.0)
+		{
+			while (geoLong < 0.0)
+			{
+				geoLong += 360.0;
+			}
+		}
 		
 		return geoLong;
-	}
-
-	/**************************************************************
-	 * This function finds the geocentric latitude of a planet.
-	 * 
-	 * @param projectedRadiusVectorPlanet in AU
-	 * @param helioLatPlanet in degrees
-	 * @param geoLongPlanet in degrees
-	 * @param projectedHelioLongPlanet in degrees
-	 * @param raiusVectorEarth in AU
-	 * @param helioLongEarth in degrees
-	 * @return geocentric latitude of planet in degree form
-	 **************************************************************/
-	public double findGeocentricLatitude(double projectedRadiusVectorPlanet, double helioLatPlanet,
-			double geoLongPlanet, double projectedHelioLongPlanet, double radiusVectorEarth, double helioLongEarth) 
-	{
-		//convert to radians for Math.tan, etc
-		projectedRadiusVectorPlanet = ToRad * projectedRadiusVectorPlanet;
-		helioLatPlanet = ToRad * helioLatPlanet;
-		geoLongPlanet = ToRad * geoLongPlanet;
-		projectedHelioLongPlanet = ToRad * projectedHelioLongPlanet;
-		helioLongEarth = ToRad * helioLongEarth;
-		
-		double top = projectedRadiusVectorPlanet * Math.tan(helioLatPlanet) * Math.sin(geoLongPlanet - projectedHelioLongPlanet);
-		double bottom = radiusVectorEarth * Math.sin(projectedHelioLongPlanet - helioLongEarth);
-		double geoLat = Math.atan(top / bottom);
-		//convert back to degrees
-		geoLat = ToDeg * geoLat;
-
-		return geoLat;
 	}
 
 	/**************************************************************
@@ -304,16 +241,19 @@ public class Calculator {
 	public double findPlanetDeclination(double meanLongPlanet, double geoLatPlanet, double geoLongPlanet) 
 	{		
 		//convert to radians for Math.cos, etc
-		meanLongPlanet = ToRad * meanLongPlanet;
-		geoLatPlanet = ToRad * geoLatPlanet;
-		geoLongPlanet = ToRad * geoLongPlanet;
-		
-		double tempA = Math.sin(geoLatPlanet)*Math.cos(meanLongPlanet);
-		double tempB = Math.cos(geoLatPlanet) * Math.sin(meanLongPlanet) * Math.sin(geoLongPlanet);
-		double tempC = tempA + tempB;
-		double declination = Math.asin(tempC);
-		//convert back to degrees
-		declination = ToDeg * declination;
+		double radMeanLongPlanet = ToRad * meanLongPlanet;
+		double radGeoLatPlanet = ToRad * geoLatPlanet;
+		double radGeoLongPlanet = ToRad * geoLongPlanet;
+		double declination = 0.0;
+
+			double tempA = Math.sin(radGeoLatPlanet)*Math.cos(radMeanLongPlanet);
+			double tempB = Math.cos(radGeoLatPlanet) * Math.sin(radMeanLongPlanet) * Math.sin(radGeoLongPlanet);
+			double tempC = tempA + tempB;
+			declination = Math.asin(tempC);
+			declination = mod2pi(declination); //adjust if needed
+			//convert back to degrees
+			declination = ToDeg * declination;
+
 		return declination;
 	}
 
@@ -328,13 +268,14 @@ public class Calculator {
 	public double findPlanetRightAscension(double meanLongPlanet, double geoLatPlanet, double geoLongPlanet) 
 	{
 		//convert to radians for Math.cos, etc
-		meanLongPlanet = ToRad * meanLongPlanet;
-		geoLatPlanet = ToRad * geoLatPlanet;
-		geoLongPlanet = ToRad * geoLongPlanet;
+		double radMeanLongPlanet = ToRad * meanLongPlanet;
+		double radGeoLatPlanet = ToRad * geoLatPlanet;
+		double radGeoLongPlanet = ToRad * geoLongPlanet;
+		double rightAsc = 0.0;
 		
-		double x = Math.cos(geoLongPlanet);
-		double y = Math.sin(geoLongPlanet) * Math.cos(meanLongPlanet) - Math.tan(geoLatPlanet) * Math.sin(meanLongPlanet);
-		double rightAsc = Math.atan2(y, x);
+		double x = Math.cos(radGeoLongPlanet);
+		double y = Math.sin(radGeoLongPlanet) * Math.cos(radMeanLongPlanet) - Math.tan(radGeoLatPlanet) * Math.sin(radMeanLongPlanet);
+		rightAsc = Math.atan2(y, x);
 				
 		//adjust if outside 0-360 range
 		rightAsc = mod2pi(rightAsc);

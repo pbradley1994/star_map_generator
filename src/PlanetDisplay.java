@@ -1,15 +1,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
-
 /**
- *
  * @author Patrick
  */
 public class PlanetDisplay extends ObjDisplay {
-    private String label;
-    private String icon;
+    protected String label;
+    protected String icon;
     
 	final static boolean DEBUG=false;	
     
@@ -22,9 +18,6 @@ public class PlanetDisplay extends ObjDisplay {
     
     public void draw(Graphics g, double scroll_x, double scroll_y)
     {
-        
-        //if(sphere_x == 0 && sphere_y == 0) {g.setColor(Color.red);}
-        //else {g.setColor(Color.white);}
         if (!draw_me) {return;} 
         g.setColor(Color.red);
         if (icon != null) {

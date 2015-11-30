@@ -51,22 +51,20 @@ public class StarMapPanel extends JPanel implements Printable {
     }*/
     
     public void createObjects(Controller the_controller) {
+        // Add Messier Objects to screen
         for (Messier messier : the_controller.messierList) {
             MessierDisplay current_object = new MessierDisplay(messier.getHourAngle()*15, messier.getDeclination(), messier.getName());
             if (DEBUG) { System.out.println("Messier: " + messier.getHourAngle()*15 + ", " + messier.getDeclination()); }
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
+        // Add Stars to screen
         for (Star star : the_controller.starList) {
             StarDisplay current_object = new StarDisplay(star.getHourAngle()*15, star.getDeclination(), star.getMagnitude(), star.getName());
             current_object.sphere_to_grid(camera_x, camera_y);
             objects.add(current_object);
         }
-        for (Planet planet : the_controller.planetList) {
-            PlanetDisplay current_object = new PlanetDisplay(planet.getHourAngle()*15, planet.getDeclination(), planet.getName(), planet.getIcon());
-            current_object.sphere_to_grid(camera_x, camera_y);
-            objects.add(current_object);
-        }
+        // Add Constellations to screen
         for (Constellation constellation : the_controller.constellationList) {
             // Convert asterisms starID's to starObjects
             if(!constellation.isPlottable()) {continue;}
@@ -84,6 +82,16 @@ public class StarMapPanel extends JPanel implements Printable {
             current_object.calculate_grid_positions(camera_x, camera_y);
             constellations.add(current_object);
         }
+        // Add Planets (Excluding Earth) to screen
+        for (Planet planet : the_controller.planetList) {
+            PlanetDisplay current_object = new PlanetDisplay(planet.getHourAngle()*15, planet.getDeclination(), planet.getName(), planet.getIcon());
+            current_object.sphere_to_grid(camera_x, camera_y);
+            objects.add(current_object);
+        }
+        // Add Moon to screen
+        MoonDisplay current_object = new MoonDisplay(the_controller.moon.getHourAngle()*15, the_controller.moon.getDeclination(), the_controller.moon.getIcon());
+        current_object.sphere_to_grid(camera_x, camera_y);
+        objects.add(current_object);
     }
     
     public void setLabels(boolean star_label, boolean messier_label, boolean planet_label, boolean constellation_label) {
@@ -123,18 +131,14 @@ public class StarMapPanel extends JPanel implements Printable {
         // Draw black background
         g.setColor(Color.black);
         g.fillRect(0, 0, Globals.WINWIDTH + Globals.GUIWIDTH, (Globals.WINHEIGHT)*2);
-        // Draw each solitary object
-        for (ObjDisplay object : objects) {
-            object.draw(g, scroll_x, scroll_y);
-        }
         // Draw each constellation
         for (ConstellationDisplay constellation : constellations) {
             constellation.draw(g, scroll_x, scroll_y);
         }
-
-        //g.setColor(Color.white);
-        //g.drawString("This is my custom panel!", 15, 15);
-        //System.out.println("This is a panel!");
+        // Draw each solitary object
+        for (ObjDisplay object : objects) {
+            object.draw(g, scroll_x, scroll_y);
+        }
     }
 
     @Override
