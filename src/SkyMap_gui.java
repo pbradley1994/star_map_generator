@@ -224,13 +224,14 @@ public class SkyMap_gui {
 		/** Begin Day */
 		// Dropdown: Day
 		JComboBox comboBoxDay = new JComboBox();
-		comboBoxDay.setFont(new Font("Arial", Font.PLAIN, 12));
 		comboBoxDay.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", 
 				"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		if (! isWindows) { 
+			comboBoxDay.setFont(new Font("Arial", Font.PLAIN, 12));
 			comboBoxDay.setBounds(80, 192, 64, 20);
         }
         else {
+    		comboBoxDay.setFont(new Font("Arial", Font.PLAIN, 12));
     		comboBoxDay.setBounds(74, 192, 54, 20);
         }
 		frmSkymap.getContentPane().add(comboBoxDay);
@@ -241,7 +242,7 @@ public class SkyMap_gui {
 		txtYear.setForeground(Color.DARK_GRAY);
 		txtYear.setColumns(10);
         if (! isWindows) { 
-    		txtYear.setBounds(140, 192, 59, 20);
+    		txtYear.setBounds(140, 192, 55, 20);
         }
         else {
     		txtYear.setBounds(132, 192, 34, 20);
@@ -808,9 +809,21 @@ public class SkyMap_gui {
         
 		// Button: Print Map
 		JButton btnPrint = new JButton("Print Map");
-		btnPrint.setForeground(Color.WHITE);
-		btnPrint.setBackground(Color.BLACK);
-		btnPrint.setBounds(781, 550, 89, 23);
+
+		
+        if (! isWindows) { 
+    		btnPrint.setForeground(Color.BLACK);
+    		btnPrint.setBackground(Color.GRAY);
+    		btnPrint.setBounds(781, 550, 89, 23); 
+    		btnPrint.setBorderPainted(true);
+        }
+        else {
+    		btnPrint.setForeground(Color.WHITE);
+    		btnPrint.setBackground(Color.BLACK);
+    		btnPrint.setBounds(781, 550, 89, 23); 
+        }
+		
+		
 		frmSkymap.getContentPane().add(btnPrint);
                 
                 btnPrint.addActionListener(new ActionListener() {
