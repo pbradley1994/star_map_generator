@@ -244,70 +244,70 @@ public class Controller {
 		//find moon phase - book's method
 		double phase = Math.abs((trueLong - sunEcLong) * toRad);
 				
-		//find moon phase
-		if ( phase > 4.71 ) //third quarter to new moon
-		{			 
-			if (phase <= 4.72) //third quarter
-				moon.setUnicodeIcon("m17.png");
-			if (phase <= 5.03) 
-				moon.setUnicodeIcon("m18.png");
-			if (phase <= 5.34) 
-				moon.setUnicodeIcon("m19.png");
-			if (phase <= 5.65) 
-				moon.setUnicodeIcon("m20.png");
-			if (phase <= 5.97) 
-				moon.setUnicodeIcon("m21.png");
-			if (phase <= 6.28) 
-				moon.setUnicodeIcon("m22.png");
-			else
-				moon.setUnicodeIcon("m00.png"); //new moon
-		}   
-		else if ( phase > 3.14 ) //full moon to third quarter
+		//find moon phase		 
+		if ( phase > 2.19 ) //full moon to third quarter
 		{			
-			if (phase <= 3.16) //full
+			if (phase >= 2.7) //full
 				moon.setUnicodeIcon("m10.png");
-			if (phase <= 3.45) 
+			if (phase >= 2.6) 
 				moon.setUnicodeIcon("m11.png");
-			if (phase <= 3.77) 
+			if (phase >= 2.5) 
 				moon.setUnicodeIcon("m12.png");
-			if (phase <= 4.08) 
+			if (phase >= 2.4) 
 				moon.setUnicodeIcon("m13.png");
-			if (phase <= 4.40) 
+			if (phase >= 2.3) 
 				moon.setUnicodeIcon("m14.png");
-			if (phase <= 2.83) 
+			if (phase >= 2.2) 
 				moon.setUnicodeIcon("m15.png");
 			else
 				moon.setUnicodeIcon("m16.png"); //third quarter
 		} 
-		else if ( phase > 1.57 ) //first quarter to full moon
+		else if ( phase > 1.65 ) //third quarter to new moon
+		{			 
+			if (phase >= 2.2) //third quarter
+				moon.setUnicodeIcon("m17.png");
+			if (phase >= 2.1) 
+				moon.setUnicodeIcon("m18.png");
+			if (phase >= 2.0) 
+				moon.setUnicodeIcon("m19.png");
+			if (phase >= 1.8) 
+				moon.setUnicodeIcon("m20.png");
+			if (phase >= 1.7) 
+				moon.setUnicodeIcon("m21.png");
+			if (phase >= 1.6) 
+				moon.setUnicodeIcon("m22.png");
+			else
+				moon.setUnicodeIcon("m00.png"); //new moon
+		} 
+		else if ( phase > 0.65 ) //first quarter to full moon
 		{			
-			if (phase <= 1.58) //new moon
+			if (phase >= 1.6) //first quarter
 				moon.setUnicodeIcon("m05.png");
-			if (phase <= 1.88) 
+			if (phase >= 1.4) 
 				moon.setUnicodeIcon("m06.png");
-			if (phase <= 2.20) 
+			if (phase >= 1.2) 
 				moon.setUnicodeIcon("m07.png");
-			if (phase <= 2.25) 
+			if (phase >= 0.8) 
 				moon.setUnicodeIcon("m08.png");
-			if (phase <= 2.83) 
+			if (phase >= 0.6) 
 				moon.setUnicodeIcon("m09.png");
 			else
 				moon.setUnicodeIcon("m10.png"); //full moon
 		} 
 		else 	 //new moon to first quarter
 		{			
-			if (phase <= 0.1) //new moon
-				moon.setUnicodeIcon("m00.png");
-			if (phase <= 0.314) 
-				moon.setUnicodeIcon("m01.png");
-			if (phase <= 0.628) 
-				moon.setUnicodeIcon("m02.png");
-			if (phase <= 0.942) 
-				moon.setUnicodeIcon("m03.png");
-			if (phase <= 1.256) 
+			if (phase >= 0.60) //first quarter
+				moon.setUnicodeIcon("m05.png");
+			if (phase >= 0.59) 
 				moon.setUnicodeIcon("m04.png");
+			if (phase >= 0.58) 
+				moon.setUnicodeIcon("m03.png");
+			if (phase >= 0.57) 
+				moon.setUnicodeIcon("m02.png");
+			if (phase >= 0.56) 
+				moon.setUnicodeIcon("m01.png");
 			else
-				moon.setUnicodeIcon("m05.png"); //first quarter
+				moon.setUnicodeIcon("m00.png"); //new moon
 		} 
  	}
 	/******************************************************
