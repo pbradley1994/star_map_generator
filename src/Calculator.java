@@ -251,8 +251,6 @@ public class Calculator {
 			double tempC = tempA + tempB;
 			declination = Math.asin(tempC);
 			declination = mod2pi(declination); //adjust if needed
-			//convert back to degrees
-			declination = ToDeg * declination;
 
 		return declination;
 	}
