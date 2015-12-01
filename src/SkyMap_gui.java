@@ -344,7 +344,7 @@ public class SkyMap_gui {
 		currentDay = cal.get(Calendar.DATE);
 		currentMonth = cal.get(Calendar.MONTH); 
 		currentYear = cal.get(Calendar.YEAR);
-		currentHour = cal.get(Calendar.HOUR);
+		currentHour = cal.get(Calendar.HOUR_OF_DAY);
 		currentMin = cal.get(Calendar.MINUTE);
 		currentTimezone = (double)TimeUnit.HOURS.convert(mGMTOffset, TimeUnit.MILLISECONDS);
 		adjCurrentTimezone = GMTKeys.get(currentTimezone);
