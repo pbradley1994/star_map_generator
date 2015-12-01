@@ -42,10 +42,10 @@ public class SkyMap_gui {
 	private JTextField txtYear;
 	private JTextField txtHour;
 	private JTextField textMinutes;
-        private JCheckBox checkboxOne;
-        private JCheckBox checkboxTwo;
-        private JCheckBox checkboxThree;
-        private JCheckBox checkboxFour;
+    private JCheckBox checkboxOne;
+    private JCheckBox checkboxTwo;
+    private JCheckBox checkboxThree;
+    private JCheckBox checkboxFour;
 	
 	// variables for storing input
 	private double inputLat = 0.0;
