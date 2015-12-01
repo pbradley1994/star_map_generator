@@ -8,15 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import static java.lang.Math.toIntExact;
 import javax.swing.*;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JTextField;
 import javax.swing.plaf.basic.*;
 
 /**
@@ -72,7 +66,9 @@ public class SkyMap_gui {
 	private int currentYear = 0;
 	private int currentHour = 0;
 	private int currentMin = 0;
-	TimeZone currentTZ;
+	private double currentTimezone = 0.0;
+	private int adjCurrentTimezone = 0;
+
 	
 	//variables for testing input
 	private double MIN_LAT = -90.000;
@@ -282,38 +278,63 @@ public class SkyMap_gui {
 		 */
 		Vector GMT = new Vector();
 			GMT.addElement( new Item(0, 0.0, "GMT - Greenwich Mean Time" ) );
-			GMT.addElement( new Item(1, 0.0, "GMT - Universal Coordinated Time" ) );
-			GMT.addElement( new Item(2, -1.0, "GMT-1:00 - Central African Time" ) );
-			GMT.addElement( new Item(3, -3.0, "GMT-3:00 - Brazil Eastern Time" ) );
-			GMT.addElement( new Item(4, -3.0, "GMT-3:00 - Argentina Standard Time" ) );
-			GMT.addElement( new Item(5, -3.5, "GMT-3:30 - Canada Newfoundland Time" ) );
-			GMT.addElement( new Item(6, -4.0, "GMT-4:00 - Puerto Rico and US Islands Time" ) );
-			GMT.addElement( new Item(7, -5.0, "GMT-5:00 - Indiana Eastern Standard Time" ) );
-			GMT.addElement( new Item(8, -5.0, "GMT-5:00 - Eastern Standard Time" ) );
-			GMT.addElement( new Item(9, -6.0, "GMT-6:00 - Central Standard Time" ) );
-			GMT.addElement( new Item(10, -7.0, "GMT-7:00 - Mountain Standard Time" ) );
-			GMT.addElement( new Item(11, -7.0, "GMT-7:00 - Phoenix Standard Time" ) );
-			GMT.addElement( new Item(12, -8.0, "GMT-8:00 - Pacific Standard Time" ) );
-			GMT.addElement( new Item(13, -9.0, "GMT-9:00 - Alaska Standard Time" ) );
-			GMT.addElement( new Item(14, -10.0, "GMT-10:00 - Hawaii Standard Time" ) );
-			GMT.addElement( new Item(15, -11.0, "GMT-11:00 - Midway Islands Time" ) );
-			GMT.addElement( new Item(16, 12.0, "GMT+12:00 - New Zealand Standard Time" ) );
-			GMT.addElement( new Item(17, 11.0, "GMT+11:00 - Solomon Standard Time" ) );
-			GMT.addElement( new Item(18, 10.0, "GMT+10:00 - Australia Eastern Time" ) );
-			GMT.addElement( new Item(19, 9.5, "GMT+9:30 - Australia Central Time" ) );
-			GMT.addElement( new Item(20, 9.0, "GMT+9:00 - Japan Standard Time" ) );
-			GMT.addElement( new Item(21, 8.0, "GMT+8:00 - China Taiwan Time" ) );
-			GMT.addElement( new Item(22, 7.0, "GMT+7:00 - Vietnam Standard Time" ) );
-			GMT.addElement( new Item(23, 6.0, "GMT+6:00 - Bangladesh Standard Time" ) );
-			GMT.addElement( new Item(24, 5.5, "GMT+5:30 - India Standard Time" ) );
-			GMT.addElement( new Item(25, 5.0, "GMT+5:00 - Pakistan Lahore Time" ) );
-			GMT.addElement( new Item(26, 4.0, "GMT+4:00 - Near East Time" ) );
-			GMT.addElement( new Item(27, 3.5, "GMT+3:30 - Middle East Time" ) );
-			GMT.addElement( new Item(28, 3.0, "GMT+3:00 - Eastern African Time" ) );
-			GMT.addElement( new Item(28, 3.0, "GMT+3:00 - Eastern African Time" ) );
-			GMT.addElement( new Item(29, 2.0, "GMT+2:00 - (Arabic) Egypt Standard Time" ) );
-			GMT.addElement( new Item(30, 2.0, "GMT+2:00 - Eastern European Time" ) );
-			GMT.addElement( new Item(31, 1.0, "GMT+1:00 - European Central Time" ) );
+			GMT.addElement( new Item(1, -1.0, "GMT-1:00 - Central African Time" ) );
+			GMT.addElement( new Item(2, -3.0, "GMT-3:00 - Brazil/Argentina Time" ) );
+			GMT.addElement( new Item(3, -3.5, "GMT-3:30 - Canada Newfoundland Time" ) );
+			GMT.addElement( new Item(4, -4.0, "GMT-4:00 - Puerto Rico and US Islands Time" ) );
+			GMT.addElement( new Item(5, -5.0, "GMT-5:00 - Eastern Standard Time" ) );
+			GMT.addElement( new Item(6, -6.0, "GMT-6:00 - Central Standard Time" ) );
+			GMT.addElement( new Item(7, -7.0, "GMT-7:00 - Mountain Standard Time" ) );
+			GMT.addElement( new Item(8, -8.0, "GMT-8:00 - Pacific Standard Time" ) );
+			GMT.addElement( new Item(9, -9.0, "GMT-9:00 - Alaska Standard Time" ) );
+			GMT.addElement( new Item(10, -10.0, "GMT-10:00 - Hawaii Standard Time" ) );
+			GMT.addElement( new Item(11, -11.0, "GMT-11:00 - Midway Islands Time" ) );
+			GMT.addElement( new Item(12, 12.0, "GMT+12:00 - New Zealand Standard Time" ) );
+			GMT.addElement( new Item(13, 11.0, "GMT+11:00 - Solomon Standard Time" ) );
+			GMT.addElement( new Item(14, 10.0, "GMT+10:00 - Australia Eastern Time" ) );
+			GMT.addElement( new Item(15, 9.5, "GMT+9:30 - Australia Central Time" ) );
+			GMT.addElement( new Item(16, 9.0, "GMT+9:00 - Japan Standard Time" ) );
+			GMT.addElement( new Item(17, 8.0, "GMT+8:00 - China Taiwan Time" ) );
+			GMT.addElement( new Item(18, 7.0, "GMT+7:00 - Vietnam Standard Time" ) );
+			GMT.addElement( new Item(19, 6.0, "GMT+6:00 - Bangladesh Standard Time" ) );
+			GMT.addElement( new Item(20, 5.5, "GMT+5:30 - India Standard Time" ) );
+			GMT.addElement( new Item(21, 5.0, "GMT+5:00 - Pakistan Lahore Time" ) );
+			GMT.addElement( new Item(22, 4.0, "GMT+4:00 - Near East Time" ) );
+			GMT.addElement( new Item(23, 3.5, "GMT+3:30 - Middle East Time" ) );
+			GMT.addElement( new Item(24, 3.0, "GMT+3:00 - Eastern African Time" ) );
+			GMT.addElement( new Item(25, 2.0, "GMT+2:00 - Eastern European Time" ) );
+			GMT.addElement( new Item(26, 1.0, "GMT+1:00 - European Central Time" ) );
+			
+		//Hash table to correspond GMT offsets to indexes for use later
+		Hashtable<Double,Integer> GMTKeys = new Hashtable<Double,Integer>() {{
+	        	put(0.0,0);
+	        	put(-1.0,1);
+	        	put(-3.0,2);
+	        	put(-3.5,3);
+	        	put(-4.0,4);
+	        	put(-5.0,5);
+	        	put(-6.0,6);
+	        	put(-7.0,7);
+	        	put(-8.0,8);
+	        	put(-9.0,9);
+	        	put(-10.0,10);
+	        	put(-11.0,11);
+	        	put(12.0,12);
+	        	put(11.0,13);
+	        	put(10.0,14);
+	        	put(9.5,15);
+	        	put(9.0,16);
+	        	put(8.0,17);
+	        	put(7.0,18);
+	        	put(6.0,19);
+	        	put(5.5,20);
+	        	put(5.0,21);
+	        	put(4.0,22);
+	        	put(3.5,23);
+	        	put(3.0,24);
+	        	put(2.0,25);
+	        	put(1.0,26);
+	     }};
 
 		// Dropdown: Timezone
 		JComboBox comboBoxTimezone = new JComboBox();
@@ -333,20 +354,27 @@ public class SkyMap_gui {
                     }
 		});
 		
+		
 		/**Begin Section: Set fields to current date/time/etc */
 		Calendar cal = Calendar.getInstance();
+		TimeZone mTimeZone = cal.getTimeZone(); 
+        int mGMTOffset = mTimeZone.getRawOffset();
+        
 		currentDay = cal.get(Calendar.DATE);
 		currentMonth = cal.get(Calendar.MONTH); 
 		currentYear = cal.get(Calendar.YEAR);
 		currentHour = cal.get(Calendar.HOUR);
 		currentMin = cal.get(Calendar.MINUTE);
+		currentTimezone = (double)TimeUnit.HOURS.convert(mGMTOffset, TimeUnit.MILLISECONDS);
+		adjCurrentTimezone = GMTKeys.get(currentTimezone);
 		
 		txtHour.setText(String.valueOf(currentHour));
 		textMinutes.setText(String.valueOf(currentMin));
 		txtYear.setText(String.valueOf(currentYear));
 		comboBoxDay.setSelectedItem(String.valueOf(currentDay));
         comboBoxMonth.setSelectedItem(Month.get(currentMonth));
-
+        comboBoxTimezone.setSelectedItem(GMT.get(adjCurrentTimezone));
+        
 		
 		/** Begin Section: Current Map's Output */
 		// Label: Current Latitute
