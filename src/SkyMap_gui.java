@@ -244,7 +244,7 @@ public class SkyMap_gui {
     		txtYear.setBounds(140, 192, 59, 20);
         }
         else {
-    		txtYear.setBounds(132, 192, 54, 20);
+    		txtYear.setBounds(132, 192, 34, 20);
         }
 		frmSkymap.getContentPane().add(txtYear);
 	
