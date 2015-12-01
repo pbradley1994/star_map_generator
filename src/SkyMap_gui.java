@@ -241,7 +241,12 @@ public class SkyMap_gui {
 		txtHour.setText("00");
 		txtLatitude.setForeground(Color.DARK_GRAY);
 		txtHour.setColumns(10);
-		txtHour.setBounds(65, 240, 25, 20);
+        if (! isWindows) { 
+    		txtHour.setBounds(55, 240, 35, 20);
+        }
+        else {
+    		txtHour.setBounds(65, 240, 25, 20);
+        }
 		frmSkymap.getContentPane().add(txtHour);
 		
 		// Minutes
@@ -249,15 +254,26 @@ public class SkyMap_gui {
 		textMinutes.setText("00");
 		txtLatitude.setForeground(Color.DARK_GRAY);
 		textMinutes.setColumns(10);
-		textMinutes.setBounds(94, 240, 25, 20);
+        if (! isWindows) { 
+    		textMinutes.setBounds(94, 240, 35, 20);
+        }
+        else {
+    		textMinutes.setBounds(94, 240, 25, 20);
+        }
 		frmSkymap.getContentPane().add(textMinutes);
 		
 		// Time Label
 		JLabel lblTime = new JLabel("Time -");
 		lblTime.setForeground(Color.WHITE);
 		lblTime.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		lblTime.setBounds(17, 215, 54, 20);
+        if (! isWindows) { 
+    		lblTime.setBounds(17, 215, 84, 20);
+        }
+        else {
+    		lblTime.setBounds(17, 215, 54, 20);
+        }
 		frmSkymap.getContentPane().add(lblTime);
+
 		
 		// Hr + Min Labels
 		JLabel lblHr = new JLabel("Hr :");
