@@ -30,7 +30,7 @@ public class Parser {
  *  
  */
 public Parser() {
-//	ArrayList<File> listOfFiles=findDataFiles("./data");
+//	ArrayList<File> listOfFiles=findDataFiles("/data");
 	if (DEBUG) { System.out.println("Parser:34"); }
 	listOfStars=readStars();
  	listOfMessierObjects=readMessier();
@@ -64,7 +64,7 @@ public ArrayList<Star> readStars() {
 	if (DEBUG) {System.out.println("readStars() start"); }
 	
 	ArrayList<Star> l=new ArrayList<Star>();
-	String fileToParse = "./data/Star.csv";
+	String fileToParse = "/data/Star.csv";
     BufferedReader fileReader = null;
 
     final String DELIMITER = ",";
@@ -111,7 +111,7 @@ public ArrayList<Messier> readMessier() {
 	if (DEBUG) { System.out.println("readMessier() start"); }
 	
 	ArrayList<Messier> l=new ArrayList<Messier>();
-	String fileToParse = "./data/Messier.csv";
+	String fileToParse = "/data/Messier.csv";
 	BufferedReader fileReader = null;
 
 	 try
@@ -156,7 +156,7 @@ public ArrayList<Constellation> readConstellations() {
 	if (DEBUG) { System.out.println("readMessier() start"); }
 	
 	ArrayList<Constellation> l=new ArrayList<Constellation>();
-	String fileToParse = "./data/Constellation.csv";
+	String fileToParse = "/data/Constellation.csv";
 	BufferedReader fileReader = null;
 
 	 try
@@ -211,51 +211,6 @@ public Star getStarfromStarID(int sid) {
     return null;
 }
 
-
-//public ArrayList<Planet> readPlanets() {
-//	
-//	if (DEBUG ) { System.out.println("readPlanets() start"); }
-//	
-//	ArrayList<Planet> l=new ArrayList<Planet>();
-//	String fileToParse = "./data/Planet.csv";
-//    BufferedReader fileReader = null;
-//
-//    final String DELIMITER = ",";
-//    try
-//    {
-//        String line = "";
-//        //Create the file reader
-//        fileReader = new BufferedReader(new FileReader(fileToParse));
-//         
-//        // Throw away the first line, which contains column names.
-//        fileReader.readLine();
-//        
-//        //Read the file line by line
-//        while ((line = fileReader.readLine()) != null)
-//        {
-//            //String[] tokens = line.split(DELIMITER);
-//        	Planet p = new Planet(line);
-//        	l.add(p);
-//        	if (DEBUG ) { System.out.println("readPlanets:  "+line); }
-//
-//        }
-//    }
-//    catch (Exception e) {
-//        e.printStackTrace();
-//    }
-//    finally
-//    {
-//        try {
-//            fileReader.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    if (DEBUG && l != null) { System.out.println("readPlanets: length of l is "+l.size());}
-//	
-//    return l;
-//}
 
 
 public ArrayList<Star> getStars() {
