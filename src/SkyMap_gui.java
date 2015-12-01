@@ -86,9 +86,11 @@ public class SkyMap_gui {
 	private int MAX_Y = 500;
 	private int MIN_Y = -500;
         
-        // Printing job
-        private PrinterJob job = PrinterJob.getPrinterJob();
+    // Printing job
+    private PrinterJob job = PrinterJob.getPrinterJob();
 
+    // System info
+    private boolean isWindows;
 	/**
 	 * Launch the application.
 	 */
@@ -109,6 +111,7 @@ public class SkyMap_gui {
 	 * Create the application.
 	 */
 	public SkyMap_gui() {
+        isWindows=(System.getProperty("os.name").startsWith("Windows"));
 		initialize();
 	}
 
@@ -411,9 +414,17 @@ public class SkyMap_gui {
 		 * are handled in their implementations since they're set immediately. */
 		// Button: Generate Map 
 		JButton btnGenerate = new JButton("Generate Map");
-		btnGenerate.setForeground(Color.WHITE);
-		btnGenerate.setBackground(Color.BLACK);
-		btnGenerate.setBounds(17, 300, 101, 23);
+        if (! isWindows) { 
+    		btnGenerate.setBounds(15, 300, 150, 23); 
+    		btnGenerate.setForeground(Color.BLACK);
+    		btnGenerate.setBackground(Color.GRAY);
+            btnGenerate.setBorderPainted(true);
+        }
+        else {
+    		btnGenerate.setForeground(Color.WHITE);
+    		btnGenerate.setBackground(Color.BLACK);
+    		btnGenerate.setBounds(17, 300, 101, 23); 
+        }
 		frmSkymap.getContentPane().add(btnGenerate);
 		
 		// Action Listener for btnGenerate: Takes input from textfields and sets them to a variable for use in the GUI and
@@ -672,6 +683,7 @@ public class SkyMap_gui {
 		btnDownScroll.setFocusPainted(false);
 		btnDownScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_down.gif")));
 		btnDownScroll.setBounds(546, 534, 53, 53);
+        if (! isWindows) { btnDownScroll.setBorderPainted(false); }
 		frmSkymap.getContentPane().add(btnDownScroll);
 		
 		btnDownScroll.addActionListener(new ActionListener() {
@@ -695,6 +707,7 @@ public class SkyMap_gui {
 		btnUpScroll.setFocusPainted(false);
 		btnUpScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_up.gif")));
 		btnUpScroll.setBounds(609, 534, 53, 53);
+        if (! isWindows) { btnUpScroll.setBorderPainted(false); }
 		frmSkymap.getContentPane().add(btnUpScroll);
 		
 		btnUpScroll.addActionListener(new ActionListener() {
@@ -718,6 +731,7 @@ public class SkyMap_gui {
 		btnLeftScroll.setFocusPainted(false);
 		btnLeftScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_left.gif")));
 		btnLeftScroll.setBounds(483, 534, 53, 53);
+        if (! isWindows) { btnLeftScroll.setBorderPainted(false); }
 		frmSkymap.getContentPane().add(btnLeftScroll);
 		
 		btnLeftScroll.addActionListener(new ActionListener() {
@@ -741,6 +755,7 @@ public class SkyMap_gui {
 		btnRightScroll.setFocusPainted(false);
 		btnRightScroll.setIcon(new ImageIcon(SkyMap_gui.class.getResource("/images/btn_right.gif")));
 		btnRightScroll.setBounds(672, 534, 53, 53);
+        if (! isWindows) { btnRightScroll.setBorderPainted(false); }
 		frmSkymap.getContentPane().add(btnRightScroll);
 		
 		btnRightScroll.addActionListener(new ActionListener() {
