@@ -202,7 +202,12 @@ public class SkyMap_gui {
 		comboBoxMonth.setFont(new Font("Arial", Font.PLAIN, 12));
 		comboBoxMonth = new JComboBox( Month );
 		comboBoxMonth.setRenderer( new ItemRenderer() );
-		comboBoxMonth.setBounds(17, 192, 54, 20);
+		if (! isWindows) { 
+			comboBoxMonth.setBounds(14, 192, 72, 20);
+        }
+        else {
+    		comboBoxMonth.setBounds(17, 192, 54, 20);
+        }
 		frmSkymap.getContentPane().add(comboBoxMonth);
 		
 		// Action Listener: When an item is selected, the InputItem variable is sent to the corresponding
@@ -222,7 +227,12 @@ public class SkyMap_gui {
 		comboBoxDay.setFont(new Font("Arial", Font.PLAIN, 12));
 		comboBoxDay.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", 
 				"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
-		comboBoxDay.setBounds(74, 192, 44, 20);
+		if (! isWindows) { 
+			comboBoxDay.setBounds(80, 192, 64, 20);
+        }
+        else {
+    		comboBoxDay.setBounds(74, 192, 54, 20);
+        }
 		frmSkymap.getContentPane().add(comboBoxDay);
 		
 		// Year Field -- takes text input
@@ -231,6 +241,12 @@ public class SkyMap_gui {
 		txtYear.setForeground(Color.DARK_GRAY);
 		txtYear.setColumns(10);
 		txtYear.setBounds(128, 192, 64, 20);
+        if (! isWindows) { 
+    		txtYear.setBounds(140, 192, 59, 20);
+        }
+        else {
+    		txtYear.setBounds(128, 192, 64, 20);
+        }
 		frmSkymap.getContentPane().add(txtYear);
 	
 		
@@ -278,14 +294,26 @@ public class SkyMap_gui {
 		// Hr + Min Labels
 		JLabel lblHr = new JLabel("Hr :");
 		lblHr.setForeground(Color.WHITE);
-		lblHr.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		lblHr.setBounds(65, 215, 25, 20);
+        if (! isWindows) { 
+    		lblHr.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+    		lblHr.setBounds(80, 215, 25, 20);
+        }
+        else {
+    		lblHr.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+    		lblHr.setBounds(65, 215, 25, 20);
+        }
 		frmSkymap.getContentPane().add(lblHr);
 		
 		JLabel lblMin = new JLabel("Min");
 		lblMin.setForeground(Color.WHITE);
-		lblMin.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		lblMin.setBounds(94, 215, 37, 20);
+        if (! isWindows) { 
+    		lblMin.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+    		lblMin.setBounds(114, 215, 37, 20);
+        }
+        else {
+    		lblMin.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+    		lblMin.setBounds(94, 215, 37, 20);
+        }
 		frmSkymap.getContentPane().add(lblMin);
 		
 	
