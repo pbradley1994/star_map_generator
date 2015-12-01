@@ -160,6 +160,7 @@ public class Controller {
 		double rightAsc = theCalculator.findPlanetRightAscension(sunEg, 0.0, sunEcLong);
 		sun.setRightAscension(rightAsc);
 		temp = theCalculator.findHourAngle(rightAsc, userLocalTime);
+		sun.setHourAngle(temp);
 		sun.setMagnitude(-26.0);
 		
 		//find moon mean longitude (in degrees)
@@ -696,19 +697,4 @@ public class Controller {
 	{
 		return moon;
 	}
-	/************************************************
-	 * Return a star object given the star objects id.
-	 * @param StarID id of star you are looking for 
-	 ************************************************/
-	// Changed use the parser's faster method
-    public Star getStarfromStarID(Integer starID)
-    {
-    	Star s = theParser.getStarfromStarID(starID);
-    	if (s.getID() == starID) {
-            return s;
-        }
-        System.out.println("StarID " + starID + "was not found in starList.");
-        return null;
-    }
 }
-
