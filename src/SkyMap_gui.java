@@ -307,33 +307,11 @@ public class SkyMap_gui {
 			
 		//Hash table to correspond GMT offsets to indexes for use later
 		Hashtable<Double,Integer> GMTKeys = new Hashtable<Double,Integer>() {{
-	        	put(0.0,0);
-	        	put(-1.0,1);
-	        	put(-3.0,2);
-	        	put(-3.5,3);
-	        	put(-4.0,4);
-	        	put(-5.0,5);
-	        	put(-6.0,6);
-	        	put(-7.0,7);
-	        	put(-8.0,8);
-	        	put(-9.0,9);
-	        	put(-10.0,10);
-	        	put(-11.0,11);
-	        	put(12.0,12);
-	        	put(11.0,13);
-	        	put(10.0,14);
-	        	put(9.5,15);
-	        	put(9.0,16);
-	        	put(8.0,17);
-	        	put(7.0,18);
-	        	put(6.0,19);
-	        	put(5.5,20);
-	        	put(5.0,21);
-	        	put(4.0,22);
-	        	put(3.5,23);
-	        	put(3.0,24);
-	        	put(2.0,25);
-	        	put(1.0,26);
+	        	put(0.0,0); put(-1.0,1); put(-3.0,2); put(-3.5,3); put(-4.0,4); put(-5.0,5);
+	        	put(-6.0,6); put(-7.0,7); put(-8.0,8); put(-9.0,9); put(-10.0,10); put(-11.0,11);
+	        	put(12.0,12); put(11.0,13); put(10.0,14); put(9.5,15); put(9.0,16); put(8.0,17);
+	        	put(7.0,18); put(6.0,19); put(5.5,20); put(5.0,21); put(4.0,22); put(3.5,23);
+	        	put(3.0,24); put(2.0,25); put(1.0,26);
 	     }};
 
 		// Dropdown: Timezone
