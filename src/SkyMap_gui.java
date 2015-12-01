@@ -240,12 +240,11 @@ public class SkyMap_gui {
 		txtYear.setText("1900");
 		txtYear.setForeground(Color.DARK_GRAY);
 		txtYear.setColumns(10);
-		txtYear.setBounds(128, 192, 64, 20);
         if (! isWindows) { 
     		txtYear.setBounds(140, 192, 59, 20);
         }
         else {
-    		txtYear.setBounds(128, 192, 64, 20);
+    		txtYear.setBounds(132, 192, 59, 20);
         }
 		frmSkymap.getContentPane().add(txtYear);
 	
@@ -306,9 +305,7 @@ public class SkyMap_gui {
     		lblMin.setFont(new Font("Century Gothic", Font.PLAIN, 16));
     		lblMin.setBounds(94, 215, 37, 20);
     		frmSkymap.getContentPane().add(lblMin);
-
-        }
-	
+        }	
 	
 		/**
 		 * Begin Timezone dropdown menu.
