@@ -64,7 +64,7 @@ public ArrayList<Star> readStars() {
 	if (DEBUG) {System.out.println("readStars() start"); }
 	
 	ArrayList<Star> l=new ArrayList<Star>();
-	String fileToParse = "/data/Star.csv";
+	String fileToParse = "data/Star.csv";
     BufferedReader fileReader = null;
 
     final String DELIMITER = ",";
@@ -111,7 +111,7 @@ public ArrayList<Messier> readMessier() {
 	if (DEBUG) { System.out.println("readMessier() start"); }
 	
 	ArrayList<Messier> l=new ArrayList<Messier>();
-	String fileToParse = "/data/Messier.csv";
+	String fileToParse = "data/Messier.csv";
 	BufferedReader fileReader = null;
 
 	 try
@@ -156,7 +156,7 @@ public ArrayList<Constellation> readConstellations() {
 	if (DEBUG) { System.out.println("readMessier() start"); }
 	
 	ArrayList<Constellation> l=new ArrayList<Constellation>();
-	String fileToParse = "/data/Constellation.csv";
+	String fileToParse = "data/Constellation.csv";
 	BufferedReader fileReader = null;
 
 	 try
@@ -243,12 +243,7 @@ public void print(double mag) {
 			m.print();
 		}
 	}
-	
-//	if (listOfPlanets != null) {
-//		for (Planet p: listOfPlanets) {
-//			p.print();
-//		}
-//	}	
+		
 	
 }
 
